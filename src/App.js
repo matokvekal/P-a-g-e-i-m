@@ -1,24 +1,22 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import ConfigContextProvider from './context/ConfigContext';
+import UploadFile from './components/UploadFile';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import PersistentDrawerLeft from './components/layouts/PersistentDrawerLeft';
+import Pageim from './components/Pageim';
+
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+   
+    <Router>
+    <PersistentDrawerLeft />
+      <Route exact path='/UploadFile' component={UploadFile} />
+      <ConfigContextProvider>
+      <Route exact path='/Pageim' component={Pageim} />
+      </ConfigContextProvider>
+      </Router>
     </div>
   );
 }
