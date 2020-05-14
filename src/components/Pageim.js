@@ -1,15 +1,14 @@
 import React from 'react';
 import ConfigHeaders from './layouts/ConfigHeaders';
-import Table1 from'./layouts/Table1';
+import Table2 from '../components/main/tabale-elemnts/tables/Table2'
 
 export const Pageim = () => {
 
-    return  (
-        <div >
-            <ConfigHeaders />
-            <Table1/>
-        </div>
-    ) 
-      
+    return (
+        < >
+            <Table2 />
+        </>
+    )
+
 }
 export default Pageim;

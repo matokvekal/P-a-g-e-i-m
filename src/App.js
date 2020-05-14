@@ -11,7 +11,7 @@ function App() {
     <div className="App">
    
     <Router>
-    <PersistentDrawerLeft />
+   <PersistentDrawerLeft />
       <Route exact path='/UploadFile' component={UploadFile} />
       <ConfigContextProvider>
       <Route exact path='/Pageim' component={Pageim} />

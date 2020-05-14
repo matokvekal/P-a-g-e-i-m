@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
         transition: theme.transitions.create(['margin', 'width'], {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
-        }),
+        }),height:'50px',
     },
     appBarShift: {
         width: `calc(100% - ${drawerWidth}px)`,
@@ -94,8 +94,7 @@ export default function PersistentDrawerLeft() {
     return (
         <div className={classes.root}>
             <CssBaseline />
-            <AppBar
-                position="fixed"
+            <AppBar 
                 className={clsx(classes.appBar, {
                     [classes.appBarShift]: open,
                 })}

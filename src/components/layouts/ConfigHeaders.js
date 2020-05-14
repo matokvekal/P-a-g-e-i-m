@@ -6,7 +6,6 @@ export const ConfigHeaders = () => {
     const { config } = useContext(ConfigContext);
     return (
         <>
-        <h1>HEADERS</h1>
             {config ? config.map((header, i) => (
                 <ConfigDetails key={i} row={header}/>
             )) :

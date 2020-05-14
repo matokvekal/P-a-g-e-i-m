@@ -1,7 +1,10 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { UseLocalStorage } from '../helpers/LocalSrorage';
+//import { UseLocalStorage } from '../helpers/LocalSrorage';
+import { pageimEndPoint } from '../Config';
 export const ConfigContext = createContext();
 
+
+const API_ENDPOINT = pageimEndPoint();
 
 const ConfigContextProvider = (props) => {
 
@@ -12,7 +15,7 @@ const ConfigContextProvider = (props) => {
     console.log("ConfigContextProvider ",d);
     useEffect(() => {
         console.log("at use efect");
-            fetch("http://yonaswr.com/files/fields")
+            fetch(`${API_ENDPOINT}/fields`)
                 .then(response => response.json())
                 .then(data => setConfig(data.res))
                 .then(console.log('after fetch',config))
