@@ -6,7 +6,7 @@ export const Pageim = () => {
 
     return (
         < >
-            <Table2 />
+           {1===3? <Table2 />:<card2 />}
         </>
     )
 

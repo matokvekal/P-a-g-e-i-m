@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
         transition: theme.transitions.create(['margin', 'width'], {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
-        }),height:'50px',
+        }), height: '50px',
     },
     appBarShift: {
         width: `calc(100% - ${drawerWidth}px)`,
@@ -78,7 +78,14 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function PersistentDrawerLeft() {
+export default function PersistentDrawerLeft(props) {
+    const { setAppDirection, AppDirection } = props;
+
+    const siteDirection = () => {
+
+        setAppDirection(AppDirection === 'ltr' ? 'rtl' : 'ltr');
+        window.localStorage.setItem('AppDirection', JSON.stringify(AppDirection));
+    }
     const classes = useStyles();
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
@@ -94,7 +101,7 @@ export default function PersistentDrawerLeft() {
     return (
         <div className={classes.root}>
             <CssBaseline />
-            <AppBar 
+            <AppBar
                 className={clsx(classes.appBar, {
                     [classes.appBarShift]: open,
                 })}
@@ -133,11 +140,7 @@ export default function PersistentDrawerLeft() {
                     </IconButton>
                 </div>
                 <Divider />
-
-
-
                 <Navbar2 />
-
                 <Divider />
                 <List>
                     {['All mail', 'Trash', 'Spam'].map((text, index) => (
@@ -146,7 +149,13 @@ export default function PersistentDrawerLeft() {
                             <ListItemText primary={text} />
                         </ListItem>
                     ))}
+                    <Divider />
+
+                    <IconButton onClick={siteDirection}>
+                        {AppDirection === 'ltr' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+                    </IconButton>
                 </List>
+
             </Drawer>
 
         </div>

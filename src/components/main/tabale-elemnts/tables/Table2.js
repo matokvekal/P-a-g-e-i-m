@@ -15,15 +15,15 @@ export const Table2 = () => {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ order: 'Last Name' })
-};
-    //post
-    // useEffect(() => {
-    //   fetch(`${API_ENDPOINT}/rows`, requestOptions)
-    // .then(response => response.json())
-    // .then(data => this.setData(data.res));
-    // }, [data]);
+  };
+  //post
+  // useEffect(() => {
+  //   fetch(`${API_ENDPOINT}/rows`, requestOptions)
+  // .then(response => response.json())
+  // .then(data => this.setData(data.res));
+  // }, [data]);
 
-  {/*get*/}
+  {/*get*/ }
   useEffect(() => {
     fetch(`${API_ENDPOINT}/rows`)
       .then(response => response.json())
@@ -37,7 +37,13 @@ export const Table2 = () => {
         <thead>
           <tr>
             {config.map((header, i) => (
-              <th data-type="numeric" key={i}>{header.name}<span className="resize-handle"></span></th>
+              <th data-type="numeric"
+                style={{ width: `${header.width}px` }}
+                key={i}>
+                {header.name}
+                <span className="resize-handle">
+                </span>
+              </th>
             ))
             }
           </tr>
@@ -46,9 +52,11 @@ export const Table2 = () => {
           {data.slice(0, 100).map((el, i) => (
             <>
               <tr>
-
                 {config.map((header, i) => (
-                  <td key={i}>{el[header.name]}</td>
+                  <td style={{ width: `${header.width}px` }}
+                    key={i}>
+                    {el[header.name]}
+                  </td>
                 ))}
               </tr>
             </>
