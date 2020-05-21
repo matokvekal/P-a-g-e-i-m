@@ -7,6 +7,7 @@ import { pageimEndPoint } from '../../../../Config';
 
 export const Table2 = () => {
   const { config } = useContext(ConfigContext);
+
   const [data, setData] = useState([]);
   const API_ENDPOINT = pageimEndPoint();
 
@@ -49,12 +50,12 @@ export const Table2 = () => {
           </tr>
         </thead>
         <tbody>
-          {data.slice(0, 100).map((el, i) => (
+          {data.slice(0, 100).map((el, index) => (
             <>
               <tr>
-                {config.map((header, i) => (
+                {config.map((header, index) => (
                   <td style={{ width: `${header.width}px` }}
-                    key={i}>
+                    key={index}>
                     {el[header.name]}
                   </td>
                 ))}

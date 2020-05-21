@@ -1,12 +1,11 @@
 import React from 'react';
-import ConfigHeaders from './layouts/ConfigHeaders';
-import Table2 from '../components/main/tabale-elemnts/tables/Table2'
+import Table2 from '../components/main/tabale-elemnts/tables/Table2';
+import Card2 from '../components/main/cards/Card2';
 
-export const Pageim = () => {
-
+export const Pageim = (props) => {
     return (
         < >
-           {1===3? <Table2 />:<card2 />}
+           {props.screenType==='table'? <Table2 />:<Card2 />}
         </>
     )
 

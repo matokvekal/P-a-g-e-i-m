@@ -4,7 +4,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import List from '@material-ui/core/List';
 import { Link } from 'react-router-dom';
 
-export const Navbar2 = () => {
+export const Navbar2 = (props) => {
     const menu2=[
     {Linkto:'UploadFile',key:0,icon:'fas fa-star',text:'UploadFile',app:''},
     {Linkto:'Pageim',key:3,icon:"fas fa-star",text:'Pageim',app:'rows'}
@@ -14,7 +14,7 @@ export const Navbar2 = () => {
 
                 <List>
                     {menu2.sort((a, b) => (a.key > b.key) ? 1 : -1).map((item, index) => (
-                        <Link to={'/'+item.Linkto} params={{test:'test'}}key={item.key}>
+                        <Link to={'/'+item.Linkto} params={"table" }  key={item.key}>
                         <ListItem button key={item.key}>
                         <i className={item.icon}></i>
                          <ListItemText primary={item.text} />

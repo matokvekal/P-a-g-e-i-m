@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import clsx from 'clsx';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles, useTheme,fade } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
@@ -12,18 +12,25 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import ViewModuleSharpIcon from '@material-ui/icons/ViewModuleSharp';
+import StorageSharpIcon from '@material-ui/icons/StorageSharp';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import Navbar2 from './Navbar2';
+import SearchIcon from '@material-ui/icons/Search';
+import InputBase from '@material-ui/core/InputBase';
+
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        display: 'flex',
+  
+        position:'sticky',
+        top:0
     },
     appBar: {
         transition: theme.transitions.create(['margin', 'width'], {
@@ -76,6 +83,22 @@ const useStyles = makeStyles((theme) => ({
         }),
         marginLeft: 0,
     },
+    search: {
+        position: 'relative',
+        borderRadius: theme.shape.borderRadius,
+        backgroundColor: fade(theme.palette.common.white, 0.15),
+        '&:hover': {
+          backgroundColor: fade(theme.palette.common.white, 0.25),
+        },
+        marginRight: theme.spacing(2),
+        marginLeft: 0,
+        width: '100%',
+        [theme.breakpoints.up('sm')]: {
+          marginLeft: theme.spacing(3),
+          width: 'auto',
+        },
+      },
+  
 }));
 
 export default function PersistentDrawerLeft(props) {
@@ -107,6 +130,7 @@ export default function PersistentDrawerLeft(props) {
                 })}
             >
                 <Toolbar>
+                
                     <IconButton
                         color="inherit"
                         aria-label="open drawer"
@@ -116,14 +140,29 @@ export default function PersistentDrawerLeft(props) {
                     >
                         <MenuIcon />
                     </IconButton>
+
+           
+
                     <Typography variant="h6" noWrap>
                         Page-im  מערכת מידע אישית
           </Typography>
+          <div className={classes.search}>
+      
+          <InputBase
+            placeholder="Search…"
+            classes={{
+              root: classes.inputRoot,
+              input: classes.inputInput,
+            }}
+            inputProps={{ 'aria-label': 'search' }}
+          />
+        </div>
                     <a href="#!" onClick={() => { }}>
                         <i className="fas fa-sign-out-alt"></i>{' '}
                         <span>Logout</span>
                     </a>
                 </Toolbar>
+                
             </AppBar>
             <Drawer
                 className={classes.drawer}
@@ -135,10 +174,14 @@ export default function PersistentDrawerLeft(props) {
                 }}
             >
                 <div className={classes.drawerHeader}>
+                <IconButton onClick={siteDirection}>
+                {AppDirection === 'ltr' ? <ViewModuleSharpIcon /> : <StorageSharpIcon />}
+            </IconButton>
+        
                     <IconButton onClick={handleDrawerClose}>
                         {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
                     </IconButton>
-                </div>
+                      </div>
                 <Divider />
                 <Navbar2 />
                 <Divider />

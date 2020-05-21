@@ -7,7 +7,6 @@ export const ConfigContext = createContext();
 const API_ENDPOINT = pageimEndPoint();
 
 const ConfigContextProvider = (props) => {
-
     const [config, setConfig] = useState([]);
     // data=UseLocalStorage("get","config");
    let d= window.localStorage.getItem('config');
@@ -20,11 +19,13 @@ const ConfigContextProvider = (props) => {
                 .then(data => setConfig(data.res))
                 .then(console.log('after fetch',config))
                 
+                
 
     }, [])
 
     useEffect(()=>{
-       localStorage.setItem('config',JSON.stringify(config))
+       localStorage.setItem('config',JSON.stringify(config));
+       
      },[config])
 
     return (
