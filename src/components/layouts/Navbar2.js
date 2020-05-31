@@ -7,7 +7,8 @@ import { Link } from 'react-router-dom';
 export const Navbar2 = (props) => {
     const menu2=[
     {Linkto:'UploadFile',key:0,icon:'fas fa-star',text:'UploadFile',app:''},
-    {Linkto:'Pageim',key:3,icon:"fas fa-star",text:'Pageim',app:'rows'}
+    {Linkto:'Pageim',key:3,icon:"fas fa-star",text:'Pageim',app:'rows'},
+    
 ];
     return (
         <>

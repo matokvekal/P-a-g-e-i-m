@@ -39,10 +39,6 @@ export const Card2 = () => {
         <>
             <div className="container">
                 <main className='cards'>
-
-
-
-
                     {data.slice(0, 100).map((el, i) => (
                         <>
                             <span className='card'>
