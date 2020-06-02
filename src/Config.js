@@ -2,7 +2,7 @@
 //     return 'https://hn.algolia.com/api/v1';
 // }
 export const pageimEndPoint = () => {
-    return 'http://yonaswr.com/files';
+    return 'http://yonaswr.com';
 }
 // export const apiEndPoint = () => {
 //     return 'https://ticket-app-backend.herokuapp.com';

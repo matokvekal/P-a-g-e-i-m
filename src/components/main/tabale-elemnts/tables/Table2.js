@@ -7,12 +7,15 @@ import { ConfigContext } from '../../../../context/ConfigContext';
 import { pageimEndPoint } from '../../../../Config';
 // import Checkbox from '@material-ui/core/Checkbox';
 // import { ListItem } from '@material-ui/core';
+import Filter from './Filter';
+
+
 
 export const Table2 = () => {
 
   const [sortOrder, setSortOrder] = useState(0);
   const { config } = useContext(ConfigContext);
-
+  const [filter, setFilter] = useState(<Filter />)
   const [data, setData] = useState([]);
   const API_ENDPOINT = pageimEndPoint();
   const [pageSize, setPageSize] = useState(100);
@@ -25,7 +28,6 @@ export const Table2 = () => {
 
 
   useEffect(() => {
-    let order = 1;
     if (config && config.length > 0) {
       for (let header of config) {
         // debugger
@@ -41,13 +43,11 @@ export const Table2 = () => {
         header.clientTableHideColumn = false;
         header.clientId = 'Id_' + header.name;
         header.dragable = true;
-        //just for test then delete
-        header.order = order++;
+        header.clientFilterHeaderCheckbox = false;
+
       }
     }
   }, [config]);
-
-
 
 
   const HandleAggregation = (field) => {
@@ -67,10 +67,12 @@ export const Table2 = () => {
     if (!h.clientFilter) {
       h.clientFilter = field;
       h.clientFilterIconColor = 'colorRed';
+      // setFilter(<Filter />);
     }
     else {
       h.clientFilter = false;
       h.clientFilterIconColor = 'colorWhite';
+      // setFilter();
     }
   }
 
@@ -118,7 +120,6 @@ export const Table2 = () => {
   }
 
   const handleChangeOrder = (target_id, source_id) => {
-    debugger
     let order = 1;
     if (config && config.length > 0) {
       let newOrder = config.filter(x => x.clientId === target_id)[0].order;
@@ -138,101 +139,103 @@ export const Table2 = () => {
   }
 
 
-// const HandleSort2 = (field) => {
-//   debugger
-//   if (listSortedItem.length > 0 && listSortedItem.filter(x => x.name === field).length > 0) {
-//     console.log(JSON.stringify(listSortedItem));
+  // const HandleSort2 = (field) => {
+  //   debugger
+  //   if (listSortedItem.length > 0 && listSortedItem.filter(x => x.name === field).length > 0) {
+  //     console.log(JSON.stringify(listSortedItem));
 
-//     let filteredDataSource = listSortedItem.filter((x) => {
-//       if (x.name === field) {
-//         x.direction === 'asc' ? x.direction = 'desc' : x.direction = 'asc';
-//       }
-//       return true;
-//     })
-//     setlistSortedItem(filteredDataSource)
-//   }
-//   else {
-//     setSortOrder(x => x + 1);
-//     let item = {};
-//     item.name = field;
-//     item.order = sortOrder;
-//     item.direction = 'asc';
-//     setlistSortedItem(x => [...x, item]);
-//   }
-// }
-
-
+  //     let filteredDataSource = listSortedItem.filter((x) => {
+  //       if (x.name === field) {
+  //         x.direction === 'asc' ? x.direction = 'desc' : x.direction = 'asc';
+  //       }
+  //       return true;
+  //     })
+  //     setlistSortedItem(filteredDataSource)
+  //   }
+  //   else {
+  //     setSortOrder(x => x + 1);
+  //     let item = {};
+  //     item.name = field;
+  //     item.order = sortOrder;
+  //     item.direction = 'asc';
+  //     setlistSortedItem(x => [...x, item]);
+  //   }
+  // }
 
 
-{/*get*/ }
-useEffect(() => {
-  fetch(`${API_ENDPOINT}/rows`)
-    .then(response => response.json())
-    .then(data => setData(data.res))
-}, [data]);
 
 
-return (
-  <>
-    <table id="main" className="display" >
-      <thead>
-        <tr>
-          {config.sort((a, b) => (a.order > b.order) ? 1 : -1).map((header, i) => (!header.clientTableHideColumn ?
-            (<th data-type="numeric"
-              id={header.clientId}
-              draggable={header.dragable}
-              onDragStart={handleDragStart}
-              onDragOver={HandleOnDragOver}
-              onDragEnter={handleDragEnter}
-              onDrop={handleDrop}
-              style={{ maxWidth: `${header.width + extra_header_width}px`, minWidth: `${header.width + extra_header_width}px` }}
-              key={i}>
-              <span className='header-unit'>
-                <span
-                  style={{ Width: `${header.width}px` }} className='header-data' onClick={() => HandleSort(header.name)}>
-                  {header.name}
+  {/*get*/ }
+  useEffect(() => {
+    fetch(`${API_ENDPOINT}/rows`)
+      .then(response => response.json())
+      .then(data => setData(data.res))
+  }, [data]);
+
+
+  return (
+    <>
+      <table id="main" className="display" >
+        <thead>
+          <tr>
+            {config.sort((a, b) => (a.order > b.order) ? 1 : -1).map((header, i) => (!header.clientTableHideColumn ?
+              (<th data-type="numeric"
+                id={header.clientId}
+                draggable={header.dragable}
+                onDragStart={handleDragStart}
+                onDragOver={HandleOnDragOver}
+                onDragEnter={handleDragEnter}
+                onDrop={handleDrop}
+                style={{ maxWidth: `${header.width + extra_header_width}px`, minWidth: `${header.width + extra_header_width}px` }}
+                key={i}>
+                <span className='header-unit'>
+                  <span
+                    style={{ Width: `${header.width}px` }} className='header-data' onClick={() => HandleSort(header.name)}>
+                    {header.name}
+                  </span>
+                  <span className='header-action' >
+
+                    <span className="sort-icon" onClick={() => HandleSort(header.name)} >
+                      <i className={header.clientSortIcon}>
+                        <span className='sort-order'>{header.clientSortOrder}</span>
+                      </i>
+                    </span>
+
+
+                    <span onClick={() => HandleHideColumn(header.name)} className='HandleHideColumn'>
+                      <i className="far fa-times-circle" ></i>
+                    </span>
+                    <span onClick={() => HandleAggregation(header.name)}>
+                      <i className={header.clientAggrigationIcon}></i>
+                    </span>
+                    <span onClick={() => HandleFilter(header.name)} className='filterIcon' >
+                      <Filter  name={header.name} filterCheckBox={header.clientFilterHeaderCheckbox} />
+                    </span>
+                  </span>
                 </span>
-                <span className='header-action' >
 
-                  <span className="sort-icon" onClick={() => HandleSort(header.name)} >
-                    <i className={header.clientSortIcon}>
-                      <span className='sort-order'>{header.clientSortOrder}</span>
-                    </i>
-                  </span>
-
-                  <span onClick={() => HandleFilter(header.name)} className={header.clientFilterIconColor}>
-                    <i className="fa fa-filter ">{header.order}</i>
-                  </span>
-                  <span onClick={() => HandleHideColumn(header.name)} className='HandleHideColumn'>
-                    <i className="far fa-times-circle" ></i>
-                  </span>
-                  <span onClick={() => HandleAggregation(header.name)}>
-                    <i className={header.clientAggrigationIcon}></i>
-                  </span>
-                </span>
-              </span>
-            </th>) : null
-          ))
-          }
-        </tr>
-      </thead>
-      <tbody>
-        {data.slice(0, pageSize).map((el, index) => (
-          <>
-            <tr>
-              {config.map((header, index) => (!header.clientTableHideColumn ?
-                <td style={{ maxWidth: `${header.width + extra_header_width}px`, minWidth: `${header.width + extra_header_width}px` }}
-                  key={index}>
-                  {el[header.name]}
-                </td> : null
-              ))}
-            </tr>
-          </>
-        ))}
-      </tbody>
-    </table>
-  </>
-)
+              </th>) : null
+            ))
+            }
+          </tr>
+        </thead>
+        <tbody>
+          {data.slice(0, pageSize).map((el, index) => (
+            <>
+              <tr>
+                {config.map((header, index) => (!header.clientTableHideColumn ?
+                  <td style={{ maxWidth: `${header.width + extra_header_width}px`, minWidth: `${header.width + extra_header_width}px` }}
+                    key={index}>
+                    {el[header.name]}
+                  </td> : null
+                ))}
+              </tr>
+            </>
+          ))}
+        </tbody>
+      </table>
+    </>
+  )
 }
 export default Table2;
 

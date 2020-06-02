@@ -38,20 +38,12 @@
     position: sticky;
     top: var(--table-head);
     border-right:gray solid 1px;
-    /* box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4); */
     overflow: hidden;
     text-overflow: ellipsis;
-    /* white-space: nowrap; */
     white-space: nowrap;
-  /* color: #716f88; */
-  /* letter-spacing: 1.5px; */
-  /* font-weight: 600; */
-  /* font-size: 14px; */
   text-align: left;
   text-transform: capitalize;
   vertical-align: middle;
-  /* padding: 20px; */
-  /* border-bottom: 2px solid #eef0f5; */
   text-transform: uppercase;
   }
   
@@ -64,8 +56,6 @@
     padding-bottom: 1px;
     color: #808080;
     font-size: 0.8rem;
-    text-transform: capitalize;
-
     border-bottom: 2px solid #eef0f5;
     text-transform: lowercase;
   }
@@ -88,35 +78,23 @@
   text-transform: lowercase;
 }
 .header-action{
-  width:120px;
+  width:140px;
 
 }
- .icon.fa-angle-up{
-  /* margin-left: 0.2em;
-  padding-top: 0.1rem; */
 
-}
   .sort-order{
     font-size: 1rem;
-    /* display:flex; */
     flex-direction: column;
     margin-left: 5px;
   }
-.checkbox1{
-  /* border:1px black solid; */
+.checkbox12222{
+
   top: 0;
     left: 0;
     width: 20px;
-    /* cursor: inherit; */
     height: 50%;
-    /* margin: 0; */
-    /* opacity: 0.5; */
     padding: 0;
     z-index: 1;
-    /* position: relative; */
-    /* display: block; */
-    /* width: 11px;
-    height: 11px; */
     border: 1px solid #808080 !important;
     content: "";
     background: #FFF;
@@ -125,8 +103,47 @@
   color: white ;
 
 }
-.colorRed{
-  color: red ;
-
+.colorRed
+{
+  color: red !important;
 }
 
+
+.filter{
+  /* position: fixed;
+  margin-top: 100px;
+  margin-left: 200PX;
+  width: 200PX; */
+  background-color:rgb(7, 6, 6);
+  display: contents;
+}
+/* <i className="fa fa-filter "></i> */
+/* given filter icon  */
+.MuiSvgIcon-root.MuiSelect-icon {
+color:white;
+/* color: red !important; */
+}
+.MuiSelect-root.MuiSelect-select.MuiSelect-selectMenu.MuiInputBase-input.MuiInput-input{
+ opacity: 0;
+}
+.MuiInput-underline:before{
+border-bottom:none!important;
+}
+.MuiInput-underline:after{
+  border-bottom:none!important;
+  }
+/* .upperFilter1111{
+max-Width: 250px;
+background-color: #FFF;
+position: sticky;
+top: 0;
+margin-top: -8px;
+height: 50px;
+z-index: 10000;
+} */
+
+.filterIcon{
+  float: left;
+  display: flex;
+  max-width: 50px;
+}
