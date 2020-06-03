@@ -1,19 +1,13 @@
 import React, { useState, useContext } from 'react';
-// import { ConfigContext } from '../../../../context/ConfigContext';
 import './Table2.css';
-// import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-// import Input from '@material-ui/core/Input';
-// import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Select from '@material-ui/core/Select';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControl from '@material-ui/core/FormControl';
-// import Chip from '@material-ui/core/Chip';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import Filter1TwoToneIcon from '@material-ui/icons/Filter1TwoTone';
-// import Input from '@material-ui/core/Input';
 
 
 
@@ -41,16 +35,6 @@ const useStyles = makeStyles(theme => ({
     top: 0,
   },
 }));
-// const ITEM_HEIGHT = 48;
-// const ITEM_PADDING_TOP = 8;
-// const MenuProps = {
-//   PaperProps: {
-//     style: {
-//       maxHeight: ITEM_HEIGHT * 15 + ITEM_PADDING_TOP,
-//       width: 250,
-//     },
-//   },
-// };
 
 
 const data = [
@@ -80,26 +64,31 @@ const data = [
 
 
 function Filter(props) {
-  // console.log('at filter');
-  // const { config } = useContext(ConfigContext);
+  const [checked, setChecked] = React.useState(false);
   const [name, filterCheckBox] = useState(props);
   const [FilterCheckBox, setFilterCheckBox] = useState(filterCheckBox);
   const [filterIcon, setFilterIcon] = useState(FilterListIcon);
   // const filterCheckBox={props};
   const classes = useStyles();
   const [filterData, setFilterData] = React.useState([]);
+  function CheckUnCheckAll(event) {
+    setChecked(event.target.checked);
+    if (!event.target.checked) {
+      setFilterData([])
+      setFilterIcon(FilterListIcon);
+    }
+    else {
+      setFilterData([...data]);
+      setFilterIcon(Filter1TwoToneIcon)
+    }
+  }
   function handleChange(event) {
     setFilterData(event.target.value);
     var options = event.target.value;
-    if(options.length > 0 ){
-      setFilterCheckBox('true');
+    if (options.length > 0)
       setFilterIcon(Filter1TwoToneIcon)
-    }  
     else
-    {
-      setFilterCheckBox('false');
       setFilterIcon(FilterListIcon);
-    }
     console.log(FilterCheckBox);
   }
 
@@ -112,11 +101,9 @@ function Filter(props) {
           onChange={handleChange}
           renderValue={selected => selected.join(', ')}
           IconComponent={filterIcon}
-          // IconComponent={FilterListIcon}
-          
         >
           <div className='upperFilter' >
-            <Checkbox checked={FilterCheckBox === 'true'} />
+            <Checkbox checked={checked} onChange={CheckUnCheckAll} />
             <span></span>
             <hr />
           </div>
