@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -27,10 +27,14 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import Navbar2 from './Navbar2';
+import ControlPointIcon from '@material-ui/icons/ControlPoint';
+import { ConfigContext } from '../../context/ConfigContext';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import CloseIcon from '@material-ui/icons/Close';
+import SimpleMenu from './SimpleMenu'
 
 
-// const drawerWidth = 240;
-// const [screenType,setScreenType]=('table');
+
 const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
@@ -87,16 +91,29 @@ const useStyles = makeStyles((theme) => ({
       display: 'flex',
     },
   },
+  hiddenColumns: {
+    width: '100%',
+    maxWidth: 360,
+    backgroundColor: theme.palette.background.paper,
+    position: 'fix',
+    overflow: 'auto',
+    maxHeight: 300,
+    direction: 'rtl',
+    marginTop: 64,
+    boxShadow: '10 10 5 grey',
+
+  },
   sectionMobile: {
     display: 'flex',
     [theme.breakpoints.up('md')]: {
       display: 'none',
     },
   },
+
 }));
 
 export default function PrimarySearchAppBar(props) {
-
+  const { config } = useContext(ConfigContext);
   const { AppDirection, setAppDirection } = props;
   const { screenType, setScreenType } = props;
   const theme = useTheme();
@@ -107,7 +124,7 @@ export default function PrimarySearchAppBar(props) {
 
   const changeScreenView = () => {
     setScreenType(screenType === 'table' ? 'card' : 'table');
-    console.log('changeScreenView after',screenType)
+    console.log('changeScreenView after', screenType)
     window.localStorage.setItem('screenType', JSON.stringify(screenType));
   }
 
@@ -142,10 +159,40 @@ export default function PrimarySearchAppBar(props) {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+  const [countHidden, SetCountHidden] = useState(0);
+  useEffect(() => {
+    SetCountHidden(config.filter(x => x.clientTableHideColumn === true).length)
+  }, [config])
+  const [showHidden, setShowHidden] = useState(false);
+  const [renderHiddenColumn, setRenderHiddenColumn] = useState(null)
 
+  const ShowHidenColumns = () => {
+    const hiddenFields = config.filter(x => x.clientTableHideColumn === true).map(x => x.name);
+    setRenderHiddenColumn(
+      < >
+        <List className={classes.hiddenColumns} style={{ position: 'fixed' }}  >
+         <span><h5 onClick={console.log("setShowHidden(false2)")}>Hidden fields</h5></span>
+        
+          <Divider variant="inset" component="li" />
+          {
+            hiddenFields.map((item, i) => (
+              <ListItem button>
+                <ListItemIcon >
+                  <HighlightOffIcon style={{ color: 'red' }} />
+                </ListItemIcon>
+                <ListItemText key={i} primary={item} />
+              </ListItem>
+            ))}
+        </List>
+
+
+      </>)
+    setShowHidden(true);
+  }
 
 
   const menuId = 'primary-search-account-menu';
+
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
@@ -160,6 +207,7 @@ export default function PrimarySearchAppBar(props) {
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
     </Menu>
   );
+
 
   const mobileMenuId = 'primary-search-account-menu-mobile';
   const renderMobileMenu = (
@@ -203,7 +251,9 @@ export default function PrimarySearchAppBar(props) {
   );
 
   return (
+
     <div className={classes.grow}>
+
       <AppBar >
         <Toolbar>
           <IconButton
@@ -215,6 +265,17 @@ export default function PrimarySearchAppBar(props) {
           >
             <MenuIcon />
           </IconButton>
+          <IconButton
+            edge="start"
+            aria-controls={menuId}
+            aria-haspopup="true"
+            aria-label="show hiden fields for reuse"
+            color="inherit">
+            <Badge badgeContent={countHidden} color="secondary">
+              <ControlPointIcon onClick={ShowHidenColumns} />
+            </Badge>
+          </IconButton>
+          <SimpleMenu/>
           <Typography className={classes.title} variant="h6" noWrap>
             Page-im
           </Typography>
@@ -222,6 +283,7 @@ export default function PrimarySearchAppBar(props) {
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
+
             <InputBase
               placeholder="Search…"
               classes={{
@@ -233,6 +295,10 @@ export default function PrimarySearchAppBar(props) {
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
+
+
+
+
             <IconButton aria-label="show 4 new mails" color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <MailIcon />
@@ -301,6 +367,8 @@ export default function PrimarySearchAppBar(props) {
       </Drawer>
       {renderMobileMenu}
       {renderMenu}
+      {showHidden ? renderHiddenColumn : null}
+
     </div>
   );
 }

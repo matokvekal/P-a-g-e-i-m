@@ -78,6 +78,7 @@ export const Table2 = () => {
 
   const HandleHideColumn = (field) => {
     let h = config.filter(x => x.name === field)[0];
+    // debugger
     h.clientTableHideColumn = true;
 
   }

@@ -21,9 +21,11 @@ function App() {
   return (
     <div className={AppDirection}>
       <Router>
+      <ConfigContextProvider>
           <PrimarySearchAppBar setAppDirection={setAppDirection} AppDirection={AppDirection} setScreenType={setScreenType} screenType={screenType}/>
+       
           <Route exact path='/UploadFile' component={UploadFile} />
-          <ConfigContextProvider>
+       
             <Route exact path='/Pageim'><Pageim screenType={screenType} /> </Route>
           </ConfigContextProvider>
       </Router>

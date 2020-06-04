@@ -4,7 +4,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import List from '@material-ui/core/List';
 import { Link } from 'react-router-dom';
 
-export const Navbar2 = (props) => {
+export const Navbar2 = () => {
     const menu2=[
     {Linkto:'UploadFile',key:0,icon:'fas fa-star',text:'UploadFile',app:''},
     {Linkto:'Pageim',key:3,icon:"fas fa-star",text:'Pageim',app:'rows'},
