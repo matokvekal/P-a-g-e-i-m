@@ -8,6 +8,7 @@ const API_ENDPOINT = pageimEndPoint();
 
 const ConfigContextProvider = (props) => {
     const [config, setConfig] = useState([]);
+
     // data=UseLocalStorage("get","config");
    let d= window.localStorage.getItem('config');
 
@@ -29,7 +30,7 @@ const ConfigContextProvider = (props) => {
      },[config])
 
     return (
-        <ConfigContext.Provider value={{ config }}>
+        <ConfigContext.Provider value={{ config }} >
             {props.children}
         </ConfigContext.Provider>
     )

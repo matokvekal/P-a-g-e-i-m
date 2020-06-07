@@ -30,8 +30,8 @@ import Navbar2 from './Navbar2';
 import ControlPointIcon from '@material-ui/icons/ControlPoint';
 import { ConfigContext } from '../../context/ConfigContext';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
-import CloseIcon from '@material-ui/icons/Close';
-import SimpleMenu from './SimpleMenu'
+
+import HiddenFields from './HiddenFields'
 
 
 
@@ -114,6 +114,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PrimarySearchAppBar(props) {
   const { config } = useContext(ConfigContext);
+
   const { AppDirection, setAppDirection } = props;
   const { screenType, setScreenType } = props;
   const theme = useTheme();
@@ -160,35 +161,11 @@ export default function PrimarySearchAppBar(props) {
     setOpen(false);
   };
   const [countHidden, SetCountHidden] = useState(0);
+
   useEffect(() => {
-    SetCountHidden(config.filter(x => x.clientTableHideColumn === true).length)
+    SetCountHidden(config.filter(x => x.clientTableHideColumn === true).length);
   }, [config])
-  const [showHidden, setShowHidden] = useState(false);
-  const [renderHiddenColumn, setRenderHiddenColumn] = useState(null)
 
-  const ShowHidenColumns = () => {
-    const hiddenFields = config.filter(x => x.clientTableHideColumn === true).map(x => x.name);
-    setRenderHiddenColumn(
-      < >
-        <List className={classes.hiddenColumns} style={{ position: 'fixed' }}  >
-         <span><h5 onClick={console.log("setShowHidden(false2)")}>Hidden fields</h5></span>
-        
-          <Divider variant="inset" component="li" />
-          {
-            hiddenFields.map((item, i) => (
-              <ListItem button>
-                <ListItemIcon >
-                  <HighlightOffIcon style={{ color: 'red' }} />
-                </ListItemIcon>
-                <ListItemText key={i} primary={item} />
-              </ListItem>
-            ))}
-        </List>
-
-
-      </>)
-    setShowHidden(true);
-  }
 
 
   const menuId = 'primary-search-account-menu';
@@ -251,7 +228,6 @@ export default function PrimarySearchAppBar(props) {
   );
 
   return (
-
     <div className={classes.grow}>
 
       <AppBar >
@@ -265,17 +241,9 @@ export default function PrimarySearchAppBar(props) {
           >
             <MenuIcon />
           </IconButton>
-          <IconButton
-            edge="start"
-            aria-controls={menuId}
-            aria-haspopup="true"
-            aria-label="show hiden fields for reuse"
-            color="inherit">
-            <Badge badgeContent={countHidden} color="secondary">
-              <ControlPointIcon onClick={ShowHidenColumns} />
-            </Badge>
-          </IconButton>
-          <SimpleMenu/>
+    
+
+
           <Typography className={classes.title} variant="h6" noWrap>
             Page-im
           </Typography>
@@ -367,7 +335,7 @@ export default function PrimarySearchAppBar(props) {
       </Drawer>
       {renderMobileMenu}
       {renderMenu}
-      {showHidden ? renderHiddenColumn : null}
+    
 
     </div>
   );
