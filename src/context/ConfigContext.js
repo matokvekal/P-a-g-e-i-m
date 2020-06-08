@@ -9,18 +9,14 @@ const API_ENDPOINT = pageimEndPoint();
 const ConfigContextProvider = (props) => {
     const [config, setConfig] = useState([]);
 
-    // data=UseLocalStorage("get","config");
    let d= window.localStorage.getItem('config');
 
     console.log("ConfigContextProvider ",d);
     useEffect(() => {
-        console.log("at use efect");
             fetch(`${API_ENDPOINT}/fields`)
                 .then(response => response.json())
                 .then(data => setConfig(data.res))
-                .then(console.log('after fetch',config))
-                
-                
+                // .then(console.log('after fetch',config))
 
     }, [])
 

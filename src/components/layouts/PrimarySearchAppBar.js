@@ -242,6 +242,7 @@ export default function PrimarySearchAppBar(props) {
             <MenuIcon />
           </IconButton>
     
+          <HiddenFields color={countHidden>0?'primery':'secondary'}/>
 
 
           <Typography className={classes.title} variant="h6" noWrap>
