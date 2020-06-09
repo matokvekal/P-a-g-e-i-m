@@ -1,5 +1,4 @@
 import React, { createContext, useState, useEffect } from 'react';
-//import { UseLocalStorage } from '../helpers/LocalSrorage';
 import { pageimEndPoint } from '../Config';
 export const ConfigContext = createContext();
 

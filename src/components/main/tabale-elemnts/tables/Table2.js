@@ -4,6 +4,7 @@ import moment from 'moment';
 import './Table2.css';
 //import socketIOClient from 'socket.io-client';
 import { ConfigContext } from '../../../../context/ConfigContext';
+import { GlobalContext } from '../../../../context/GlobalContext';
 import { pageimEndPoint } from '../../../../Config';
 // import Checkbox from '@material-ui/core/Checkbox';
 // import { ListItem } from '@material-ui/core';
@@ -12,7 +13,7 @@ import Filter from './Filter';
 
 
 export const Table2 = () => {
-
+  const { global } = useContext(GlobalContext);
   const [sortOrder, setSortOrder] = useState(0);
   const { config } = useContext(ConfigContext);
   const [filter, setFilter] = useState(<Filter />)
@@ -26,11 +27,12 @@ export const Table2 = () => {
     body: JSON.stringify({ order: 'Last Name' })
   };
 
-
+  const [trigerFetch, setTrigerFetch] = useState([]);
   useEffect(() => {
+    //debugger
     if (config && config.length > 0) {
       for (let header of config) {
-        // debugger
+
         header.clienSort = false;
         header.clientSortOrder = null;
         header.clientSortIcon = null;
@@ -51,6 +53,7 @@ export const Table2 = () => {
 
 
   const HandleAggregation = (field) => {
+    setTrigerFetch('HandleAggregation');
     let h = config.filter(x => x.name === field)[0];
     if (!h.clientAggregation) {
       h.clientAggrigationIcon = 'fa fa-check-square';
@@ -63,6 +66,7 @@ export const Table2 = () => {
   }
 
   const HandleFilter = (field) => {
+    setTrigerFetch('HandleFilter');
     let h = config.filter(x => x.name === field)[0];
     if (!h.clientFilter) {
       h.clientFilter = field;
@@ -77,15 +81,15 @@ export const Table2 = () => {
   }
 
   const HandleHideColumn = (field) => {
+    setTrigerFetch('HandleHideColumn');
     let h = config.filter(x => x.name === field)[0];
-    // debugger
     h.clientTableHideColumn = true;
-
   }
 
 
 
   const HandleSort = (field) => {
+    setTrigerFetch('HandleSort');
     let h = config.filter(x => x.name === field)[0];
 
     if (h.clientSort) {
@@ -98,10 +102,10 @@ export const Table2 = () => {
       setSortOrder(x => x + 1);
       h.clientSortOrder = sortOrder;
     }
-
   }
 
   const handleDragStart = e => {
+    setTrigerFetch('handleDragStart');
     const { id } = e.target;
     e.dataTransfer.setData("data", id);
     console.log('from handleDragStart  fieldId' + id)
@@ -121,6 +125,7 @@ export const Table2 = () => {
   }
 
   const handleChangeOrder = (target_id, source_id) => {
+    setTrigerFetch('handleChangeOrder');
     let order = 1;
     if (config && config.length > 0) {
       let newOrder = config.filter(x => x.clientId === target_id)[0].order;
@@ -138,41 +143,18 @@ export const Table2 = () => {
       }
     }
   }
-
-
-  // const HandleSort2 = (field) => {
-  //   debugger
-  //   if (listSortedItem.length > 0 && listSortedItem.filter(x => x.name === field).length > 0) {
-  //     console.log(JSON.stringify(listSortedItem));
-
-  //     let filteredDataSource = listSortedItem.filter((x) => {
-  //       if (x.name === field) {
-  //         x.direction === 'asc' ? x.direction = 'desc' : x.direction = 'asc';
-  //       }
-  //       return true;
-  //     })
-  //     setlistSortedItem(filteredDataSource)
-  //   }
-  //   else {
-  //     setSortOrder(x => x + 1);
-  //     let item = {};
-  //     item.name = field;
-  //     item.order = sortOrder;
-  //     item.direction = 'asc';
-  //     setlistSortedItem(x => [...x, item]);
-  //   }
-  // }
-
-
-
-
   {/*get*/ }
   useEffect(() => {
+    //debugger
     fetch(`${API_ENDPOINT}/rows`)
       .then(response => response.json())
       .then(data => setData(data.res))
-  }, [data]);
+    setTrigerFetch('');
+  }, [config, trigerFetch,global]);
 
+  // useEffect(() => {
+  //   console.log("global in use efect", global);
+  // }, [global]);
 
   return (
     <>
@@ -210,7 +192,7 @@ export const Table2 = () => {
                       <i className={header.clientAggrigationIcon}></i>
                     </span>
                     <span onClick={() => HandleFilter(header.name)} className='filterIcon' >
-                      <Filter  name={header.name} filterCheckBox={header.clientFilterHeaderCheckbox} />
+                      <Filter name={header.name} filterCheckBox={header.clientFilterHeaderCheckbox} />
                     </span>
                   </span>
                 </span>

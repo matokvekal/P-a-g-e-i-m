@@ -1,8 +1,8 @@
-import React,{useContext,useState} from 'react';
+import React, { useContext, useState ,useEffect} from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-
+import { GlobalContext } from '../../context/GlobalContext';
 import Divider from '@material-ui/core/Divider';
 import { ConfigContext } from '../../context/ConfigContext';
 import ControlPointIcon from '@material-ui/icons/ControlPoint';
@@ -11,36 +11,35 @@ const ITEM_HEIGHT = 48;
 
 export default function HiddenFields() {
   const { config } = useContext(ConfigContext);
+  const { global, settingGlobal } = useContext(GlobalContext);
 
-
-  const [hideItem,setHideItem]=useState('')
+  const [hideItem, setHideItem] = useState('')
   let hiddenFields = config.filter(x => x.clientTableHideColumn === true).map(x => x.name);
- 
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+  let countHidden = hiddenFields.length;
 
   const handleClose = () => {
     setAnchorEl(null);
   };
 
-const handleRemoveOption=(option)=>{
-
-  config.filter(x => x.name === option)[0].clientTableHideColumn=false;
-
-
-}
+  const handleRemoveOption = (option) => {
+    config.filter(x => x.name === option)[0].clientTableHideColumn = false;
+    settingGlobal(countHidden);
+  }
   return (
     <div>
-      <IconButton disabled={false} 
+      <IconButton disabled={false}
         aria-label="more"
         aria-controls="long-menu"
         aria-haspopup="true"
         onClick={handleClick}
       >
-        <ControlPointIcon color='primery'/>
+        <ControlPointIcon color={countHidden === 0 ? 'inherit' : 'secondary'} />
       </IconButton>
       <Menu
         id="long-menu"
@@ -55,11 +54,11 @@ const handleRemoveOption=(option)=>{
           },
         }}
       >
-      <div><h4>Hidden fields</h4></div>
-      <Divider variant="inset" component="li" />
-        {hiddenFields.map((option,i) => (
-          <MenuItem  key={i} style={{ displey: hideItem===option?'none':'block'}} onClick={()=>{handleRemoveOption(option);setHideItem(option)}} >
-      {option}
+        <div><h4>Hidden fields</h4></div>
+        <Divider variant="inset" component="li" />
+        {hiddenFields.map((option, i) => (
+          <MenuItem key={i} style={{ displey: hideItem === option ? 'none' : 'block' }} onClick={() => { handleRemoveOption(option); setHideItem(option) }} >
+            {option}
           </MenuItem>
         ))}
       </Menu>

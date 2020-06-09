@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import ConfigContextProvider from './context/ConfigContext';
+import GlobalContextProvider from './context/GlobalContext';
 
 import UploadFile from './components/UploadFile';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
@@ -14,21 +15,23 @@ function App() {
   if (currentDir == null || (currentDir !== 'rtl' && currentDir !== 'ltr'))
     currentDir = 'ltr'
 
-  let screenView='table';
+  let screenView = 'table';
   const [AppDirection, setAppDirection] = useState(currentDir ? currentDir : 'ltr')
   const [screenType, setScreenType] = useState(screenView ? screenView : 'table')
 
   return (
     <div className={AppDirection}>
-      <Router>
-      <ConfigContextProvider>
-          <PrimarySearchAppBar setAppDirection={setAppDirection} AppDirection={AppDirection} setScreenType={setScreenType} screenType={screenType}/>
-       
-          <Route exact path='/UploadFile' component={UploadFile} />
-       
+      <GlobalContextProvider>
+        <Router>
+          <ConfigContextProvider>
+            <PrimarySearchAppBar setAppDirection={setAppDirection} AppDirection={AppDirection} setScreenType={setScreenType} screenType={screenType} />
+
+            <Route exact path='/UploadFile' component={UploadFile} />
+
             <Route exact path='/Pageim'><Pageim screenType={screenType} /> </Route>
           </ConfigContextProvider>
-      </Router>
+        </Router>
+      </GlobalContextProvider>
     </div>
   );
 }
