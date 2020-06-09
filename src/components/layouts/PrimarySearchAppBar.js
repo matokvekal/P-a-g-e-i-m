@@ -216,7 +216,7 @@ export default function PrimarySearchAppBar(props) {
         <p>Notifications</p>
       </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton aria-label="account of current user" aria-controls="primary-search-account-menu" aria-haspopup="true"color="inherit">
+        <IconButton aria-label="account of current user" aria-controls="primary-search-account-menu" aria-haspopup="true" color="inherit">
           <AccountCircle />
         </IconButton>
         <p>Profile</p>
@@ -230,11 +230,11 @@ export default function PrimarySearchAppBar(props) {
       <AppBar >
         <Toolbar>
           <IconButton onClick={handleDrawerOpen} edge="start" className={classes.menuButton} color="inherit" aria-label="open drawer"> <MenuIcon /> </IconButton>
-         
+
           <Badge badgeContent={global[0].countHiddenFields} color="secondary" size="small">
-          <HiddenFields  />
+            <HiddenFields />
           </Badge>
-     
+
           <Typography className={classes.title} variant="h6" noWrap>
             Page-im
           </Typography>
@@ -274,7 +274,7 @@ export default function PrimarySearchAppBar(props) {
         </Toolbar>
       </AppBar>
       <Drawer
-        className={classes.drawer} variant="persistent" anchor="left" open={open}classes={{ paper: classes.drawerPaper,}}>
+        className={classes.drawer} variant="persistent" anchor="left" open={open} classes={{ paper: classes.drawerPaper, }}>
         <div className={classes.drawerHeader}>
           <IconButton onClick={changeScreenView}>{screenType === 'table' ? <ViewModuleSharpIcon /> : <StorageSharpIcon />} </IconButton>
           <IconButton onClick={handleDrawerClose}>{theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />} </IconButton>
@@ -292,7 +292,7 @@ export default function PrimarySearchAppBar(props) {
           <Divider />
 
           <IconButton onClick={siteDirection}> {AppDirection === 'ltr' ? <ChevronRightIcon /> : <ChevronLeftIcon />} </IconButton>
-
+          <p>ver 1.01</p>
         </List>
 
       </Drawer>
