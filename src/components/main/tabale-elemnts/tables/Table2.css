@@ -147,3 +147,9 @@ z-index: 10000;
   display: flex;
   max-width: 50px;
 }
+.error{
+  margin-top: 100px;
+  color:red;
+ text-align: center;
+ font-size: 5rem;
+}

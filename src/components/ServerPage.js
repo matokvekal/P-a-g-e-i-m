@@ -21,7 +21,7 @@ function ServerPage() {
 
     
     useEffect(() => {
-        console.log('1')
+        console.log('server   useEffect 24')
         const fetchData = async () => {
             console.log('3')
             const result = await axios(

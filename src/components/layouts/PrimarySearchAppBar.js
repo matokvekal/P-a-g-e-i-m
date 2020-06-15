@@ -165,6 +165,7 @@ export default function PrimarySearchAppBar(props) {
   const [countHidden, SetCountHidden] = useState(0);
 
   useEffect(() => {
+    console.log('primery  useEffect 168')
     SetCountHidden(config.filter(x => x.clientTableHideColumn === true).length);
   }, [config])
 
@@ -273,6 +274,8 @@ export default function PrimarySearchAppBar(props) {
           </div>
         </Toolbar>
       </AppBar>
+
+      
       <Drawer
         className={classes.drawer} variant="persistent" anchor="left" open={open} classes={{ paper: classes.drawerPaper, }}>
         <div className={classes.drawerHeader}>

@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react';
-import moment from 'moment';
 import './Card2.css';
 //import socketIOClient from 'socket.io-client';
 import { ConfigContext } from '../../../../src/context/ConfigContext';
@@ -13,13 +12,11 @@ export const Card2 = () => {
 
     const [data, setData] = useState([]);
     const API_ENDPOINT = pageimEndPoint();
-
-
-    const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ order: 'Last Name' })
-    };
+    // const requestOptions = {
+    //     method: 'POST',
+    //     headers: { 'Content-Type': 'application/json' },
+    //     body: JSON.stringify({ order: 'Last Name' })
+    // };
     //post
     // useEffect(() => {
     //   fetch(`${API_ENDPOINT}/rows`, requestOptions)
@@ -29,11 +26,11 @@ export const Card2 = () => {
 
     {/*get*/ }
     useEffect(() => {
+        console.log('cards2  useEffect 32')
         fetch(`${API_ENDPOINT}/rows`)
             .then(response => response.json())
             .then(data => setData(data.res))
     }, [data]);
-
 
     return (
         <>

@@ -9,10 +9,12 @@ import { pageimEndPoint } from '../../../../Config';
 // import Checkbox from '@material-ui/core/Checkbox';
 // import { ListItem } from '@material-ui/core';
 import Filter from './Filter';
+import axios from 'axios';
 
 
 
-export const Table2 = () => {
+export const Table2 = (props) => {
+  const app = props.app ? props.app : '';
   const { global } = useContext(GlobalContext);
   const [sortOrder, setSortOrder] = useState(0);
   const { config } = useContext(ConfigContext);
@@ -21,18 +23,16 @@ export const Table2 = () => {
   const API_ENDPOINT = pageimEndPoint();
   const [pageSize, setPageSize] = useState(100);
   const extra_header_width = 80;
-  const requestOptions = {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ order: 'Last Name' })
-  };
+  const orderDefault = 'Last Name';
+  const [hasError, setHasError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
+
 
   const [trigerFetch, setTrigerFetch] = useState([]);
   useEffect(() => {
-    //debugger
+     console.log('table2 useEffect 39')
     if (config && config.length > 0) {
       for (let header of config) {
-
         header.clienSort = false;
         header.clientSortOrder = null;
         header.clientSortIcon = null;
@@ -136,88 +136,115 @@ export const Table2 = () => {
         else {
           if (order === newOrder)
             order = order + 1;
-
           header.order = order;
           order = order + 1;
         }
       }
     }
   }
-  {/*get*/ }
   useEffect(() => {
-    //debugger
-    fetch(`${API_ENDPOINT}/rows`)
-      .then(response => response.json())
-      .then(data => setData(data.res))
-    setTrigerFetch('');
-  }, [config, trigerFetch,global]);
+    if (!localStorage["freeUserToken"] || localStorage["freeUserToken"] === null || localStorage["freeUserToken"] === "undefined") {
+      const AUTHURL = `${API_ENDPOINT}/session/createNewUserDevice`;
+      fetch(AUTHURL)
+        .then(async response => {
+          const data = await response.json();
+          if (!response.ok || !data.success) {
+            setErrorMsg(data.message);
+            setHasError(true);
+          }
+          else {
+            localStorage["freeUserToken"] = data.token;
+            // window.location.reload();
+          }
+        })
+        .catch(error => {
+          this.setState({ errorMessage: error.toString() });
+          console.error('There was an error!', error);
+        });
+    }
+    else {
+      const URL = `${API_ENDPOINT}/public${app}/data`;
+    // const URL = `${API_ENDPOINT}/public/races/data`;
+    fetch(URL, {
+      method: 'POST', 
+      headers: {Authorization: "Bearer " + localStorage['freeUserToken']}}
+    )
+    .then(response => response.json())
+    .then(res => setData(res))
+    .catch((error) => {
+      console.error('Error:', error);
+    });
 
-  // useEffect(() => {
-  //   console.log("global in use efect", global);
-  // }, [global]);
+   }
+    // setTrigerFetch('');
+  }, [config, trigerFetch, global]);
+
 
   return (
     <>
-      <table id="main" className="display" >
-        <thead>
-          <tr>
-            {config.sort((a, b) => (a.order > b.order) ? 1 : -1).map((header, i) => (!header.clientTableHideColumn ?
-              (<th data-type="numeric"
-                id={header.clientId}
-                draggable={header.dragable}
-                onDragStart={handleDragStart}
-                onDragOver={HandleOnDragOver}
-                onDragEnter={handleDragEnter}
-                onDrop={handleDrop}
-                style={{ maxWidth: `${header.width + extra_header_width}px`, minWidth: `${header.width + extra_header_width}px` }}
-                key={i}>
-                <span className='header-unit'>
-                  <span
-                    style={{ Width: `${header.width}px` }} className='header-data' onClick={() => HandleSort(header.name)}>
-                    {header.name}
+      {hasError ? <><div className='error'>Error occured : {errorMsg}</div></> :
+        <table id="main" className="display" >
+          <thead>
+            <tr>
+            {console.log(config)}
+              {config.sort((a, b) => (a.order > b.order) ? 1 : -1).map((header, i) => (!header.clientTableHideColumn ?
+                (<th data-type="numeric"
+                  id={header.clientId}
+                  draggable={header.dragable}
+                  onDragStart={handleDragStart}
+                  onDragOver={HandleOnDragOver}
+                  onDragEnter={handleDragEnter}
+                  onDrop={handleDrop}
+                  style={{ maxWidth: `${header.width + extra_header_width}px`, minWidth: `${header.width + extra_header_width}px` }}
+                  key={i}>
+                  <span className='header-unit'>
+                    <span
+                      style={{ Width: `${header.width}px` }} className='header-data' onClick={() => HandleSort(header.name)}>
+                      {header.name}
+                    </span>
+                    <span className='header-action' >
+
+                      <span className="sort-icon" onClick={() => HandleSort(header.name)} >
+                        <i className={header.clientSortIcon}>
+                          <span className='sort-order'>{header.clientSortOrder}</span>
+                        </i>
+                      </span>
+
+
+                      <span onClick={() => HandleHideColumn(header.name)} className='HandleHideColumn'>
+                        <i className="far fa-times-circle" ></i>
+                      </span>
+                      <span onClick={() => HandleAggregation(header.name)}>
+                        <i className={header.clientAggrigationIcon}></i>
+                      </span>
+                      <span onClick={() => HandleFilter(header.name)} className='filterIcon' >
+                        <Filter name={header.name} filterCheckBox={header.clientFilterHeaderCheckbox} />
+                      </span>
+                    </span>
                   </span>
-                  <span className='header-action' >
 
-                    <span className="sort-icon" onClick={() => HandleSort(header.name)} >
-                      <i className={header.clientSortIcon}>
-                        <span className='sort-order'>{header.clientSortOrder}</span>
-                      </i>
-                    </span>
-
-
-                    <span onClick={() => HandleHideColumn(header.name)} className='HandleHideColumn'>
-                      <i className="far fa-times-circle" ></i>
-                    </span>
-                    <span onClick={() => HandleAggregation(header.name)}>
-                      <i className={header.clientAggrigationIcon}></i>
-                    </span>
-                    <span onClick={() => HandleFilter(header.name)} className='filterIcon' >
-                      <Filter name={header.name} filterCheckBox={header.clientFilterHeaderCheckbox} />
-                    </span>
-                  </span>
-                </span>
-
-              </th>) : null
-            ))
-            }
-          </tr>
-        </thead>
-        <tbody>
-          {data.slice(0, pageSize).map((el, index) => (
-            <>
-              <tr>
-                {config.map((header, index) => (!header.clientTableHideColumn ?
-                  <td style={{ maxWidth: `${header.width + extra_header_width}px`, minWidth: `${header.width + extra_header_width}px` }}
-                    key={index}>
-                    {el[header.name]}
-                  </td> : null
-                ))}
-              </tr>
-            </>
-          ))}
-        </tbody>
-      </table>
-    </>
+                </th>) : null
+              ))
+              }
+            </tr>
+          </thead>
+          <tbody>
+            {!data || data.length===0 ? <><div className='noData'>Wait...</div></> :
+            data.slice(0, pageSize).map((el, index) => (
+              <>
+                <tr>
+                  {config.map((header, index) => (!header.clientTableHideColumn ?
+                    <td style={{ maxWidth: `${header.width + extra_header_width}px`, minWidth: `${header.width + extra_header_width}px` }}
+                      key={index}>
+                      {el[header.name]}
+                    </td> : null
+                  ))}
+                </tr>
+              </>
+            ))}
+          </tbody>
+        </table>
+      }</>
   )
 }
 export default Table2;

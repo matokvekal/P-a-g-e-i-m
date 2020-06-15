@@ -8,6 +8,7 @@ export const ServerPagePost = () => {
   const [data, setData] = useState([]);
 
    useEffect(() => {
+    console.log('serverPagePost   useEffect 11')
      //axios.all([
   //   axios.get('https://api.github.com/users/mapbox'),
   //   axios.get('https://api.github.com/users/phantomjs')
