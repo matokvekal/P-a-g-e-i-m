@@ -154,7 +154,7 @@ export const Table2 = (props) => {
     else if (header.name === 'action')
       return <Actions />
     else if (header.name === 'checkBox')
-    return <Checkbox />
+      return <Checkbox />
     else return <span>{row[header.name]}</span>
   }
   const handleChangeOrder = (target_id, source_id) => {

@@ -27,10 +27,11 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import Navbar2 from './Navbar2';
-import ControlPointIcon from '@material-ui/icons/ControlPoint';
+
 import { ConfigContext } from '../../context/ConfigContext';
 import { GlobalContext } from '../../context/GlobalContext';
-import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import Button from '@material-ui/core/Button';
+import {Modal} from './../reusable/modal/Modal';
 
 import HiddenFields from './HiddenFields'
 
@@ -116,7 +117,6 @@ const useStyles = makeStyles((theme) => ({
 export default function PrimarySearchAppBar(props) {
   const { config } = useContext(ConfigContext);
   const { global } = useContext(GlobalContext);
-
   const { AppDirection, setAppDirection } = props;
   const { screenType, setScreenType } = props;
   const theme = useTheme();
@@ -167,7 +167,11 @@ export default function PrimarySearchAppBar(props) {
   useEffect(() => {
     SetCountHidden(config.filter(x => x.clientTableHideColumn === true).length);
   }, [config])
+ const [modalVisible,setModalVisible]=useState(false)
 
+const showHideModal=()=>{
+  setModalVisible(x=>!x);
+}
 
 
   const menuId = 'primary-search-account-menu';
@@ -221,19 +225,27 @@ export default function PrimarySearchAppBar(props) {
         </IconButton>
         <p>Profile</p>
       </MenuItem>
+      
     </Menu>
+    
   );
 
   return (
+    
     <div className={classes.grow}>
-
+ 
       <AppBar >
+      
         <Toolbar>
           <IconButton onClick={handleDrawerOpen} edge="start" className={classes.menuButton} color="inherit" aria-label="open drawer"> <MenuIcon /> </IconButton>
 
           <Badge badgeContent={global[0].countHiddenFields} color="secondary" size="small">
             <HiddenFields />
           </Badge>
+     
+      
+
+    
 
           <Typography className={classes.title} variant="h6" noWrap>
             Page-im
@@ -249,6 +261,8 @@ export default function PrimarySearchAppBar(props) {
                 input: classes.inputInput,
               }} inputProps={{ 'aria-label': 'search' }} />
           </div>
+
+          <Button color="secondary" onClick={showHideModal}>Add row</Button>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
 
@@ -274,13 +288,20 @@ export default function PrimarySearchAppBar(props) {
         </Toolbar>
       </AppBar>
 
-      
+      <Modal 
+      header='Add anew row'
+      visible={modalVisible}
+      dismiss={showHideModal}
+      children='This is atest2'
+      />
+
       <Drawer
         className={classes.drawer} variant="persistent" anchor="left" open={open} classes={{ paper: classes.drawerPaper, }}>
         <div className={classes.drawerHeader}>
           <IconButton onClick={changeScreenView}>{screenType === 'table' ? <ViewModuleSharpIcon /> : <StorageSharpIcon />} </IconButton>
           <IconButton onClick={handleDrawerClose}>{theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />} </IconButton>
         </div>
+        
         <Divider />
         <Navbar2 />
         <Divider />

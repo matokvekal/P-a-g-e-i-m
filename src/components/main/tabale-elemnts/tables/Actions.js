@@ -7,7 +7,7 @@ function Actions() {
         <i className="fas fa-trash"></i>
       </a>
       <a href='#!' className="btn btn-sm disabled">
-        <i className="fas fa-edit "></i>
+        <i className="fas fa-edit"></i>
       </a>
       <a href='#!' className="btn btn-sm disabled">
         <i className="fas fa-pencil-alt"></i>

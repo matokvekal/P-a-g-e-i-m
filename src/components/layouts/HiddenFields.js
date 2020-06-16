@@ -12,10 +12,8 @@ const ITEM_HEIGHT = 48;
 export default function HiddenFields() {
   const { config } = useContext(ConfigContext);
   const { global, settingGlobal } = useContext(GlobalContext);
-
   const [hideItem, setHideItem] = useState('')
   let hiddenFields = config.filter(x => x.clientTableHideColumn === true).map(x => x.name);
-
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
