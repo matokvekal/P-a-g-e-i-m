@@ -165,7 +165,6 @@ export default function PrimarySearchAppBar(props) {
   const [countHidden, SetCountHidden] = useState(0);
 
   useEffect(() => {
-    console.log('primery  useEffect 168')
     SetCountHidden(config.filter(x => x.clientTableHideColumn === true).length);
   }, [config])
 

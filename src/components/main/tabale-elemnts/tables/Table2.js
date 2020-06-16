@@ -1,7 +1,9 @@
 /* eslint-disable no-unused-expressions */
 import React, { useState, useEffect, useContext } from 'react';
 import moment from 'moment';
+import Actions from './Actions';
 import './Table2.css';
+
 //import socketIOClient from 'socket.io-client';
 import { ConfigContext } from '../../../../context/ConfigContext';
 import { GlobalContext } from '../../../../context/GlobalContext';
@@ -9,7 +11,29 @@ import { pageimEndPoint } from '../../../../Config';
 // import Checkbox from '@material-ui/core/Checkbox';
 // import { ListItem } from '@material-ui/core';
 import Filter from './Filter';
-import axios from 'axios';
+import Stars from './Stars';
+
+import PropTypes from 'prop-types';
+import clsx from 'clsx';
+import { lighten, makeStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TablePagination from '@material-ui/core/TablePagination';
+import TableRow from '@material-ui/core/TableRow';
+import TableSortLabel from '@material-ui/core/TableSortLabel';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import Paper from '@material-ui/core/Paper';
+import Checkbox from '@material-ui/core/Checkbox';
+import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
+import DeleteIcon from '@material-ui/icons/Delete';
+import FilterListIcon from '@material-ui/icons/FilterList';
 
 
 
@@ -21,16 +45,16 @@ export const Table2 = (props) => {
   const [filter, setFilter] = useState(<Filter />)
   const [data, setData] = useState([]);
   const API_ENDPOINT = pageimEndPoint();
-  const [pageSize, setPageSize] = useState(100);
+  const [pageSize, setPageSize] = useState(3);
   const extra_header_width = 80;
-  const orderDefault = 'Last Name';
+
   const [hasError, setHasError] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
 
   const [trigerFetch, setTrigerFetch] = useState([]);
   useEffect(() => {
-     console.log('table2 useEffect 39')
+
     if (config && config.length > 0) {
       for (let header of config) {
         header.clienSort = false;
@@ -108,7 +132,7 @@ export const Table2 = (props) => {
     setTrigerFetch('handleDragStart');
     const { id } = e.target;
     e.dataTransfer.setData("data", id);
-    console.log('from handleDragStart  fieldId' + id)
+
   }
   const HandleOnDragOver = (e) => {
     e.preventDefault();
@@ -123,7 +147,16 @@ export const Table2 = (props) => {
 
     // e.preventDefault();
   }
-
+  const CheckSpecialFields = (header, row) => {
+    console.log(header.name)
+    if (header.name === 'stars')
+      return <Stars stars={row[header.name]} />
+    else if (header.name === 'action')
+      return <Actions />
+    else if (header.name === 'checkBox')
+    return <Checkbox />
+    else return <span>{row[header.name]}</span>
+  }
   const handleChangeOrder = (target_id, source_id) => {
     setTrigerFetch('handleChangeOrder');
     let order = 1;
@@ -142,6 +175,9 @@ export const Table2 = (props) => {
       }
     }
   }
+
+
+
   useEffect(() => {
     if (!localStorage["freeUserToken"] || localStorage["freeUserToken"] === null || localStorage["freeUserToken"] === "undefined") {
       const AUTHURL = `${API_ENDPOINT}/session/createNewUserDevice`;
@@ -164,18 +200,18 @@ export const Table2 = (props) => {
     }
     else {
       const URL = `${API_ENDPOINT}/public${app}/data`;
-    // const URL = `${API_ENDPOINT}/public/races/data`;
-    fetch(URL, {
-      method: 'POST', 
-      headers: {Authorization: "Bearer " + localStorage['freeUserToken']}}
-    )
-    .then(response => response.json())
-    .then(res => setData(res))
-    .catch((error) => {
-      console.error('Error:', error);
-    });
+      fetch(URL, {
+        method: 'POST',
+        headers: { Authorization: "Bearer " + localStorage['freeUserToken'] }
+      }
+      )
+        .then(response => response.json())
+        .then(res => setData(res))
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+    }
 
-   }
     // setTrigerFetch('');
   }, [config, trigerFetch, global]);
 
@@ -186,7 +222,7 @@ export const Table2 = (props) => {
         <table id="main" className="display" >
           <thead>
             <tr>
-            {console.log(config)}
+
               {config.sort((a, b) => (a.order > b.order) ? 1 : -1).map((header, i) => (!header.clientTableHideColumn ?
                 (<th data-type="numeric"
                   id={header.clientId}
@@ -229,19 +265,23 @@ export const Table2 = (props) => {
             </tr>
           </thead>
           <tbody>
-            {!data || data.length===0 ? <><div className='noData'>Wait...</div></> :
-            data.slice(0, pageSize).map((el, index) => (
-              <>
-                <tr>
-                  {config.map((header, index) => (!header.clientTableHideColumn ?
-                    <td style={{ maxWidth: `${header.width + extra_header_width}px`, minWidth: `${header.width + extra_header_width}px` }}
-                      key={index}>
-                      {el[header.name]}
-                    </td> : null
-                  ))}
-                </tr>
-              </>
-            ))}
+            {!data || data.length === 0 ? <><div className='noData'>Wait...</div></> :
+              data.slice(0, pageSize).map((row, index) => (
+
+                <>
+                  <tr className='tablerow'>
+                    {config.map((header, index) => (!header.clientTableHideColumn ?
+                      <td style={{ maxWidth: `${header.width + extra_header_width}px`, minWidth: `${header.width + extra_header_width}px` }} key={index}>
+                        <span>
+                          {CheckSpecialFields(header, row)}
+                        </span>
+                      </td> : null
+                    ))}
+
+                  </tr>
+
+                </>
+              ))}
           </tbody>
         </table>
       }</>

@@ -10,20 +10,12 @@
     border-collapse: collapse; 
     margin-top:2.5rem;
   }
-  
-.abc{
-    background-color: red;
-    position: sticky;
-    top: 0;
-}
-  
+
   th,td {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     padding: 0.25rem;
-  
-   
 
   }
   tbody{
@@ -60,9 +52,9 @@
     text-transform: lowercase;
   }
  
-  tr:nth-child(even) td {
+  /* tr:nth-child(even) td {
     background: #f2f2f5;
-  }
+  } */
   .header-unit{
     /* border:1px white solid; */
     display: flex;
@@ -152,4 +144,10 @@ z-index: 10000;
   color:red;
  text-align: center;
  font-size: 5rem;
+}
+.tablerow{
+	text-align: center;
+}
+.tablerow:hover {
+	background:lightskyblue;
 }
