@@ -148,7 +148,6 @@ export const Table2 = (props) => {
     // e.preventDefault();
   }
   const CheckSpecialFields = (header, row) => {
-    console.log(header.name)
     if (header.name === 'stars')
       return <Stars stars={row[header.name]} />
     else if (header.name === 'action')
@@ -233,7 +232,7 @@ export const Table2 = (props) => {
                   onDrop={handleDrop}
                   style={{ maxWidth: `${header.width + extra_header_width}px`, minWidth: `${header.width + extra_header_width}px` }}
                   key={i}>
-                  <span className='header-unit'>
+                  <span className='header-unit' key={i*999}>
                     <span
                       style={{ Width: `${header.width}px` }} className='header-data' onClick={() => HandleSort(header.name)}>
                       {header.name}

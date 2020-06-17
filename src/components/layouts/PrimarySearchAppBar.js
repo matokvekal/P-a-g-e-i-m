@@ -31,10 +31,10 @@ import Navbar2 from './Navbar2';
 import { ConfigContext } from '../../context/ConfigContext';
 import { GlobalContext } from '../../context/GlobalContext';
 import Button from '@material-ui/core/Button';
-import {Modal} from './../reusable/modal/Modal';
+import Modal from './../reusable/modal/Modal';
+import AddRowModal from './../main/tabale-elemnts/tables/add/AddRowModal';
 
-import HiddenFields from './HiddenFields'
-
+import HiddenFields from './HiddenFields';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -127,7 +127,6 @@ export default function PrimarySearchAppBar(props) {
 
   const changeScreenView = () => {
     setScreenType(screenType === 'table' ? 'card' : 'table');
-    console.log('changeScreenView after', screenType)
     window.localStorage.setItem('screenType', JSON.stringify(screenType));
   }
 
@@ -167,11 +166,11 @@ export default function PrimarySearchAppBar(props) {
   useEffect(() => {
     SetCountHidden(config.filter(x => x.clientTableHideColumn === true).length);
   }, [config])
- const [modalVisible,setModalVisible]=useState(false)
+  const [modalVisible, setModalVisible] = useState(false)
 
-const showHideModal=()=>{
-  setModalVisible(x=>!x);
-}
+  const showHideModal = () => {
+    setModalVisible(x => !x);
+  }
 
 
   const menuId = 'primary-search-account-menu';
@@ -225,27 +224,27 @@ const showHideModal=()=>{
         </IconButton>
         <p>Profile</p>
       </MenuItem>
-      
+
     </Menu>
-    
+
   );
 
   return (
-    
+
     <div className={classes.grow}>
- 
+
       <AppBar >
-      
+
         <Toolbar>
           <IconButton onClick={handleDrawerOpen} edge="start" className={classes.menuButton} color="inherit" aria-label="open drawer"> <MenuIcon /> </IconButton>
 
           <Badge badgeContent={global[0].countHiddenFields} color="secondary" size="small">
             <HiddenFields />
           </Badge>
-     
-      
 
-    
+
+
+
 
           <Typography className={classes.title} variant="h6" noWrap>
             Page-im
@@ -262,7 +261,8 @@ const showHideModal=()=>{
               }} inputProps={{ 'aria-label': 'search' }} />
           </div>
 
-          <Button color="secondary" onClick={showHideModal}>Add row</Button>
+          <Button color="secondary" onClick={showHideModal}>Add</Button>
+          <Button color="default" onClick={showHideModal}>new row+</Button>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
 
@@ -288,12 +288,13 @@ const showHideModal=()=>{
         </Toolbar>
       </AppBar>
 
-      <Modal 
-      header='Add anew row'
-      visible={modalVisible}
-      dismiss={showHideModal}
-      children='This is atest2'
+      <Modal
+        header='Add anew row1'
+        visible={modalVisible}
+        dismiss={showHideModal}
+        children='Test from menu'
       />
+      <AddRowModal />
 
       <Drawer
         className={classes.drawer} variant="persistent" anchor="left" open={open} classes={{ paper: classes.drawerPaper, }}>
@@ -301,7 +302,7 @@ const showHideModal=()=>{
           <IconButton onClick={changeScreenView}>{screenType === 'table' ? <ViewModuleSharpIcon /> : <StorageSharpIcon />} </IconButton>
           <IconButton onClick={handleDrawerClose}>{theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />} </IconButton>
         </div>
-        
+
         <Divider />
         <Navbar2 />
         <Divider />
