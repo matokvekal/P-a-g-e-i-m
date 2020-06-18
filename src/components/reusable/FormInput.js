@@ -2,33 +2,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
-import { makeStyles } from '@material-ui/core/styles';
-
+import moment from 'moment';
+import ColorPicker from 'material-ui-color-picker'
 
 
 const FormInput = props => {
-    const useStyles = makeStyles((theme) => ({
-        container: {
-          display: 'flex',
-          flexWrap: 'wrap',
-        },
-        textField: {
-          marginLeft: theme.spacing(1),
-          marginRight: theme.spacing(1),
-          width: 200,
-        },
-      }));
-      const classes = useStyles();
+
 
     const {
-        id = "standard-basic",
+        id ,
         name,
         type,
         placeholder,
         onChange,
         className,
         value,
-        error,
+        error = true,
         label,
         variant = "outlined"
     } = props;
@@ -36,36 +25,48 @@ const FormInput = props => {
     return (
         <>
             {type === 'date' ?
-            <form >
-            <TextField
-              id="date"
-             label={label}
-              type="date"
-
-
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-          </form>
-                :
                 <TextField
-                    variant={variant}
+                    id="date-required"
                     label={label}
-                    id={id}
-                    name={name}
-                    type={type}
-                    placeholder={placeholder}
-                    value={value}
-                    className={className}
-                    onChange={onChange}
-                    autoComplete="false"
-                    style={{ border: error ? 'solid 1px red' : '' }}
+                    type="date"
+                    variant="outlined"
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
+                    style={{ width: 305 }}
                 />
+                : type === 'color' ?
+                    <ColorPicker
+                        id="standard-basic {name}"
+                        name='color'
+                        defaultValue='Pick color'
+                        // value={this.state.color} - for controlled component
+                        onChange={color => console.log(color)}
+                        placeholder="Placeholder"
+                        // helperText="Full width!"
+                        variant="outlined"
+                        style={{ width: 305 }}
+                    />
+                    :
+                    <TextField
+                        variant={variant}
+                        label={label}
+                        id={name}
+                        name={name}
+                        type={type}
+                        placeholder={placeholder}
+                        value={value}
+                        className={className}
+                        onChange={onChange}
+                        autoComplete="false"
+                        style={{ border: error ? 'solid 1px red' : '' }}
+                    />
+
             }
             {
                 error ? <p style={{ color: 'red', fontSize: '14px' }}>{error}</p> : ''
             }
+
         </>
     )
 }
@@ -78,8 +79,8 @@ FormInput.defaultProps = {
 FormInput.propTypes = {
     id: PropTypes.string,
     name: PropTypes.string.isRequired,
-    placeholder: PropTypes.string.isRequired,
-    type: PropTypes.oneOf(['text', 'number', 'password']),
+    placeholder: PropTypes.string,
+    type: PropTypes.oneOf(['text', 'number', 'password', 'color', 'date']),
     className: PropTypes.string,
     value: PropTypes.any,
     onChange: PropTypes.func.isRequired

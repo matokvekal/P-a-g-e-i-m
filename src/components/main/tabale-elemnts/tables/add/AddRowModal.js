@@ -3,20 +3,20 @@ import Modal from './../../../../reusable/modal/Modal';
 import AddRowModalForm from './AddRowModalForm';
 
 
-
-const  AddRowModal=()=> {
-    const [visible, setVisible] = useState(true);
+const AddRowModal = (props) => {
+    const { header, visible,children,dismiss  } = props;
+    const [ setVisible] = useState(visible);
     // const showModal = () => {
     //     setVisible(true);
     // }
-    const dismiss = () => {
-        setVisible(false);
-    }
+    // const dismiss = () => {
+    //     setVisible(false);
+    // }
     return (
         <>
             <Modal
-                header='from AddRowModal'
-                visible='true'
+                header='Add new row'
+                visible={visible}
                 children={<AddRowModalForm/>}
                 dismiss={dismiss}
             />

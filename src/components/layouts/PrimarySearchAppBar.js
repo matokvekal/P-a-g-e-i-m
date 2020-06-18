@@ -171,7 +171,11 @@ export default function PrimarySearchAppBar(props) {
   const showHideModal = () => {
     setModalVisible(x => !x);
   }
+  const [modalAddRowVisible, setAddRowModalVisible] = useState(false)
 
+  const showHideModalAddRow = () => {
+    setAddRowModalVisible(x => !x);
+  }
 
   const menuId = 'primary-search-account-menu';
 
@@ -262,7 +266,7 @@ export default function PrimarySearchAppBar(props) {
           </div>
 
           <Button color="secondary" onClick={showHideModal}>Add</Button>
-          <Button color="default" onClick={showHideModal}>new row+</Button>
+          <Button color="default" onClick={showHideModalAddRow}>ADD ROW</Button>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
 
@@ -289,12 +293,17 @@ export default function PrimarySearchAppBar(props) {
       </AppBar>
 
       <Modal
-        header='Add anew row1'
+        header='old test'
         visible={modalVisible}
         dismiss={showHideModal}
-        children='Test from menu'
+        children='old test'
       />
-      <AddRowModal />
+      <AddRowModal
+        header='Add new row'
+        visible={modalAddRowVisible}
+         dismiss={showHideModalAddRow}
+        children='modalAddRowVisible'
+      />
 
       <Drawer
         className={classes.drawer} variant="persistent" anchor="left" open={open} classes={{ paper: classes.drawerPaper, }}>

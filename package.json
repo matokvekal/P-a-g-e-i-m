@@ -17,6 +17,7 @@
     "axios": "^0.19.2",
     "contentful": "^7.14.4",
     "font-awesome": "^4.7.0",
+    "material-ui-color-picker": "^3.5.0",
     "mdbreact": "^4.27.0",
     "moment": "^2.25.3",
     "react": "^16.13.1",

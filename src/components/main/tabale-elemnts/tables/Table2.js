@@ -217,12 +217,13 @@ export const Table2 = (props) => {
 
   return (
     <>
-      {hasError ? <><div className='error'>Error occured : {errorMsg}</div></> :
+      {hasError ? 
+        <span className='error'>Error occured : {errorMsg}</span> :
         <table id="main" className="display" >
           <thead>
             <tr>
 
-              {config.sort((a, b) => (a.order > b.order) ? 1 : -1).map((header, i) => (!header.clientTableHideColumn ?
+              {config.sort((a, b) => (a.order > b.order) ? 1 : -1).map((header, index1) => (!header.clientTableHideColumn ?
                 (<th data-type="numeric"
                   id={header.clientId}
                   draggable={header.dragable}
@@ -231,8 +232,8 @@ export const Table2 = (props) => {
                   onDragEnter={handleDragEnter}
                   onDrop={handleDrop}
                   style={{ maxWidth: `${header.width + extra_header_width}px`, minWidth: `${header.width + extra_header_width}px` }}
-                  key={i}>
-                  <span className='header-unit' key={i*999}>
+                  key={index1}>
+                  <span className='header-unit' key={index1*999}>
                     <span
                       style={{ Width: `${header.width}px` }} className='header-data' onClick={() => HandleSort(header.name)}>
                       {header.name}
@@ -264,21 +265,18 @@ export const Table2 = (props) => {
             </tr>
           </thead>
           <tbody>
-            {!data || data.length === 0 ? <><div className='noData'>Wait...</div></> :
-              data.slice(0, pageSize).map((row, index) => (
-
+            {!data  ? <tr className='noData'>Wait...</tr> :
+              data.slice(0, pageSize).map((row, index2) => (
                 <>
-                  <tr className='tablerow'>
-                    {config.map((header, index) => (!header.clientTableHideColumn ?
-                      <td style={{ maxWidth: `${header.width + extra_header_width}px`, minWidth: `${header.width + extra_header_width}px` }} key={index}>
+                  <tr className='tablerow' key={index2}>
+                    {config.map((header, index3) => (!header.clientTableHideColumn ?
+                      <td style={{ maxWidth: `${header.width + extra_header_width}px`, minWidth: `${header.width + extra_header_width}px` }} key={index3}>
                         <span>
                           {CheckSpecialFields(header, row)}
                         </span>
                       </td> : null
                     ))}
-
                   </tr>
-
                 </>
               ))}
           </tbody>

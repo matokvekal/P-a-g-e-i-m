@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext,useState } from 'react'
 import FormInput from './../../../../reusable/FormInput';
 import { ConfigContext } from './../../../../../context/ConfigContext';
 import { Button } from '@material-ui/core';
@@ -7,9 +7,45 @@ import { Button } from '@material-ui/core';
 
 const AddRowModalForm = () => {
     const { config } = useContext(ConfigContext);
+    // console.log(config)
+ 
+
+    // let row = config.map(obj => {
+    //     let rObj = {}
+    //     rObj[obj.name] = ''
+    //     return rObj
+    //  })
     debugger
-    const onChange = () => { }
-    debugger
+
+    let newRow=new Object;
+    (() => config.map( x=> {
+        newRow[x.name]=''  ;
+    }))(); 
+    const [row,setRow]=useState({
+        newRow
+    })
+
+    // const a = config.map( x=> {
+    //     newRow[x.name]=''  ;
+    // });
+    // const [row,setRow]=useState({
+    //     data:(config.map(obj => {
+    //         let rObj = {}
+    //         rObj[obj.name] = ''
+    //         return rObj
+    //      }))
+    //  })
+
+    const onChange = (e) => {
+        debugger
+        const{name,value}=e.target;
+        // const{data}=row;
+        newRow[name]=value
+        setRow({
+            newRow
+        })
+     }
+     console.log(row)
     return (
         <>
             <form>
@@ -21,8 +57,8 @@ const AddRowModalForm = () => {
                             name={field.name ? field.name : null}
                             label={field.label?field.label:field.name}
                             className='form-control'
-                            placeHolder='insert'
-                            value=''
+                            placeHolder={field.name}
+                            value={row.name}
                             error=''
                             onChange={onChange} />
                     </span>
@@ -31,9 +67,9 @@ const AddRowModalForm = () => {
                     ) : null
                 ))
                     : null}
-                   
+                   <br></br>
   
-                <Button variant="contained">Cancel</Button>
+                <Button style={{marginRight:'1rem'}}variant="contained">Cancel</Button> 
                 <Button variant="contained" color="primary">Add</Button>
 
             </form>
