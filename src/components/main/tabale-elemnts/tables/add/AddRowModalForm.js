@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import FormInput from './../../../../reusable/FormInput';
-import { ConfigContext } from './../../../../../context/ConfigContext';
+import { ConfigContext } from '../../../../../context/ConfigContext';
 import { Button } from '@material-ui/core';
 import {addNewRow}  from '../../../../../services/addRowService';
 

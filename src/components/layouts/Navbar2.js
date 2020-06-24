@@ -8,8 +8,8 @@ export const Navbar2 = () => {
     const menu2=[
     // {Linkto:'UploadFile',key:0,icon:'fas fa-star',text:'UploadFile',app:''},
     // {Linkto:'Pageim',key:3,icon:"fas fa-star",text:'Pageim',app:'rows'},
-    // {Linkto:'Pageim/races',key:4,icon:"fas fa-star",text:'races',app:'rows'},
- // {Linkto:'Templates',key:5,icon:"fas fa-star",text:'Templates',app:'rows'},
+       {Linkto:'races',key:4,icon:"fas fa-star",text:'races',app:'rows'},
+     {Linkto:'Templates',key:5,icon:"fas fa-star",text:'Templates',app:'rows'},
 
     
 ];

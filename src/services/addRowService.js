@@ -2,10 +2,9 @@ import axios from 'axios';
 import { pageimEndPoint } from '../Config';
 
 const API_ENDPOINT = pageimEndPoint();
-
     export const addNewRow=async(row)=>{
         if (!localStorage["freeUserToken"] || localStorage["freeUserToken"] === null || localStorage["freeUserToken"] === "undefined") 
-            return null;
+        console.log('no freeUserToken add row')
         else
         {
             let APP = window.location.pathname.toString();
@@ -25,7 +24,7 @@ const API_ENDPOINT = pageimEndPoint();
             .catch((err) => {
                 console.log("AXIOS ERROR: ", err);
               })
-            console.log(response);
+            console.log('addNewRow',response);
             debugger
             return response;
          

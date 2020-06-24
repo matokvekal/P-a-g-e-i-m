@@ -1,64 +1,55 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { pageimEndPoint } from '../Config';
-
 export const ConfigContext = createContext();
-
-
 const API_ENDPOINT = pageimEndPoint();
-
+let APP = window.location.pathname.toString();
+APP = APP ? APP.substr(1) : '';
 
 const ConfigContextProvider = (props) => {
-    const [config, setConfig] = useState([]);
-    // let d = window.localStorage.getItem('config');
-    const [ setHasError] = useState(false);
-    const [ setErrorMsg] = useState('');
-    const [ setData] = useState([]);
+    const [appFields, setAppFields] = useState([]);
+    const [fields, setFields] = useState([]);
+
     useEffect(() => {
-        let APP = window.location.pathname.toString();
-        APP= APP?APP.substr(1):'';
+
         if (!localStorage["freeUserToken"] || localStorage["freeUserToken"] === null || localStorage["freeUserToken"] === "undefined") {
             const AUTHURL = `${API_ENDPOINT}/session/createNewUserDevice`;
             fetch(AUTHURL)
                 .then(async response => {
                     const data = await response.json();
                     if (!response.ok || !data.success) {
-                        setErrorMsg(data.message);
-                        setHasError(true);
+                        console.log('Error: config context', data.message)
                     }
                     else {
                         localStorage["freeUserToken"] = data.token;
-                        // window.location.reload();
+                        window.location.reload();
                     }
                 })
-                .catch(error => {
-                    this.setState({ errorMessage: error.toString() });
-                });
+                .then(res => console.log(res))
         }
         else {
-            const URL = `${API_ENDPOINT}/public/fields/data?application=${APP}`;
+            const URL = `${API_ENDPOINT}/public/fields/data?client=1`;
             fetch(URL, {
                 method: 'POST',
                 headers: { Authorization: "Bearer " + localStorage['freeUserToken'] }
             })
                 .then(response => response.json())
-                .then(data => setConfig(data))
+                .then(data => setFields(data))
                 .catch((error) => {
                     console.error('Error:', error);
                 });
         }
     }, [global]);
-    // useEffect(() => {
-    //     fetch(`${API_ENDPOINT}/fields`)
-    //         .then(response => response.json())
-    //         .then(data => setConfig(data.res))
-    // }, [])
-
+    
     useEffect(() => {
-        localStorage.setItem('config', JSON.stringify(config));
-    }, [config])
+        if (fields && fields.length > 0) {
+            setAppFields(fields.filter(x => x.application === APP))
+        }
+    }, [fields])
+
+
 
     return (
-        <ConfigContext.Provider value={{ config }} >
+        <ConfigContext.Provider value={{ appFields }} >
             {props.children}
         </ConfigContext.Provider>
     )

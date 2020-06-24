@@ -22,13 +22,10 @@ import Divider from '@material-ui/core/Divider';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import StorageSharpIcon from '@material-ui/icons/StorageSharp';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import Navbar2 from './Navbar2';
 
-import { ConfigContext } from '../../context/ConfigContext';
+import Navbar3 from './Navbar3';
+
+// import { ConfigContext } from '../../context/ConfigContext';
 import { GlobalContext } from '../../context/GlobalContext';
 import Button from '@material-ui/core/Button';
 import Modal from './../reusable/modal/Modal';
@@ -115,7 +112,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function PrimarySearchAppBar(props) {
-  const { config } = useContext(ConfigContext);
+  // const { config } = useContext(ConfigContext);
   const { global } = useContext(GlobalContext);
   const { AppDirection, setAppDirection } = props;
   const { screenType, setScreenType } = props;
@@ -161,11 +158,11 @@ export default function PrimarySearchAppBar(props) {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  const [countHidden, SetCountHidden] = useState(0);
+  // const [countHidden, SetCountHidden] = useState(0);
 
-  useEffect(() => {
-    SetCountHidden(config.filter(x => x.clientTableHideColumn === true).length);
-  }, [config])
+  // useEffect(() => {
+  //   SetCountHidden(config.filter(x => x.clientTableHideColumn === true).length);
+  // }, [config])
   const [modalVisible, setModalVisible] = useState(false)
 
   const showHideModal = () => {
@@ -301,7 +298,7 @@ export default function PrimarySearchAppBar(props) {
       <AddRowModal
         header='Add new row'
         visible={modalAddRowVisible}
-         dismiss={showHideModalAddRow}
+        dismiss={showHideModalAddRow}
         children='modalAddRowVisible'
       />
 
@@ -313,15 +310,10 @@ export default function PrimarySearchAppBar(props) {
         </div>
 
         <Divider />
-        <Navbar2 />
+        <Navbar3 />
         <Divider />
         <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
+
           <Divider />
 
           <IconButton onClick={siteDirection}> {AppDirection === 'ltr' ? <ChevronRightIcon /> : <ChevronLeftIcon />} </IconButton>

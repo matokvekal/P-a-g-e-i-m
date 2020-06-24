@@ -1,40 +1,92 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ConfigContextProvider from './context/ConfigContext';
+import MenuContextProvider from './context/MenuContext';
 import GlobalContextProvider from './context/GlobalContext';
+import PrimarySearchAppBar from './components/layouts/PrimarySearchAppBar';
+import './App.css';
 import UploadFile from './components/UploadFile';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import PrimarySearchAppBar from './components/layouts/PrimarySearchAppBar';
 import Pageim from './components/Pageim';
 import './App.css';
 import Templates from './components/main/Templates';
+// import { getFields } from './services/getFields-old';
+import { pageimEndPoint } from './Config';
 
+// import RouterApp from './components/main/RouterApp';
 
 function App() {
+  const API_ENDPOINT = pageimEndPoint();
+  const [menu, setMenu] = useState([]);
   const location = window.location.pathname;
+  const [freeUserToken] = useState(null)
 
   let currentDir = window.localStorage.getItem('AppDirection');
+  // debugger
   if (currentDir == null || (currentDir !== 'rtl' && currentDir !== 'ltr'))
-    currentDir = 'ltr'
+    currentDir = 'ltr';
+
+
+
+
+  useEffect(() => {
+    if (!localStorage['menu'] || localStorage['menu'] === null || localStorage['menu'] === "undefined")
+      setMenu(JSON.stringify(localStorage['menu']))
+    else {
+      if (!localStorage['freeUserToken'] || localStorage['freeUserToken'] === null || localStorage['freeUserToken'] === "undefined") {
+        console.log('no user token App.js')
+      }
+      else {
+        const URL = `${API_ENDPOINT}/public/menu/data?customer=1`;
+        fetch(URL, {
+          method: 'POST',
+          headers: { Authorization: "Bearer " + localStorage['freeUserToken'] }
+        }
+        )
+          .then(response => response.json())
+          .then(data => setMenu(data))
+          .catch((error) => {
+            console.error('Error:', error);
+          });
+      }
+    }
+    // setTrigerFetch('');
+  }, [freeUserToken]);
+
+
+  useEffect(() => {
+    if (!localStorage['menu'] || localStorage['menu'] === null || localStorage['menu'] === "undefined")
+      if (menu && menu.length > 0)
+        localStorage['menu'] = JSON.stringify(menu);
+
+  }, [menu])
+
 
   let screenView = 'table';
-  const [AppDirection, setAppDirection] = useState(currentDir ? currentDir : 'ltr')
-  const [screenType, setScreenType] = useState(screenView ? screenView : 'table')
+  const [AppDirection, setAppDirection] = useState(currentDir ? currentDir : 'ltr');
+  const [screenType, setScreenType] = useState(screenView ? screenView : 'table');
 
   return (
     <div className={AppDirection}>
       <GlobalContextProvider>
-        <Router>
+        <MenuContextProvider>
 
-          <Switch>
-            <Route exact path="/" component={Templates} />
-            <Route path="/Templates" component={Templates} />
-          </Switch>
-          <ConfigContextProvider>
-            <PrimarySearchAppBar setAppDirection={setAppDirection} AppDirection={AppDirection} setScreenType={setScreenType} screenType={screenType} />
-            <Route exact path='/UploadFile' component={UploadFile} />
-            <Route exact path={location}><Pageim app={location} screenType={screenType} /> </Route>       
-          </ConfigContextProvider>
-        </Router>
+          <Router>
+
+            <Switch>
+              <Route exact path="/" component={Templates} />
+              <Route path="/Templates" component={Templates} />
+            </Switch>
+            <ConfigContextProvider>
+              <PrimarySearchAppBar setAppDirection={setAppDirection} AppDirection={AppDirection} setScreenType={setScreenType} screenType={screenType} />
+
+              {(menu && menu.length > 0) ? menu.map((item, index) => (
+                <Route exact path={item.location}><Pageim app={'/' + item.app} screenType={screenType} key={index} /> </Route>
+              )) : null}
+
+
+            </ConfigContextProvider>
+          </Router>
+        </MenuContextProvider>
       </GlobalContextProvider>
     </div>
   );

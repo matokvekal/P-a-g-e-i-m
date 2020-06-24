@@ -10,10 +10,10 @@ import ControlPointIcon from '@material-ui/icons/ControlPoint';
 const ITEM_HEIGHT = 48;
 
 export default function HiddenFields() {
-  const { config } = useContext(ConfigContext);
+  const { appFields } = useContext(ConfigContext);
   const { global, settingGlobal } = useContext(GlobalContext);
   const [hideItem, setHideItem] = useState('')
-  let hiddenFields = config.filter(x => x.clientTableHideColumn === true).map(x => x.name);
+  let hiddenFields = appFields.filter(x => x.clientTableHideColumn === true).map(x => x.name);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -26,7 +26,7 @@ export default function HiddenFields() {
   };
 
   const handleRemoveOption = (option) => {
-    config.filter(x => x.name === option)[0].clientTableHideColumn = false;
+    appFields.filter(x => x.name === option)[0].clientTableHideColumn = false;
     settingGlobal(countHidden);
   }
   return (
