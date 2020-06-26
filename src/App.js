@@ -15,6 +15,7 @@ import { pageimEndPoint } from './Config';
 // import RouterApp from './components/main/RouterApp';
 
 function App() {
+  const [renderCounter, setRenderCounter] = useState([])
   const API_ENDPOINT = pageimEndPoint();
   const [menu, setMenu] = useState([]);
   const location = window.location.pathname;
@@ -29,13 +30,17 @@ function App() {
 
 
   useEffect(() => {
-    if (!localStorage['menu'] || localStorage['menu'] === null || localStorage['menu'] === "undefined")
+    // debugger
+    if (!localStorage['menu'] || localStorage['menu'] === null || localStorage['menu'] === "undefined") {
       setMenu(JSON.stringify(localStorage['menu']))
+      console.log('GetMenu App.js');
+    }
     else {
       if (!localStorage['freeUserToken'] || localStorage['freeUserToken'] === null || localStorage['freeUserToken'] === "undefined") {
         console.log('no user token App.js')
       }
       else {
+        console.log('Fetch Menu App.js');
         const URL = `${API_ENDPOINT}/public/menu/data?customer=1`;
         fetch(URL, {
           method: 'POST',
@@ -50,15 +55,16 @@ function App() {
       }
     }
     // setTrigerFetch('');
-  }, [freeUserToken]);
+  }, []);
 
 
-  useEffect(() => {
-    if (!localStorage['menu'] || localStorage['menu'] === null || localStorage['menu'] === "undefined")
-      if (menu && menu.length > 0)
-        localStorage['menu'] = JSON.stringify(menu);
+  // useEffect(() => {
+  //   debugger
+  //   if (!localStorage['menu'] || localStorage['menu'] === null || localStorage['menu'] === "undefined")
+  //     if (menu && menu.length > 0)
+  //       localStorage['menu'] = JSON.stringify(menu);
 
-  }, [menu])
+  // }, [])
 
 
   let screenView = 'table';
@@ -67,23 +73,21 @@ function App() {
 
   return (
     <div className={AppDirection}>
+
       <GlobalContextProvider>
         <MenuContextProvider>
-
           <Router>
-
             <Switch>
               <Route exact path="/" component={Templates} />
               <Route path="/Templates" component={Templates} />
             </Switch>
             <ConfigContextProvider>
               <PrimarySearchAppBar setAppDirection={setAppDirection} AppDirection={AppDirection} setScreenType={setScreenType} screenType={screenType} />
-
-              {(menu && menu.length > 0) ? menu.map((item, index) => (
-                <Route exact path={item.location}><Pageim app={'/' + item.app} screenType={screenType} key={index} /> </Route>
-              )) : null}
-
-
+              <Switch>
+                {(menu && menu.length > 0) ? menu.map((item, index) => (
+                  <Route path={'/' + item.app}><Pageim app={'/' + item.app} screenType={screenType} key={index} /> </Route>
+                )) : null}
+              </Switch>
             </ConfigContextProvider>
           </Router>
         </MenuContextProvider>

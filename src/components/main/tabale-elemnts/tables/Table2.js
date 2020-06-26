@@ -3,16 +3,10 @@ import React, { useState, useEffect, useContext } from 'react';
 import moment from 'moment';
 import Actions from './Actions';
 import './Table2.css';
-
-//import socketIOClient from 'socket.io-client';
-// import { ConfigContext } from '../../../../context/ConfigContext';
 import { GlobalContext } from '../../../../context/GlobalContext';
 import { pageimEndPoint } from '../../../../Config';
-// import Checkbox from '@material-ui/core/Checkbox';
-// import { ListItem } from '@material-ui/core';
 import Filter from './Filter';
 import Stars from './Stars';
-
 import Checkbox from '@material-ui/core/Checkbox';
 
 
@@ -20,7 +14,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 
 export const Table2 = (props) => {
   console.log('at Table2',props)
-  debugger
+  // debugger
   const app = props.app ? props.app : '';
    const APP = app ? app.substr(1) : '';
   const { global } = useContext(GlobalContext);
@@ -37,33 +31,39 @@ export const Table2 = (props) => {
   const [trigerFetch, setTrigerFetch] = useState([]);
 
   useEffect(() => {
-      if (localStorage['freeUserToken'] &&(!localStorage['fields']|| localStorage['fields']==='[]')) {
+    console.log('at table2 before get fields',fields)
+    
+      if ((!localStorage['fields']|| localStorage['fields']==='[]') && localStorage['freeUserToken'] ) {
         const URL = `${API_ENDPOINT}/public/fields/data`;
+        console.log('at table2 do get fields',fields)
         fetch(URL, {
           method: 'POST',
           headers: { Authorization: "Bearer " + localStorage['freeUserToken'] }
         })
           .then(response => response.json())
-          .then(data => setFields(data.filter(x => x.application === APP)))
+          .then(res => setFields(res.filter(x => x.application === APP),console.log('at table2 sec func',res)))
           .catch((error) => {
             console.error('Error: at table2', error);
           });
       }
-
-    for (let header of fields) {
-      header.clienSort = false;
-      header.clientSortOrder = null;
-      header.clientSortIcon = null;
-      header.clientSortDirection = null;
-      header.clientHide = false;
-      header.clientAggregation = false;
-      header.clientAggrigationIcon = 'far fa-square';
-      header.clientFilter = false;
-      header.clientFilterIconColor = 'colorWhite';
-      header.clientTableHideColumn = false;
-      header.clientId = 'Id_' + header.name;
-      header.dragable = true;
-      header.clientFilterHeaderCheckbox = false;
+      else{
+        setFields(localStorage['fields'].filter(x => x.application === APP))
+      }
+console.log('fields at table2rows',fields)
+    for (let row of fields) {
+      row.clienSort = false;
+      row.clientSortOrder = null;
+      row.clientSortIcon = null;
+      row.clientSortDirection = null;
+      row.clientHide = false;
+      row.clientAggregation = false;
+      row.clientAggrigationIcon = 'far fa-square';
+      row.clientFilter = false;
+      row.clientFilterIconColor = 'colorWhite';
+      row.clientTableHideColumn = false;
+      row.clientId = 'Id_' + row.name;
+      row.dragable = true;
+      row.clientFilterHeaderCheckbox = false;
       }
 
 }, []);
@@ -197,6 +197,7 @@ useEffect(() => {
   }
 
 }, [fields, trigerFetch, global]);
+// }, [fields, trigerFetch, global]);
 
 
 

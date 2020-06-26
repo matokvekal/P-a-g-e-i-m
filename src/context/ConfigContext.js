@@ -10,7 +10,7 @@ const ConfigContextProvider = (props) => {
     const [fields, setFields] = useState([]);
 
     useEffect(() => {
-
+console.log("At config context")
         if (!localStorage["freeUserToken"] || localStorage["freeUserToken"] === null || localStorage["freeUserToken"] === "undefined") {
             const AUTHURL = `${API_ENDPOINT}/session/createNewUserDevice`;
             fetch(AUTHURL)
@@ -27,6 +27,7 @@ const ConfigContextProvider = (props) => {
                 .then(res => console.log(res))
         }
         else {
+            console.log("At config context get fields",fields)
             const URL = `${API_ENDPOINT}/public/fields/data?client=1`;
             fetch(URL, {
                 method: 'POST',
@@ -41,6 +42,7 @@ const ConfigContextProvider = (props) => {
     }, [global]);
     
     useEffect(() => {
+        console.log("At config context get fields",fields)
         if (fields && fields.length > 0) {
             setAppFields(fields.filter(x => x.application === APP))
         }

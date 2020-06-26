@@ -39,7 +39,9 @@ const MenuContextProvider = (props) => {
 
     useEffect(() => {
         if (!localStorage['menu'] || localStorage['menu'] === null || localStorage['menu'] === "undefined")
-            localStorage.setItem('menu', JSON.stringify(menuList));
+           { localStorage.setItem('menu', JSON.stringify(menuList));
+console.log('menu context update menu,',menuList)
+    }
     }, [menuList])
 
     return (

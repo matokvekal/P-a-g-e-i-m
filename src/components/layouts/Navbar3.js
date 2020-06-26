@@ -19,11 +19,13 @@ const { SubMenu } = Menu;
 export const Navbar3 = () => {
     const [collapsed, setCollapsed] = useState(false);
     const { menuList } = useContext(MenuContext);
-    // console.log('menuList',menuList);
+    
     const toggleCollapsed = () => {
         setCollapsed(state => !state)
     };
-    localStorage['menu']=JSON.stringify(menuList)
+    // console.log(' menu nav bar 3 localStorage',menuList)
+    if(menuList && menuList.length>0)
+        localStorage['menu']=JSON.stringify(menuList)
 
 
     return (
@@ -36,14 +38,14 @@ export const Navbar3 = () => {
                 inlineCollapsed={collapsed}
             >
                 {
-                    menuList.sort((a, b) => (a.key > b.key) ? 1 : -1).map((item, index) => (
+                    menuList?  menuList.sort((a, b) => (a.key > b.key) ? 1 : -1).map((item, index) => (
                         <Menu.Item key={item.id} icon={<DesktopOutlined />}>
                             <Link to={'/' + item.linkTo} params={"table"} key={item.key} app={item.app}>
                                 {item.text}
                             </Link>
                         </Menu.Item>
 
-                    ))}
+                    )):null}
 
     
                 <SubMenu key="sub1" icon={<MailOutlined />} title="Navigation One">
