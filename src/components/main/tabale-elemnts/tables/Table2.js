@@ -8,18 +8,23 @@ import { pageimEndPoint } from '../../../../Config';
 import Filter from './Filter';
 import Stars from './Stars';
 import Checkbox from '@material-ui/core/Checkbox';
+import { ConfigContext } from '../../../../context/ConfigContext';
+
 
 
 
 
 export const Table2 = (props) => {
-  console.log('at Table2',props)
+  // console.log('at Table2',props)
   // debugger
   const app = props.app ? props.app : '';
    const APP = app ? app.substr(1) : '';
-  const { global } = useContext(GlobalContext);
+  // const { global } = useContext(GlobalContext);
   const [sortOrder, setSortOrder] = useState(0);
-  // const { config } = useContext(ConfigContext);
+
+ 
+
+  
   const [filter, setFilter] = useState(<Filter />)
   const [data, setData] = useState([]);
   const API_ENDPOINT = pageimEndPoint();
@@ -27,53 +32,57 @@ export const Table2 = (props) => {
   const extra_header_width = 80;
   const [fields, setFields] = useState([]);
   const [errorMsg, setErrorMsg] = useState('');
+  const { tableFields } = useContext(ConfigContext);
+  const appFields=tableFields.filter(x => x.application === APP);
 
   const [trigerFetch, setTrigerFetch] = useState([]);
 
-  useEffect(() => {
-    console.log('at table2 before get fields',fields)
-    
-      if ((!localStorage['fields']|| localStorage['fields']==='[]') && localStorage['freeUserToken'] ) {
-        const URL = `${API_ENDPOINT}/public/fields/data`;
-        console.log('at table2 do get fields',fields)
-        fetch(URL, {
-          method: 'POST',
-          headers: { Authorization: "Bearer " + localStorage['freeUserToken'] }
-        })
-          .then(response => response.json())
-          .then(res => setFields(res.filter(x => x.application === APP),console.log('at table2 sec func',res)))
-          .catch((error) => {
-            console.error('Error: at table2', error);
-          });
-      }
-      else{
-        setFields(localStorage['fields'].filter(x => x.application === APP))
-      }
-console.log('fields at table2rows',fields)
-    for (let row of fields) {
-      row.clienSort = false;
-      row.clientSortOrder = null;
-      row.clientSortIcon = null;
-      row.clientSortDirection = null;
-      row.clientHide = false;
-      row.clientAggregation = false;
-      row.clientAggrigationIcon = 'far fa-square';
-      row.clientFilter = false;
-      row.clientFilterIconColor = 'colorWhite';
-      row.clientTableHideColumn = false;
-      row.clientId = 'Id_' + row.name;
-      row.dragable = true;
-      row.clientFilterHeaderCheckbox = false;
-      }
+//   useEffect(() => {
+//     console.log('at table2 before get fields',fields)
+//       if ((!localStorage['fields']|| localStorage['fields']==='[]') && localStorage['freeUserToken'] ) {
+//         const URL = `${API_ENDPOINT}/public/fields/data`;
+//         console.log('at table2 do get fields',fields)
+//         fetch(URL, {
+//           method: 'POST',
+//           headers: { Authorization: "Bearer " + localStorage['freeUserToken'] }
+//         })
+//           .then(response => response.json())
+//           .then(res => setFields(res.filter(x => x.application === APP),console.log('at table2 sec func',res)))
+//           .catch((error) => {
+//             console.error('Error: at table2', error);
+//           });
+//       }
+//       else{
+//         setFields(JSON.parse(localStorage['fields']).filter(x => x.application === APP));
+//         console.log('at table2 parse  field from localstorage',fields);
+//       }
+//     console.log('fields at table2rows',fields)
+//     for (let row of fields) {
+//       row.clienSort = false;
+//       row.clientSortOrder = null;
+//       row.clientSortIcon = null;
+//       row.clientSortDirection = null;
+//       row.clientHide = false;
+//       row.clientAggregation = false;
+//       row.clientAggrigationIcon = 'far fa-square';
+//       row.clientFilter = false;
+//       row.clientFilterIconColor = 'colorWhite';
+//       row.clientTableHideColumn = false;
+//       row.clientId = 'Id_' + row.name;
+//       row.dragable = true;
+//       row.clientFilterHeaderCheckbox = false;
+//       }
 
-}, []);
+// }, []);
 
-// useEffect(() => {
-//   debugger
-//   if (fields && fields.length > 0) {
-//     setFields(fields.filter(x => x.application === app))
-//   }
-// }, [])
+useEffect(() => {
+  // console.log('appFields at table2',appFields)
+  if(appFields)
+  setFields(appFields);
+//  if ((localStorage['fields']&&  localStorage['fields']!=='[]'))
+//      setFields(JSON.parse(localStorage['fields']).filter(x => x.application === APP));
+
+}, [])
 
 const HandleAggregation = (field) => {
   setTrigerFetch('HandleAggregation');

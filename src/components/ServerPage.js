@@ -21,19 +21,19 @@ function ServerPage() {
 
     
     useEffect(() => {
-        console.log('server   useEffect 24')
+        // console.log('server   useEffect 24')
         const fetchData = async () => {
-            console.log('3')
+            // console.log('3')
             const result = await axios(
                 `${API_ENDPOINT}/search?query=${query}`, 
             );
-            console.log('5')
+            // console.log('5')
             setData(result.data);
-            console.log('6')
+            // console.log('6')
         };
-        console.log('2')
+        // console.log('2')
         fetchData().then(
-            console.log('4')
+            // console.log('4')
         );
     }, [search]);
 

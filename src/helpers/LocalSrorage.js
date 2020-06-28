@@ -1,7 +1,7 @@
 
 export const UseLocalStorage = (type, key, value) => {
     try {
-        console.log("at ls")
+        // console.log("at ls")
         if (!key )
             return "key  must be set";
         if (type === 'set') {

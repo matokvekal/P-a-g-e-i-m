@@ -26,7 +26,7 @@ export const Card2 = () => {
 
     {/*get*/ }
     useEffect(() => {
-        console.log('cards2  useEffect 32')
+        // console.log('cards2  useEffect 32')
         fetch(`${API_ENDPOINT}/rows`)
             .then(response => response.json())
             .then(data => setData(data.res))

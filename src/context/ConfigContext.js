@@ -6,11 +6,11 @@ let APP = window.location.pathname.toString();
 APP = APP ? APP.substr(1) : '';
 
 const ConfigContextProvider = (props) => {
-    const [appFields, setAppFields] = useState([]);
-    const [fields, setFields] = useState([]);
+    // const [appFields, setAppFields] = useState([]);
+    const [tableFields, setTableFields] = useState([]);
 
     useEffect(() => {
-console.log("At config context")
+//  console.log("At config context")
         if (!localStorage["freeUserToken"] || localStorage["freeUserToken"] === null || localStorage["freeUserToken"] === "undefined") {
             const AUTHURL = `${API_ENDPOINT}/session/createNewUserDevice`;
             fetch(AUTHURL)
@@ -24,17 +24,17 @@ console.log("At config context")
                         window.location.reload();
                     }
                 })
-                .then(res => console.log(res))
+                // .then(res => console.log(res))
         }
         else {
-            console.log("At config context get fields",fields)
+            // console.log("At config context get fields",tableFields)
             const URL = `${API_ENDPOINT}/public/fields/data?client=1`;
             fetch(URL, {
                 method: 'POST',
                 headers: { Authorization: "Bearer " + localStorage['freeUserToken'] }
             })
                 .then(response => response.json())
-                .then(data => setFields(data))
+                .then(data => setTableFields(data))
                 .catch((error) => {
                     console.error('Error:', error);
                 });
@@ -42,16 +42,33 @@ console.log("At config context")
     }, [global]);
     
     useEffect(() => {
-        console.log("At config context get fields",fields)
-        if (fields && fields.length > 0) {
-            setAppFields(fields.filter(x => x.application === APP))
+        //  console.log("At config context setAppFields has change 46",tableFields)
+        if (tableFields && tableFields.length > 0) {
+            for (let row of tableFields) {
+                row.clienSort = false;
+                row.clientSortOrder = null;
+                row.clientSortIcon = null;
+                row.clientSortDirection = null;
+                row.clientHide = false;
+                row.clientAggregation = false;
+                row.clientAggrigationIcon = 'far fa-square';
+                row.clientFilter = false;
+                row.clientFilterIconColor = 'colorWhite';
+                row.clientTableHideColumn = false;
+                row.clientId = 'Id_' + row.name;
+                row.dragable = true;
+                row.clientFilterHeaderCheckbox = false;
+                }
+            localStorage['fields']=JSON.stringify(tableFields);
+            // setAppFields(tableFields.filter(x => x.application === APP));//not in use
+            // console.log('At config   49 setAppFields has change and localStorage reset ',tableFields)
         }
-    }, [fields])
+    }, [tableFields])
 
 
 
     return (
-        <ConfigContext.Provider value={{ appFields }} >
+        <ConfigContext.Provider value={{ tableFields }} >
             {props.children}
         </ConfigContext.Provider>
     )

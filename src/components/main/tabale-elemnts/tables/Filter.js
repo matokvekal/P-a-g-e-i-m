@@ -89,7 +89,7 @@ function Filter(props) {
       setFilterIcon(Filter1TwoToneIcon)
     else
       setFilterIcon(FilterListIcon);
-    console.log(FilterCheckBox);
+    // console.log(FilterCheckBox);
   }
 
   return (

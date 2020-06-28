@@ -9,8 +9,8 @@ const API_ENDPOINT = pageimEndPoint();
 
 const MenuContextProvider = (props) => {
     const [menuList, setMenuList] = useState([]);
-    const [setHasError] = useState(false);
-    const [setErrorMsg] = useState('');
+    // const [setHasError] = useState(false);
+    // const [setErrorMsg] = useState('');
 
     useEffect(() => {
         if (!localStorage['menu'] || localStorage['menu'] === null || localStorage['menu'] === "undefined")
@@ -40,7 +40,7 @@ const MenuContextProvider = (props) => {
     useEffect(() => {
         if (!localStorage['menu'] || localStorage['menu'] === null || localStorage['menu'] === "undefined")
            { localStorage.setItem('menu', JSON.stringify(menuList));
-console.log('menu context update menu,',menuList)
+// console.log('menu context update menu,',menuList)
     }
     }, [menuList])
 

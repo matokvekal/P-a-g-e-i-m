@@ -1,10 +1,10 @@
 import React from 'react';
 
 
- const ConfigDetails = ({row,index}) => {
+ const ConfigDetails = ({column,index}) => {
     return (
         <>
-            <span key={index} className='rowData'>{row.name} |</span>
+            <span key={index} className='rowData'>{column.name} |</span>
             {/*<span className='rowData'>{row.width}</span>
     <span className='rowData'>{row.alias}</span>*/}
         </>

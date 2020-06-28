@@ -9,6 +9,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Pageim from './components/Pageim';
 import './App.css';
 import Templates from './components/main/Templates';
+import toDoWatsApp from './components/main/external/toDoWatsApp';
 // import { getFields } from './services/getFields-old';
 import { pageimEndPoint } from './Config';
 
@@ -33,14 +34,14 @@ function App() {
     // debugger
     if (!localStorage['menu'] || localStorage['menu'] === null || localStorage['menu'] === "undefined") {
       setMenu(JSON.stringify(localStorage['menu']))
-      console.log('GetMenu App.js');
+      // console.log('GetMenu App.js');
     }
     else {
       if (!localStorage['freeUserToken'] || localStorage['freeUserToken'] === null || localStorage['freeUserToken'] === "undefined") {
         console.log('no user token App.js')
       }
       else {
-        console.log('Fetch Menu App.js');
+        // console.log('Fetch Menu App.js');
         const URL = `${API_ENDPOINT}/public/menu/data?customer=1`;
         fetch(URL, {
           method: 'POST',
@@ -77,11 +78,13 @@ function App() {
       <GlobalContextProvider>
         <MenuContextProvider>
           <Router>
+          <ConfigContextProvider>
             <Switch>
               <Route exact path="/" component={Templates} />
               <Route path="/Templates" component={Templates} />
             </Switch>
-            <ConfigContextProvider>
+            <Route path="/toDoWatsApp" component={toDoWatsApp}/>
+          
               <PrimarySearchAppBar setAppDirection={setAppDirection} AppDirection={AppDirection} setScreenType={setScreenType} screenType={screenType} />
               <Switch>
                 {(menu && menu.length > 0) ? menu.map((item, index) => (

@@ -4,7 +4,7 @@ import Card2 from '../components/main/cards/Card2';
 
 export const Pageim = (props) => {
     const [app] = useState(props.app)
-    console.log('at pagim',props)
+    // console.log('at pagim',props)
 
     return (
         < >

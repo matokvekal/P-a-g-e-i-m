@@ -7,10 +7,15 @@ import {addNewRow}  from '../../../../../services/addRowService';
 
 
 const AddRowModalForm = () => {
-    const { config } = useContext(ConfigContext);
+    let APP = window.location.pathname.toString();
+    APP = APP ? APP.substr(1) : '';
+    const { tableFields } = useContext(ConfigContext);
+
+    const appFields=tableFields.filter(x => x.application === APP);
+    // const { config } = useContext(ConfigContext);
 
     let newRow = {};
-    (() => config.map(x => {
+    (() => appFields.map(x => {
         newRow[x.name] = '';
     }))();
     const [row, setRow] = useState(newRow)
@@ -27,7 +32,7 @@ const AddRowModalForm = () => {
     return (
         <>
             <form>
-                {config ? config.sort((a, b) => (a.order > b.order) ? 1 : -1).map((field, i) => (!field.is_edit ?
+                {appFields ? appFields.sort((a, b) => (a.order > b.order) ? 1 : -1).map((field, i) => (!field.is_edit ?
                     (<span className='form-group' id={field.clientId} style={{ maxWidth: `${field.width}px`, minWidth: `${field.width}px` }} key={i}>
                         <FormInput
                             id={field.type === 'date' ? 'outlined-helperText' : field.is_edit ? 'standard' : 'standard-read-only-input'}
