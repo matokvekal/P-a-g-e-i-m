@@ -6,11 +6,16 @@ import {addNewRow}  from '../../../../../services/addRowService';
 
 
 
-const AddRowModalForm = () => {
+const AddRowModalForm = (props) => {
+    
+    // const dismiss=props;
+
+    const { cancelModal } = props;
+    debugger
     let APP = window.location.pathname.toString();
     APP = APP ? APP.substr(1) : '';
     const { tableFields } = useContext(ConfigContext);
-
+    APP = APP.toLowerCase();
     const appFields=tableFields.filter(x => x.application === APP);
     // const { config } = useContext(ConfigContext);
 
@@ -32,7 +37,7 @@ const AddRowModalForm = () => {
     return (
         <>
             <form>
-                {appFields ? appFields.sort((a, b) => (a.order > b.order) ? 1 : -1).map((field, i) => (!field.is_edit ?
+                {appFields ? appFields.sort((a, b) => (a.order > b.order) ? 1 : -1).map((field, i) => (field.is_edit ?
                     (<span className='form-group' id={field.clientId} style={{ maxWidth: `${field.width}px`, minWidth: `${field.width}px` }} key={i}>
                         <FormInput
                             id={field.type === 'date' ? 'outlined-helperText' : field.is_edit ? 'standard' : 'standard-read-only-input'}
@@ -52,7 +57,7 @@ const AddRowModalForm = () => {
                     : null}
                 <br></br>
 
-                <Button style={{ marginRight: '1rem' }} variant="contained">Cancel</Button>
+                <Button style={{ marginRight: '1rem' }} onClick={() => cancelModal(false)} variant="contained">Cancel</Button>
                 <Button variant="contained" color="primary" onClick={onAddRow}>Add</Button>
 
             </form>

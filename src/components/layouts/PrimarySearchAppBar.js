@@ -28,7 +28,7 @@ import Navbar3 from './Navbar3';
 // import { ConfigContext } from '../../context/ConfigContext';
 import { GlobalContext } from '../../context/GlobalContext';
 import Button from '@material-ui/core/Button';
-import Modal from './../reusable/modal/Modal';
+
 import AddRowModal from './../main/tabale-elemnts/tables/add/AddRowModal';
 
 import HiddenFields from './HiddenFields';
@@ -168,10 +168,11 @@ export default function PrimarySearchAppBar(props) {
   const showHideModal = () => {
     setModalVisible(x => !x);
   }
-  const [modalAddRowVisible, setAddRowModalVisible] = useState(false)
+  // const [modalAddRowVisible, setAddRowModalVisible] = useState(false)
 
   const showHideModalAddRow = () => {
-    setAddRowModalVisible(x => !x);
+    setModalVisible(false);
+    // setModalVisible(x => !x);
   }
 
   const menuId = 'primary-search-account-menu';
@@ -262,8 +263,8 @@ export default function PrimarySearchAppBar(props) {
               }} inputProps={{ 'aria-label': 'search' }} />
           </div>
 
-          <Button color="secondary" onClick={showHideModal}>Add</Button>
-          <Button color="default" onClick={showHideModalAddRow}>ADD ROW</Button>
+       
+          <Button color="default" onClick={showHideModal}>ADD ROW</Button>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
 
@@ -289,15 +290,10 @@ export default function PrimarySearchAppBar(props) {
         </Toolbar>
       </AppBar>
 
-      <Modal
-        header='old test'
-        visible={modalVisible}
-        dismiss={showHideModal}
-        children='old test'
-      />
+
       <AddRowModal
         header='Add new row'
-        visible={modalAddRowVisible}
+        visible={modalVisible}
         dismiss={showHideModalAddRow}
         children='modalAddRowVisible'
       />

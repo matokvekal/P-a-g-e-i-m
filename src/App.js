@@ -31,12 +31,12 @@ function App() {
 
 
   useEffect(() => {
-    // debugger
-    if (!localStorage['menu'] || localStorage['menu'] === null || localStorage['menu'] === "undefined") {
-      setMenu(JSON.stringify(localStorage['menu']))
-      // console.log('GetMenu App.js');
-    }
-    else {
+     debugger
+    // if (!localStorage['menu'] || localStorage['menu'] === null || localStorage['menu'] === "undefined") {
+    //   setMenu(JSON.stringify(localStorage['menu']))
+    //   // console.log('GetMenu App.js');
+    // }
+    // else {
       if (!localStorage['freeUserToken'] || localStorage['freeUserToken'] === null || localStorage['freeUserToken'] === "undefined") {
         console.log('no user token App.js')
       }
@@ -54,7 +54,7 @@ function App() {
             console.error('Error:', error);
           });
       }
-    }
+    // }
     // setTrigerFetch('');
   }, []);
 
@@ -89,7 +89,7 @@ function App() {
               <Switch>
                 {(menu && menu.length > 0) ? menu.map((item, index) => (
                   <Route path={'/' + item.app}><Pageim app={'/' + item.app} screenType={screenType} key={index} /> </Route>
-                )) : null}
+                )) : console.log('menu error')}
               </Switch>
             </ConfigContextProvider>
           </Router>

@@ -19,13 +19,13 @@ const { SubMenu } = Menu;
 export const Navbar3 = () => {
     const [collapsed, setCollapsed] = useState(false);
     const { menuList } = useContext(MenuContext);
-    
+    // debugger
     const toggleCollapsed = () => {
         setCollapsed(state => !state)
     };
-    // console.log(' menu nav bar 3 localStorage',menuList)
-    if(menuList && menuList.length>0)
-        localStorage['menu']=JSON.stringify(menuList)
+ console.log(' menu nav bar 3 localStorage',menuList)
+    // if(menuList && menuList.length>0)
+    //     localStorage['menu']=JSON.stringify(menuList)
 
 
     return (

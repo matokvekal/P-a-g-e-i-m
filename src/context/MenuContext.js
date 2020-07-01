@@ -8,19 +8,20 @@ const API_ENDPOINT = pageimEndPoint();
 
 
 const MenuContextProvider = (props) => {
+    // debugger
     const [menuList, setMenuList] = useState([]);
     // const [setHasError] = useState(false);
     // const [setErrorMsg] = useState('');
 
     useEffect(() => {
-        if (!localStorage['menu'] || localStorage['menu'] === null || localStorage['menu'] === "undefined")
-        setMenuList(JSON.stringify(localStorage['menu']))
-        else {
+        // debugger
+        // if (localStorage['menu'] && localStorage['menu'] !== null  && localStorage['menu'] !== "[]")
+        // setMenuList(JSON.stringify(localStorage['menu']))
+        // else {
             if (!localStorage["freeUserToken"] || localStorage["freeUserToken"] === null || localStorage["freeUserToken"] === "undefined") {
-                console.log('no user tocken Menu context')
+                console.log('no user token Menu context')
             }
             else {
-
                 const URL = `${API_ENDPOINT}/public/menu/data?customer=1`;
                 fetch(URL, {
                     method: 'POST',
@@ -32,17 +33,18 @@ const MenuContextProvider = (props) => {
                     .catch((error) => {
                         console.error('Error:', error);
                     });
-            }
-        }
+             }
+        // }
     }, []);
 
 
-    useEffect(() => {
-        if (!localStorage['menu'] || localStorage['menu'] === null || localStorage['menu'] === "undefined")
-           { localStorage.setItem('menu', JSON.stringify(menuList));
-// console.log('menu context update menu,',menuList)
-    }
-    }, [menuList])
+//     useEffect(() => {
+//         debugger
+//         if (!localStorage['menu'] || localStorage['menu'] === null || localStorage['menu'] === "undefined")
+//            { localStorage.setItem('menu', JSON.stringify(menuList));
+// // console.log('menu context update menu,',menuList)
+//     }
+//     }, [menuList])
 
     return (
         <MenuContext.Provider value={{ menuList }} >

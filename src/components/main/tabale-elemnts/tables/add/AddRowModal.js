@@ -4,12 +4,14 @@ import AddRowModalForm from './AddRowModalForm';
 
 
 const AddRowModal = (props) => {
-    const { header, visible,children,dismiss  } = props;
+    const { header, visible,children,dismiss} = props;
     const [ setVisible] = useState(visible);
     // const showModal = () => {
     //     setVisible(true);
     // }
     // const dismiss = () => {
+    //     debugger
+    //     alert('dismis')
     //     setVisible(false);
     // }
     return (
@@ -17,8 +19,9 @@ const AddRowModal = (props) => {
             <Modal
                 header='Add new row'
                 visible={visible}
-                children={<AddRowModalForm/>}
                 dismiss={dismiss}
+                children={<AddRowModalForm cancelModal={dismiss}/>}
+              
             />
         </>
     )

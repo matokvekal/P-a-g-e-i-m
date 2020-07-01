@@ -17,8 +17,9 @@ import { ConfigContext } from '../../../../context/ConfigContext';
 export const Table2 = (props) => {
   // console.log('at Table2',props)
   // debugger
-  const app = props.app ? props.app : '';
-   const APP = app ? app.substr(1) : '';
+  let app = props.app ? props.app : '';
+   let APP = app ? app.substr(1) : '';
+   APP = APP.toLowerCase();
   // const { global } = useContext(GlobalContext);
   const [sortOrder, setSortOrder] = useState(0);
 
@@ -28,7 +29,7 @@ export const Table2 = (props) => {
   const [filter, setFilter] = useState(<Filter />)
   const [data, setData] = useState([]);
   const API_ENDPOINT = pageimEndPoint();
-  const [pageSize, setPageSize] = useState(3);
+  const [pageSize, setPageSize] = useState(100);
   const extra_header_width = 80;
   const [fields, setFields] = useState([]);
   const [errorMsg, setErrorMsg] = useState('');

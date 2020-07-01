@@ -1,4 +1,4 @@
-import React, { useContext, useState ,useEffect} from 'react';
+import React, { useContext, useState } from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -15,6 +15,7 @@ export default function HiddenFields() {
   const [hideItem, setHideItem] = useState('')
   let APP = window.location.pathname.toString();
   APP = APP ? APP.substr(1) : '';
+  APP = APP.toLowerCase();
   // const [appFields, setAppFields] = useState([]);
 
   // setAppFields(tableFields.filter(x => x.application === APP));

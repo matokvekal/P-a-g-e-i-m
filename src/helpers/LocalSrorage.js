@@ -7,6 +7,8 @@ export const UseLocalStorage = (type, key, value) => {
         if (type === 'set') {
             if (!value)
                 return "value  must be set";
+            debugger
+            alert('localStorage.js')    
             window.localStorage.setItem(key, JSON.stringify(value));
             return "ok";
         }

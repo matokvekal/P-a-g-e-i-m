@@ -6,6 +6,7 @@ export const ConfigHeaders = () => {
     const { tableFields } = useContext(ConfigContext);
     let APP = window.location.pathname.toString();
     APP = APP ? APP.substr(1) : '';
+    APP = APP.toLowerCase();
 
     const appFields=tableFields.filter(x => x.application === APP);
     // console.log('config headers 2  try get config ',appFields)

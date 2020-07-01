@@ -2,31 +2,35 @@ import React, { createContext, useState, useEffect } from 'react';
 import { pageimEndPoint } from '../Config';
 export const ConfigContext = createContext();
 const API_ENDPOINT = pageimEndPoint();
-let APP = window.location.pathname.toString();
-APP = APP ? APP.substr(1) : '';
+// let APP = window.location.pathname.toString();
+// APP = APP ? APP.substr(1) : '';
 
 const ConfigContextProvider = (props) => {
     // const [appFields, setAppFields] = useState([]);
     const [tableFields, setTableFields] = useState([]);
 
     useEffect(() => {
+        
+        // debugger
 //  console.log("At config context")
-        if (!localStorage["freeUserToken"] || localStorage["freeUserToken"] === null || localStorage["freeUserToken"] === "undefined") {
-            const AUTHURL = `${API_ENDPOINT}/session/createNewUserDevice`;
-            fetch(AUTHURL)
-                .then(async response => {
-                    const data = await response.json();
-                    if (!response.ok || !data.success) {
-                        console.log('Error: config context', data.message)
-                    }
-                    else {
-                        localStorage["freeUserToken"] = data.token;
-                        window.location.reload();
-                    }
-                })
-                // .then(res => console.log(res))
-        }
-        else {
+        // if (!localStorage["freeUserToken"] || localStorage["freeUserToken"] === null || localStorage["freeUserToken"] === "undefined") {
+        //     const AUTHURL = `${API_ENDPOINT}/session/createNewUserDevice`;
+        //     fetch(AUTHURL)
+        //         .then(async response => {
+        //             const data = await response.json();
+        //             if (!response.ok || !data.success) {
+        //                 console.log('Error: config context', data.message)
+        //             }
+        //             else {
+        //                 localStorage["freeUserToken"] = data.token;
+        //                 window.location.reload();
+        //             }
+        //         })
+        //         // .then(res => console.log(res))
+        // }
+        // else {
+            // debugger
+            if(localStorage['freeUserToken']){
             // console.log("At config context get fields",tableFields)
             const URL = `${API_ENDPOINT}/public/fields/data?client=1`;
             fetch(URL, {
@@ -39,7 +43,8 @@ const ConfigContextProvider = (props) => {
                     console.error('Error:', error);
                 });
         }
-    }, [global]);
+  
+    }, []);
     
     useEffect(() => {
         //  console.log("At config context setAppFields has change 46",tableFields)

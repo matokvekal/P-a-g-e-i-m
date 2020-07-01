@@ -4,8 +4,8 @@ import Card2 from '../components/main/cards/Card2';
 
 export const Pageim = (props) => {
     const [app] = useState(props.app)
-    // console.log('at pagim',props)
-
+    console.log('at pagim',props)
+debugger
     return (
         < >
            {props.screenType==='table'? <Table2 app={app}/>:<Card2 app={app}/>}
