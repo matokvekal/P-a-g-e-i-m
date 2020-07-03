@@ -264,7 +264,7 @@ export default function PrimarySearchAppBar(props) {
           </div>
 
        
-          <Button color="default" onClick={showHideModal}>ADD ROW</Button>
+          <Button color="default" onClick={showHideModal}>ADD NEW ROW</Button>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
 

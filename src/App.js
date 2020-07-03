@@ -31,7 +31,7 @@ function App() {
 
 
   useEffect(() => {
-     debugger
+
     // if (!localStorage['menu'] || localStorage['menu'] === null || localStorage['menu'] === "undefined") {
     //   setMenu(JSON.stringify(localStorage['menu']))
     //   // console.log('GetMenu App.js');
@@ -42,7 +42,7 @@ function App() {
       }
       else {
         // console.log('Fetch Menu App.js');
-        const URL = `${API_ENDPOINT}/public/menu/data?customer=1`;
+        const URL = `${API_ENDPOINT}/public/menu/data`;
         fetch(URL, {
           method: 'POST',
           headers: { Authorization: "Bearer " + localStorage['freeUserToken'] }
@@ -71,7 +71,7 @@ function App() {
   let screenView = 'table';
   const [AppDirection, setAppDirection] = useState(currentDir ? currentDir : 'ltr');
   const [screenType, setScreenType] = useState(screenView ? screenView : 'table');
-
+debugger
   return (
     <div className={AppDirection}>
 

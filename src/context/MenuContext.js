@@ -22,7 +22,7 @@ const MenuContextProvider = (props) => {
                 console.log('no user token Menu context')
             }
             else {
-                const URL = `${API_ENDPOINT}/public/menu/data?customer=1`;
+                const URL = `${API_ENDPOINT}/public/menu/data`;
                 fetch(URL, {
                     method: 'POST',
                     headers: { Authorization: "Bearer " + localStorage['freeUserToken'] }

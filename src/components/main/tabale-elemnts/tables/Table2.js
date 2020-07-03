@@ -122,7 +122,8 @@ const HandleHideColumn = (field) => {
 
 
 const HandleSort = (field) => {
-  setTrigerFetch('HandleSort');
+  debugger
+  
   let h = fields.filter(x => x.name === field)[0];
 
   if (h.clientSort) {
@@ -135,6 +136,7 @@ const HandleSort = (field) => {
     setSortOrder(x => x + 1);
     h.clientSortOrder = sortOrder;
   }
+  setTrigerFetch('HandleSort'+field+h.clientSortIcon);
 }
 
 const handleDragStart = e => {
@@ -230,16 +232,19 @@ return (
                 key={index1}>
                 <span className='header-unit' key={index1 * 999}>
                   <span
-                    style={{ Width: `${header.width}px` }} className='header-data' onClick={() => HandleSort(header.name)}>
+                    style={{ Width: `${header.width}px` }} className='header-data'  onClick={() =>  header.can_sort===1?HandleSort(header.name):''}>
                     {header.name}
                   </span>
                   <span className='header-action' >
 
-                    <span className="sort-icon" onClick={() => HandleSort(header.name)} >
+                   {header.can_sort===1? <span className="sort-icon" onClick={() => HandleSort(header.name)} >
                       <i className={header.clientSortIcon}>
                         <span className='sort-order'>{header.clientSortOrder}</span>
                       </i>
-                    </span>
+                      
+                    </span>:null
+            }
+           
 
 
                     <span onClick={() => HandleHideColumn(header.name)} className='HandleHideColumn'>

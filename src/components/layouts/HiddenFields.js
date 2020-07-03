@@ -6,6 +6,7 @@ import { GlobalContext } from '../../context/GlobalContext';
 import Divider from '@material-ui/core/Divider';
 import { ConfigContext } from '../../context/ConfigContext';
 import ControlPointIcon from '@material-ui/icons/ControlPoint';
+import SettingsBackupRestoreIcon from '@material-ui/icons/SettingsBackupRestore';
 
 const ITEM_HEIGHT = 48;
 
@@ -44,7 +45,7 @@ export default function HiddenFields() {
         aria-haspopup="true"
         onClick={handleClick}
       >
-        <ControlPointIcon color={countHidden === 0 ? 'inherit' : 'secondary'} />
+        <SettingsBackupRestoreIcon color={countHidden === 0 ? 'inherit' : 'secondary'} />
       </IconButton>
       <Menu
         id="long-menu"

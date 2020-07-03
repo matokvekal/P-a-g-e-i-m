@@ -32,7 +32,7 @@ const ConfigContextProvider = (props) => {
             // debugger
             if(localStorage['freeUserToken']){
             // console.log("At config context get fields",tableFields)
-            const URL = `${API_ENDPOINT}/public/fields/data?client=1`;
+            const URL = `${API_ENDPOINT}/public/fields/data`;
             fetch(URL, {
                 method: 'POST',
                 headers: { Authorization: "Bearer " + localStorage['freeUserToken'] }
