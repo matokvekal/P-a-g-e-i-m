@@ -4,10 +4,11 @@ import Card2 from '../components/main/cards/Card2';
 
 export const Pageim = (props) => {
     const [app] = useState(props.app)
+    const [appPermission] = useState(props.appPermission)
     console.log('at pagim',props)
     return (
         < >
-           {props.screenType==='table'? <Table2 app={app}/>:<Card2 app={app}/>}
+           {props.screenType==='table'? <Table2 app={app} appPermission={appPermission}/>:<Card2 app={app}/>}
         </>
     )
 

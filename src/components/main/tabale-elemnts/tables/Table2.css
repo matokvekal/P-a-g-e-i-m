@@ -37,6 +37,7 @@
   text-transform: capitalize;
   vertical-align: middle;
   text-transform: uppercase;
+  height: 50px;
   }
   
   th:last-child {
@@ -70,7 +71,8 @@
   text-transform: lowercase;
 }
 .header-action{
-  width:120px;
+
+  height: 40px;;
 
 }
 

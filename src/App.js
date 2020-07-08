@@ -32,11 +32,6 @@ function App() {
 
   useEffect(() => {
 
-    // if (!localStorage['menu'] || localStorage['menu'] === null || localStorage['menu'] === "undefined") {
-    //   setMenu(JSON.stringify(localStorage['menu']))
-    //   // console.log('GetMenu App.js');
-    // }
-    // else {
       if (!localStorage['freeUserToken'] || localStorage['freeUserToken'] === null || localStorage['freeUserToken'] === "undefined") {
         console.log('no user token App.js')
       }
@@ -58,20 +53,10 @@ function App() {
     // setTrigerFetch('');
   }, []);
 
-
-  // useEffect(() => {
-  //   debugger
-  //   if (!localStorage['menu'] || localStorage['menu'] === null || localStorage['menu'] === "undefined")
-  //     if (menu && menu.length > 0)
-  //       localStorage['menu'] = JSON.stringify(menu);
-
-  // }, [])
-
-
   let screenView = 'table';
   const [AppDirection, setAppDirection] = useState(currentDir ? currentDir : 'ltr');
   const [screenType, setScreenType] = useState(screenView ? screenView : 'table');
-debugger
+
   return (
     <div className={AppDirection}>
 
@@ -88,7 +73,7 @@ debugger
               <PrimarySearchAppBar setAppDirection={setAppDirection} AppDirection={AppDirection} setScreenType={setScreenType} screenType={screenType} />
               <Switch>
                 {(menu && menu.length > 0) ? menu.map((item, index) => (
-                  <Route path={'/' + item.app}><Pageim app={'/' + item.app} screenType={screenType} key={index} /> </Route>
+                  <Route path={'/' + item.app}><Pageim app={'/' + item.app} appPermission={item.permission} screenType={screenType} key={index} /> </Route>
                 )) : console.log('menu error')}
               </Switch>
             </ConfigContextProvider>
