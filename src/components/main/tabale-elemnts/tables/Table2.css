@@ -101,7 +101,9 @@
 {
   color: red !important;
 }
-
+.disabled {
+  display:none;
+}
 
 .filter{
   /* position: fixed;

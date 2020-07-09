@@ -9,7 +9,7 @@ import Filter from './Filter';
 import Stars from './Stars';
 import Checkbox from '@material-ui/core/Checkbox';
 import { ConfigContext } from '../../../../context/ConfigContext';
-
+import {editRow} from './../../../../services/editRowService';
 
 export const Table2 = (props) => {
   let app = props.app ? props.app : '';
@@ -28,9 +28,11 @@ export const Table2 = (props) => {
   const appFields = tableFields.filter(x => x.application === APP);
   const [trigerFetch, setTrigerFetch] = useState([]);
   const [rowInEditMode, setRowInEditMode] = useState('');
-  const [currentHeader, setCurrentHeader] = useState('')
-  const[checked,setChecked]=useState();
+  const [rowBeforeEdit, setRowBeforeEdit] = useState('');
+  const [x, fx] = useState(0)
+  const [checked, setChecked] = useState();
   const [newRow, setNewRow] = useState('');
+  const [icons, setIcons] = useState([])
   let appPermissionEdit = false;
   let appPermissionDel = false;
   if (appPermission) {
@@ -55,7 +57,14 @@ export const Table2 = (props) => {
       h.clientAggregation = false;
     }
   }
-
+  const saveRow = async e => {
+    debugger
+    const res=await editRow(newRow);
+    debugger
+    if(res!=='ok')
+    alert('error')
+    console.log('at table2',res)
+}
   const HandleFilter = (field) => {
     setTrigerFetch('HandleFilter');
     let h = fields.filter(x => x.name === field)[0];
@@ -110,17 +119,39 @@ export const Table2 = (props) => {
   }
 
   const [state, setState] = React.useState({
-    a: true,
+    s: 'abc',
   });
- 
+
+
   const handleChange = (event) => {
-    newRow[event.target.name] = newRow[event.target.name] && newRow[event.target.name] === 1 ? 0 : 1;
+    debugger
     setNewRow(newRow);
-    setState({ ...state,  });
+    if(event.target.type==='checkbox')
+      newRow[event.target.name]= event.target.checked?1:0;
+    else //include text or textarea
+      newRow[event.target.name]=event.target.value;
+    setNewRow(newRow);
+   
+    setState({ ...state, newRow });
+    console.log('newRow after ',newRow);
   };
+
+  const clickCancel = () => {
+    
+    setRowInEditMode({});
+    setNewRow({ ...state, newRow });
+  }
+  const clickDelete = (row) => {
+  }
+  const clickSave = () => {
+    saveRow();
+    setRowInEditMode({});
+    setNewRow({ ...state, newRow });
+  }
   const clickEdit = (row) => {
-    setRowInEditMode(row);
-    setNewRow(row);
+        setRowBeforeEdit({...row});
+    setNewRow({...row});
+    setRowInEditMode({...row});
   }
 
   const CheckSpecialFields = (header, row) => {
@@ -215,7 +246,7 @@ export const Table2 = (props) => {
                     onDragOver={HandleOnDragOver}
                     onDragEnter={handleDragEnter}
                     onDrop={handleDrop}
-                    style={{ maxWidth: `150px`, minWidth: `140px` }}
+                    style={{ maxWidth: `300px`, minWidth: `140px` }}
                     key={index1}>
                     <span className='header-unit' >
                       <span
@@ -271,35 +302,57 @@ export const Table2 = (props) => {
                     {fields.map((header, index3) => (!header.clientTableHideColumn ?
                       header.name === 'action'
                         ?
-                        <td style={{ maxWidth: `125px` }} key={header + index3}>
-                          <span>
-                            <a href='#!' className={`btn btn-sm ${appPermissionDel ? '' : "disabled"}`}>
-                              <i className="fas fa-trash"></i>
-                            </a>
-                            <a href='#!' className={`btn btn-sm ${appPermissionEdit ? '' : "disabled"}`} onClick={() => clickEdit(row)}>
-                              <i className="fas fa-edit"></i>
-                            </a>
-                          </span>
+                        <td style={{ maxWidth: `300px` }} key={header + index3}>
+
+                          {(rowInEditMode.id === row.id)
+                            ?
+                            <span>
+                              <a href='#!' className={`btn btn-sm `} onClick={() => clickCancel()}>
+                                <i className="fas fa-times"></i>
+                              </a>
+                              <a href='#!' className={`btn btn-sm `} onClick={() => clickSave()}>
+                                <i className="fas fa-check" aria-hidden="true"></i>
+                              </a>
+                            </span>
+                            :
+                            <span>
+                              <a href='#!' className={`btn btn-sm ${appPermissionDel ? '' : "disabled"}`} onClick={() => clickDelete(row)}>
+                                <i className="fas fa-trash"></i>
+                              </a>
+                              <a href='#!' className={`btn btn-sm ${appPermissionEdit ? '' : "disabled"}`} onClick={() => clickEdit(row)}>
+                                <i className="fas fa-edit"></i>
+                              </a>
+                            </span>
+                          }
+
                         </td>
                         :
                         <td style={{ maxWidth: `${header.width + extra_header_width}px`, minWidth: `${header.width + extra_header_width}px` }} key={header + index3}>
-                          <span>
-                            {(rowInEditMode === row && header.is_edit && header.is_edit === 1)
+                          <span>{/**row in edit mode **/}
+                            {(rowInEditMode.id === row.id  )
+                              ?/**header can edit**/
+                              (header.is_edit && header.is_edit === 1)
                               ?
                               (header.type === 'textarea')
                                 ?
-                                <textarea value={newRow[header.name]} />
+                                <textarea value={newRow[header.name]} name={header.name} onChange={handleChange} />
                                 :
                                 (header.type === 'checkBox')
                                   ?
-                                  /*   {<Checkbox name={header.name}  checked={newRow[header.name] && newRow[header.name] === 1} onChange={event=>{console.log(newRow[header.name]);let checked=event.target.checked;newRow[header.name]= checked ? 1 : 0; setNewRow(newRow)}} />}*/
-
-                                  <Checkbox name={header.name}  checked={newRow[header.name]} onChange={handleChange} />
+                                  <Checkbox name={header.name} checked={newRow[header.name] === 1 ? true : false} onChange={handleChange} />
                                   :
-                                  <input value={newRow[header.name]} />
-                              :
+                                  <input name={header.name} value={newRow[header.name]} onChange={handleChange} />
+                              :   /**row in edit mode  but header can not edit **/
+
+                                  (header.type === 'checkBox')
+                                  ?
+                                  <Checkbox disabled checked={newRow[header.name] && row[header.name] === 1} />
+                                  :
+                                  <span>{newRow[header.name]}</span>
 
 
+                              : /**row in view mode  **/
+                                    
                               (header.type === 'checkBox')
                                 ?
                                 <Checkbox disabled checked={row[header.name] && row[header.name] === 1} />
