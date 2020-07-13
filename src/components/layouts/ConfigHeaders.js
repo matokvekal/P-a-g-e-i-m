@@ -9,7 +9,6 @@ export const ConfigHeaders = () => {
     APP = APP.toLowerCase();
 
     const appFields=tableFields.filter(x => x.application === APP);
-    // console.log('config headers 2  try get config ',appFields)
     return (
         <>
             {appFields ? appFields.map((header, i) => (

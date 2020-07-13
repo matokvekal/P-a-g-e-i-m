@@ -23,9 +23,7 @@ export const Navbar3 = () => {
     const toggleCollapsed = () => {
         setCollapsed(state => !state)
     };
- console.log(' menu nav bar 3 localStorage',menuList)
-    // if(menuList && menuList.length>0)
-    //     localStorage['menu']=JSON.stringify(menuList)
+
 
 
     return (

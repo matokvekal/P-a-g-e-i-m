@@ -36,7 +36,7 @@ function App() {
         console.log('no user token App.js')
       }
       else {
-        // console.log('Fetch Menu App.js');
+
         const URL = `${API_ENDPOINT}/public/menu/data`;
         fetch(URL, {
           method: 'POST',

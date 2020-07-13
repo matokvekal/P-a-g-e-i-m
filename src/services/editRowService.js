@@ -3,7 +3,6 @@ import { pageimEndPoint } from '../Config';
 
 const API_ENDPOINT = pageimEndPoint();
     export const editRow=async(row)=>{
-      debugger
         if (!localStorage["freeUserToken"] || localStorage["freeUserToken"] === null || localStorage["freeUserToken"] === "undefined") 
         console.log('no freeUserToken add row')
         else
@@ -25,9 +24,7 @@ const API_ENDPOINT = pageimEndPoint();
                 console.log("AXIOS ERROR: ", response);
                 return response;
               })
-    
-            // return 'Error:add new row';
-         
+
         }
 
     }

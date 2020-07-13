@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import './Table2.css';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -89,7 +89,7 @@ function Filter(props) {
       setFilterIcon(Filter1TwoToneIcon)
     else
       setFilterIcon(FilterListIcon);
-    // console.log(FilterCheckBox);
+
   }
 
   return (

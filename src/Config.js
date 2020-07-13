@@ -1,6 +1,6 @@
 
 export const pageimEndPoint = () => {
-    return 'http://yonaswr.com';
+    return 'http://104.248.161.10:8080';
 }
 
 export const configHeader = () => {

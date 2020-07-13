@@ -25,7 +25,6 @@ useEffect(() => {
                     window.location.reload();
                 }
             })
-            // .then(res => console.log(res))
     }
 }, [])
     return (

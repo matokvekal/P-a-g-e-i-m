@@ -28,7 +28,6 @@ const MenuContextProvider = (props) => {
                     headers: { Authorization: "Bearer " + localStorage['freeUserToken'] }
                 })
                     .then(response => response.json())
-                    // .then(res=>console.log('menu context',res))
                     .then(data => setMenuList(data))
                     .catch((error) => {
                         console.error('Error:', error);
@@ -37,14 +36,6 @@ const MenuContextProvider = (props) => {
         // }
     }, []);
 
-
-//     useEffect(() => {
-//         debugger
-//         if (!localStorage['menu'] || localStorage['menu'] === null || localStorage['menu'] === "undefined")
-//            { localStorage.setItem('menu', JSON.stringify(menuList));
-// // console.log('menu context update menu,',menuList)
-//     }
-//     }, [menuList])
 
     return (
         <MenuContext.Provider value={{ menuList }} >

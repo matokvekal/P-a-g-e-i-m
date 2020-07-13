@@ -9,7 +9,7 @@ import Filter from './Filter';
 import Stars from './Stars';
 import Checkbox from '@material-ui/core/Checkbox';
 import { ConfigContext } from '../../../../context/ConfigContext';
-import {editRow} from './../../../../services/editRowService';
+import { editRow } from './../../../../services/editRowService';
 
 export const Table2 = (props) => {
   let app = props.app ? props.app : '';
@@ -46,7 +46,7 @@ export const Table2 = (props) => {
   }, [])
 
   const HandleAggregation = (field) => {
-    setTrigerFetch('HandleAggregation');
+    setTrigerFetch('HandleAggregation'+Date.now());
     let h = fields.filter(x => x.name === field)[0];
     if (!h.clientAggregation) {
       h.clientAggrigationIcon = 'fa fa-check-square';
@@ -58,15 +58,11 @@ export const Table2 = (props) => {
     }
   }
   const saveRow = async e => {
-    debugger
-    const res=await editRow(newRow);
-    debugger
-    if(res!=='ok')
-    alert('error')
-    console.log('at table2',res)
-}
+    const res = editRow(newRow)
+    console.log('at table2', res)
+  }
   const HandleFilter = (field) => {
-    setTrigerFetch('HandleFilter');
+    setTrigerFetch('HandleFilter'+Date.now());
     let h = fields.filter(x => x.name === field)[0];
     if (!h.clientFilter) {
       h.clientFilter = field;
@@ -79,7 +75,7 @@ export const Table2 = (props) => {
   }
 
   const HandleHideColumn = (field) => {
-    setTrigerFetch('HandleHideColumn');
+    setTrigerFetch('HandleHideColumn'+Date.now());
     let h = fields.filter(x => x.name === field)[0];
     h.clientTableHideColumn = true;
   }
@@ -98,11 +94,11 @@ export const Table2 = (props) => {
       setSortOrder(x => x + 1);
       h.clientSortOrder = sortOrder;
     }
-    setTrigerFetch('HandleSort' + field + h.clientSortIcon);
+    setTrigerFetch('HandleSort'+Date.now());
   }
 
   const handleDragStart = e => {
-    setTrigerFetch('handleDragStart');
+    setTrigerFetch('handleDragStart'+Date.now());
     const { id } = e.target;
     e.dataTransfer.setData("data", id);
   }
@@ -124,39 +120,38 @@ export const Table2 = (props) => {
 
 
   const handleChange = (event) => {
-    debugger
+
     setNewRow(newRow);
-    if(event.target.type==='checkbox')
-      newRow[event.target.name]= event.target.checked?1:0;
+    if (event.target.type === 'checkbox')
+      newRow[event.target.name] = event.target.checked ? 1 : 0;
     else //include text or textarea
-      newRow[event.target.name]=event.target.value;
+      newRow[event.target.name] = event.target.value;
     setNewRow(newRow);
-   
     setState({ ...state, newRow });
-    console.log('newRow after ',newRow);
   };
 
   const clickCancel = () => {
-    
     setRowInEditMode({});
     setNewRow({ ...state, newRow });
   }
   const clickDelete = (row) => {
   }
   const clickSave = () => {
+  
     saveRow();
-    setRowInEditMode({});
-    setNewRow({ ...state, newRow });
+    setTrigerFetch('clickSave'+Date.now());
+       setNewRow({ ...state, newRow });
+    setRowInEditMode({ ...state, newRow });
+   
   }
   const clickEdit = (row) => {
-        setRowBeforeEdit({...row});
-    setNewRow({...row});
-    setRowInEditMode({...row});
+    setRowBeforeEdit({ ...row });
+    setNewRow({ ...row });
+    setRowInEditMode({ ...row });
   }
 
   const CheckSpecialFields = (header, row) => {
-    console.log('in CheckSpecialFields')
-    debugger
+    // debugger
     if (rowInEditMode === row && header.is_edit && header.is_edit === 1) {
 
       if (header.type === 'textarea')
@@ -205,12 +200,13 @@ export const Table2 = (props) => {
 
 
   useEffect(() => {
-    if (app === '/')
+    if (app === '/'||app==='/Templates')
       return
     if (!localStorage["freeUserToken"] || localStorage["freeUserToken"] === null || localStorage["freeUserToken"] === "undefined") {
       console.log('no freeUserToken table2')
     }
     else {
+      // debugger
       const URL = `${API_ENDPOINT}/public${app}/data`;
       fetch(URL, {
         method: 'POST',
@@ -231,7 +227,7 @@ export const Table2 = (props) => {
 
   return (
     <>
-      {!fields ?
+      {!fields ||fields.length===0?
         <span className='error'>Error occured : {errorMsg}</span> :
         <table id="main" className="display" >
           <thead>
@@ -295,7 +291,7 @@ export const Table2 = (props) => {
             </tr>
           </thead>
           <tbody>
-            {!data ? <tr className='noData'>Wait...</tr> :
+            {!data || data.length === 0  ?<tr className='noData'>Wait...</tr> :
               data.slice(0, pageSize).map((row, index2) => (
                 <>
                   <tr className='tablerow' key={index2} >
@@ -329,22 +325,22 @@ export const Table2 = (props) => {
                         :
                         <td style={{ maxWidth: `${header.width + extra_header_width}px`, minWidth: `${header.width + extra_header_width}px` }} key={header + index3}>
                           <span>{/**row in edit mode **/}
-                            {(rowInEditMode.id === row.id  )
+                            {(rowInEditMode.id === row.id)
                               ?/**header can edit**/
                               (header.is_edit && header.is_edit === 1)
-                              ?
-                              (header.type === 'textarea')
                                 ?
-                                <textarea value={newRow[header.name]} name={header.name} onChange={handleChange} />
-                                :
-                                (header.type === 'checkBox')
+                                (header.type === 'textarea')
                                   ?
-                                  <Checkbox name={header.name} checked={newRow[header.name] === 1 ? true : false} onChange={handleChange} />
+                                  <textarea value={newRow[header.name]} name={header.name} onChange={handleChange} />
                                   :
-                                  <input name={header.name} value={newRow[header.name]} onChange={handleChange} />
-                              :   /**row in edit mode  but header can not edit **/
-
                                   (header.type === 'checkBox')
+                                    ?
+                                    <Checkbox name={header.name} checked={newRow[header.name] === 1 ? true : false} onChange={handleChange} />
+                                    :
+                                    <input name={header.name} value={newRow[header.name]} onChange={handleChange} />
+                                :   /**row in edit mode  but header can not edit **/
+
+                                (header.type === 'checkBox')
                                   ?
                                   <Checkbox disabled checked={newRow[header.name] && row[header.name] === 1} />
                                   :
@@ -352,7 +348,7 @@ export const Table2 = (props) => {
 
 
                               : /**row in view mode  **/
-                                    
+
                               (header.type === 'checkBox')
                                 ?
                                 <Checkbox disabled checked={row[header.name] && row[header.name] === 1} />

@@ -23,16 +23,14 @@ import locale from 'antd/es/date-picker/locale/he_IL';
 
 const AddRowModalForm = (props) => {
     const { TextArea } = Input;
-    // const dismiss=props;
 
     const { cancelModal } = props;
-    debugger
+    // debugger
     let APP = window.location.pathname.toString();
     APP = APP ? APP.substr(1) : '';
     const { tableFields } = useContext(ConfigContext);
     APP = APP.toLowerCase();
     const appFields = tableFields.filter(x => x.application === APP);
-    // const { config } = useContext(ConfigContext);
 
     let newRow = {};
     (() => appFields.map(x => {
@@ -40,7 +38,7 @@ const AddRowModalForm = (props) => {
     }))();
     const [row, setRow] = useState(newRow)
     const onChange = (e) => {
-        debugger
+        // debugger
         const { name, value } = e.target;
         row[name] = value;
         setRow({ ...row },)
