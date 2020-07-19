@@ -313,7 +313,7 @@ export default function PrimarySearchAppBar(props) {
           <Divider />
 
           <IconButton onClick={siteDirection}> {AppDirection === 'ltr' ? <ChevronRightIcon /> : <ChevronLeftIcon />} </IconButton>
-          <p>ver 1.01</p>
+          <p>ver 1.03</p>
         </List>
 
       </Drawer>

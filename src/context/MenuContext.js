@@ -8,13 +8,11 @@ const API_ENDPOINT = pageimEndPoint();
 
 
 const MenuContextProvider = (props) => {
-    // debugger
     const [menuList, setMenuList] = useState([]);
     // const [setHasError] = useState(false);
     // const [setErrorMsg] = useState('');
 
     useEffect(() => {
-        // debugger
         // if (localStorage['menu'] && localStorage['menu'] !== null  && localStorage['menu'] !== "[]")
         // setMenuList(JSON.stringify(localStorage['menu']))
         // else {

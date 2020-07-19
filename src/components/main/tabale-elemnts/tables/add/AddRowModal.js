@@ -10,7 +10,6 @@ const AddRowModal = (props) => {
     //     setVisible(true);
     // }
     // const dismiss = () => {
-    //     debugger
     //     alert('dismis')
     //     setVisible(false);
     // }

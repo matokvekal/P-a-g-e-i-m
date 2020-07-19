@@ -8,7 +8,6 @@ const ConfigContextProvider = (props) => {
     const [tableFields, setTableFields] = useState([]);
 
     useEffect(() => {
-//  debugger
             if(localStorage['freeUserToken']){
             const URL = `${API_ENDPOINT}/public/fields/data`;
             fetch(URL, {
@@ -26,6 +25,7 @@ const ConfigContextProvider = (props) => {
     
     useEffect(() => {
         if (tableFields && tableFields.length > 0) {
+            // console.log('got tableFields',tableFields)
             for (let row of tableFields) {
                 row.clienSort = false;
                 row.clientSortOrder = null;
@@ -41,14 +41,17 @@ const ConfigContextProvider = (props) => {
                 row.dragable = true;
                 row.clientFilterHeaderCheckbox = false;
                 }
+                setTableFields(x=>tableFields);
             localStorage['fields']=JSON.stringify(tableFields);
         }
+        else
+        console.log('no tableFields')
     }, [tableFields])
 
 
 
     return (
-        <ConfigContext.Provider value={{ tableFields }} >
+        <ConfigContext.Provider value={[ tableFields ,setTableFields]} >
             {props.children}
         </ConfigContext.Provider>
     )
