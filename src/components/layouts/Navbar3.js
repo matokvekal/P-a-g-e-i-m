@@ -19,7 +19,6 @@ const { SubMenu } = Menu;
 export const Navbar3 = () => {
     const [collapsed, setCollapsed] = useState(false);
     const { menuList } = useContext(MenuContext);
-    // debugger
     const toggleCollapsed = () => {
         setCollapsed(state => !state)
     };

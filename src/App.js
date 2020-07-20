@@ -10,12 +10,15 @@ import Pageim from './components/Pageim';
 import './App.css';
 import Templates from './components/main/Templates';
 import toDoWatsApp from './components/main/external/toDoWatsApp';
+import DynamicComponent from './components/main/DynamicComponent';
 // import { getFields } from './services/getFields-old';
 import { pageimEndPoint } from './Config';
 
 // import RouterApp from './components/main/RouterApp';
 
 function App() {
+  console.log('at App.js')
+
   const [renderCounter, setRenderCounter] = useState([])
   const API_ENDPOINT = pageimEndPoint();
   const [menu, setMenu] = useState([]);
@@ -23,7 +26,6 @@ function App() {
   const [freeUserToken] = useState(null)
 
   let currentDir = window.localStorage.getItem('AppDirection');
-  // debugger
   if (currentDir == null || (currentDir !== 'rtl' && currentDir !== 'ltr'))
     currentDir = 'ltr';
 
@@ -31,7 +33,7 @@ function App() {
 
 
   useEffect(() => {
-
+    console.log('at useEffect App.js')
       if (!localStorage['freeUserToken'] || localStorage['freeUserToken'] === null || localStorage['freeUserToken'] === "undefined") {
         console.log('no user token App.js')
       }
@@ -56,7 +58,6 @@ function App() {
   let screenView = 'table';
   const [AppDirection, setAppDirection] = useState(currentDir ? currentDir : 'ltr');
   const [screenType, setScreenType] = useState(screenView ? screenView : 'table');
-
   return (
     <div className={AppDirection}>
 
@@ -72,8 +73,12 @@ function App() {
           
               <PrimarySearchAppBar setAppDirection={setAppDirection} AppDirection={AppDirection} setScreenType={setScreenType} screenType={screenType} />
               <Switch>
-                {(menu && menu.length > 0) ? menu.map((item, index) => (
-                  <Route path={'/' + item.app}><Pageim app={'/' + item.app} appPermission={item.permission} screenType={screenType} key={index} /> </Route>
+                {(menu && menu.length > 0 ) ? menu.map((item, index) => (
+                  item.mainApp==='pageim'
+                  ?
+                  <Route exact path={'/' + item.app}><Pageim app={'/' + item.app} appPermission={item.permission} screenType={screenType} key={index} /> </Route>
+                  :
+                  <Route exact path={'/' + item.app}><DynamicComponent html={item.html}/> </Route>
                 )) : console.log('menu error')}
               </Switch>
             </ConfigContextProvider>

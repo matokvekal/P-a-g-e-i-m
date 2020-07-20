@@ -5,13 +5,13 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { GlobalContext } from '../../context/GlobalContext';
 import Divider from '@material-ui/core/Divider';
 import { ConfigContext } from '../../context/ConfigContext';
-import ControlPointIcon from '@material-ui/icons/ControlPoint';
+// import ControlPointIcon from '@material-ui/icons/ControlPoint';
 import SettingsBackupRestoreIcon from '@material-ui/icons/SettingsBackupRestore';
 
 const ITEM_HEIGHT = 48;
 
 export default function HiddenFields() {
-  const { tableFields } = useContext(ConfigContext);
+  const [ tableFields ,setTableFields] = useContext(ConfigContext);
   const { global, settingGlobal } = useContext(GlobalContext);
   const [hideItem, setHideItem] = useState('')
   let APP = window.location.pathname.toString();

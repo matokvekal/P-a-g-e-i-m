@@ -22,17 +22,31 @@ export const Table2 = (props) => {
   const API_ENDPOINT = pageimEndPoint();
   const [pageSize, setPageSize] = useState(100);
   const extra_header_width = 80;
-  const [fields, setFields] = useState([]);
+  const [AppFields, setAppFields] = useState([]);
   const [errorMsg, setErrorMsg] = useState('');
-  const { tableFields } = useContext(ConfigContext);
-  const appFields = tableFields.filter(x => x.application === APP);
+  const [ tableFields ,setTableFields] = useContext(ConfigContext);
+
+
+
+  useEffect(() => {
+    if (!tableFields || tableFields.length===0){
+      if(!localStorage['fields'] || localStorage['fields'].length===0)
+          tableFields =JSON.parse(localStorage['fields']) ;
+    }
+    if (tableFields){
+      setAppFields(tableFields.filter(x => x.application === APP));
+    }
+
+  }, [tableFields])
+
   const [trigerFetch, setTrigerFetch] = useState([]);
   const [rowInEditMode, setRowInEditMode] = useState('');
   const [rowBeforeEdit, setRowBeforeEdit] = useState('');
   const [x, fx] = useState(0)
   const [checked, setChecked] = useState();
   const [newRow, setNewRow] = useState('');
-  const [icons, setIcons] = useState([])
+  const [icons, setIcons] = useState([]);
+  const { global } = useContext(GlobalContext);
   let appPermissionEdit = false;
   let appPermissionDel = false;
   if (appPermission) {
@@ -40,14 +54,11 @@ export const Table2 = (props) => {
     appPermissionDel = appPermission.toLowerCase().includes('all') || appPermission.toLowerCase().includes('del');
   }
 
-  useEffect(() => {
-    if (appFields)
-      setFields(appFields);
-  }, [])
+
 
   const HandleAggregation = (field) => {
-    setTrigerFetch('HandleAggregation'+Date.now());
-    let h = fields.filter(x => x.name === field)[0];
+
+    let h = AppFields.filter(x => x.name === field)[0];
     if (!h.clientAggregation) {
       h.clientAggrigationIcon = 'fa fa-check-square';
       h.clientAggregation = field;
@@ -56,14 +67,14 @@ export const Table2 = (props) => {
       h.clientAggrigationIcon = 'far fa-square';
       h.clientAggregation = false;
     }
+    setTrigerFetch('HandleAggregation'+Date.now());
   }
   const saveRow = async e => {
     const res = editRow(newRow)
-    console.log('at table2', res)
   }
   const HandleFilter = (field) => {
-    setTrigerFetch('HandleFilter'+Date.now());
-    let h = fields.filter(x => x.name === field)[0];
+    
+    let h = AppFields.filter(x => x.name === field)[0];
     if (!h.clientFilter) {
       h.clientFilter = field;
       h.clientFilterIconColor = 'colorRed';
@@ -72,18 +83,19 @@ export const Table2 = (props) => {
       h.clientFilter = false;
       h.clientFilterIconColor = 'colorWhite';
     }
+    setTrigerFetch('HandleFilter'+Date.now());
   }
 
   const HandleHideColumn = (field) => {
-    setTrigerFetch('HandleHideColumn'+Date.now());
-    let h = fields.filter(x => x.name === field)[0];
+        let h = AppFields.filter(x => x.name === field)[0];
     h.clientTableHideColumn = true;
+    setTrigerFetch('HandleHideColumn'+Date.now());
   }
 
 
 
   const HandleSort = (field) => {
-    let h = fields.filter(x => x.name === field)[0];
+    let h = AppFields.filter(x => x.name === field)[0];
     if (h.clientSort) {
       h.clientSortIcon === 'fas fa-sort-down icon' ? (h.clientSortIcon = 'fas fa-sort-up icon', h.direction = 'asc') : (h.clientSortIcon = 'fas fa-sort-down icon', h.direction = 'desc');
     }
@@ -98,9 +110,10 @@ export const Table2 = (props) => {
   }
 
   const handleDragStart = e => {
-    setTrigerFetch('handleDragStart'+Date.now());
+    
     const { id } = e.target;
     e.dataTransfer.setData("data", id);
+    setTrigerFetch('handleDragStart'+Date.now());
   }
   const HandleOnDragOver = (e) => {
     e.preventDefault();
@@ -139,9 +152,10 @@ export const Table2 = (props) => {
   const clickSave = () => {
   
     saveRow();
-    setTrigerFetch('clickSave'+Date.now());
+  
        setNewRow({ ...state, newRow });
     setRowInEditMode({ ...state, newRow });
+    setTrigerFetch('clickSave'+Date.now());
    
   }
   const clickEdit = (row) => {
@@ -150,41 +164,39 @@ export const Table2 = (props) => {
     setRowInEditMode({ ...row });
   }
 
-  const CheckSpecialFields = (header, row) => {
-    // debugger
-    if (rowInEditMode === row && header.is_edit && header.is_edit === 1) {
-
-      if (header.type === 'textarea')
-        return <textarea value={row[header.name]} />
-      else if (header.type === 'select')
-        return <h3 value={`${row[header.name]}  select not ready yet`} />
-      else if (header.type === 'multiSelect')
-        return <h3 value={`${row[header.name]}  muly select not ready yet`} />
-      else if (header.type === 'number')
-        return <input type='number' value={row[header.name]} />
-      else if (header.type === 'stars')
-        return <Stars stars={row[header.name]} />
-      else if (header.type === 'checkBox') {
-        return <Checkbox name={header.name} checked={newRow[header.name] && newRow[header.name] === 1 ? true : false} onChange={handleChange} />
-      }
-      else return <input value={row[header.name]} />
-    }
-    else {
-      if (header.type === 'stars')
-        return <Stars stars={row[header.name]} />
-      else if (header.type === 'checkBox')
-        return <Checkbox disabled checked={row[header.name] && row[header.name] === 1} />
-      else
-        return <span>{row[header.name]}</span>
-    }
-  }
+  // const CheckSpecialFields = (header, row) => {
+  //   if (rowInEditMode === row && header.is_edit && header.is_edit === 1) {
+  //     if (header.type === 'textarea')
+  //       return <textarea value={row[header.name]} />
+  //     else if (header.type === 'select')
+  //       return <h3 value={`${row[header.name]}  select not ready yet`} />
+  //     else if (header.type === 'multiSelect')
+  //       return <h3 value={`${row[header.name]}  muly select not ready yet`} />
+  //     else if (header.type === 'number')
+  //       return <input type='number' value={row[header.name]} />
+  //     else if (header.type === 'stars')
+  //       return <Stars stars={row[header.name]} />
+  //     else if (header.type === 'checkBox') {
+  //       return <Checkbox name={header.name} checked={newRow[header.name] && newRow[header.name] === 1 ? true : false} onChange={handleChange} />
+  //     }
+  //     else return <input value={row[header.name]} />
+  //   }
+  //   else {
+  //     if (header.type === 'stars')
+  //       return <Stars stars={row[header.name]} />
+  //     else if (header.type === 'checkBox')
+  //       return <Checkbox disabled checked={row[header.name] && row[header.name] === 1} />
+  //     else
+  //       return <span>{row[header.name]}</span>
+  //   }
+  // }
 
   const handleChangeOrder = (target_id, source_id) => {
-    setTrigerFetch('handleChangeOrder');
+  
     let order = 1;
-    if (fields && fields.length > 0) {
-      let newOrder = fields.filter(x => x.clientId === target_id)[0].order;
-      for (let header of fields) {
+    if (AppFields && AppFields.length > 0) {
+      let newOrder = AppFields.filter(x => x.clientId === target_id)[0].order;
+      for (let header of AppFields) {
         if (header.clientId === source_id) {
           header.order = newOrder;
         }
@@ -196,6 +208,7 @@ export const Table2 = (props) => {
         }
       }
     }
+    setTrigerFetch('handleChangeOrder');
   }
 
 
@@ -206,7 +219,6 @@ export const Table2 = (props) => {
       console.log('no freeUserToken table2')
     }
     else {
-      // debugger
       const URL = `${API_ENDPOINT}/public${app}/data`;
       fetch(URL, {
         method: 'POST',
@@ -220,19 +232,19 @@ export const Table2 = (props) => {
         });
     }
 
-  }, [fields, trigerFetch, global]);
+  }, [AppFields, trigerFetch, global]);
 
 
 
 
   return (
     <>
-      {!fields ||fields.length===0?
+      {!AppFields ||AppFields.length===0?
         <span className='error'>Error occured : {errorMsg}</span> :
         <table id="main" className="display" >
           <thead>
             <tr>
-              {fields.sort((a, b) => (a.order > b.order) ? 1 : -1).map((header, index1) => (!header.clientTableHideColumn ?
+              {AppFields.sort((a, b) => (a.order > b.order) ? 1 : -1).map((header, index1) => (!header.clientTableHideColumn ?
                 (header.name === 'action'
                   ?
                   <th
@@ -295,7 +307,7 @@ export const Table2 = (props) => {
               data.slice(0, pageSize).map((row, index2) => (
                 <>
                   <tr className='tablerow' key={index2} >
-                    {fields.map((header, index3) => (!header.clientTableHideColumn ?
+                    {AppFields.map((header, index3) => (!header.clientTableHideColumn ?
                       header.name === 'action'
                         ?
                         <td style={{ maxWidth: `300px` }} key={header + index3}>
@@ -337,6 +349,10 @@ export const Table2 = (props) => {
                                     ?
                                     <Checkbox name={header.name} checked={newRow[header.name] === 1 ? true : false} onChange={handleChange} />
                                     :
+                                    (header.type === 'stars')
+                                    ?
+                                    <Stars stars={row[header.name]} />
+                                    :
                                     <input name={header.name} value={newRow[header.name]} onChange={handleChange} />
                                 :   /**row in edit mode  but header can not edit **/
 
@@ -353,6 +369,10 @@ export const Table2 = (props) => {
                                 ?
                                 <Checkbox disabled checked={row[header.name] && row[header.name] === 1} />
                                 :
+                                (header.type === 'stars')
+                                ?
+                                <Stars stars={row[header.name]} />
+                                :
                                 <span>{row[header.name]}</span>
                             }
                           </span>
@@ -367,9 +387,3 @@ export const Table2 = (props) => {
   )
 }
 export default Table2;
-
-
-
-
-
-

@@ -11,7 +11,6 @@ const GlobalContextProvider = (props) => {
         setGlobal([{countHiddenFields:count},]);
     }
 useEffect(() => {
-    // debugger
     if (!localStorage["freeUserToken"] || localStorage["freeUserToken"] === null || localStorage["freeUserToken"] === "undefined") {
         const AUTHURL = `${API_ENDPOINT}/session/createNewUserDevice`;
         fetch(AUTHURL)
