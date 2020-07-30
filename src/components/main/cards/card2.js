@@ -3,7 +3,7 @@ import './Card2.css';
 //import socketIOClient from 'socket.io-client';
 import { ConfigContext } from '../../../context/ConfigContext';
 // import { pageimEndPoint } from '../../../../Config';
-import { pageimEndPoint } from '../../../../src/Config';
+import { pageimEndPoint } from '../../../Config';
 import Checkboxes from './cards-extra';
 
 
@@ -16,9 +16,10 @@ export const Card2 = (props) => {
     // const { config } = useContext(ConfigContext);
     const [AppFields, setAppFields] = useState([]);
     useEffect(() => {
-        if (!tableFields || tableFields.length===0){
-          if(!localStorage['fields'] || localStorage['fields'].length===0)
-              tableFields =JSON.parse(localStorage['fields']) ;
+        debugger
+        if (!tableFields || tableFields.length === 0) {
+            if (localStorage['fields'] && localStorage['fields'].length === 0)
+              tableFields = JSON.parse(localStorage['fields']);
         }
         if (tableFields){
           setAppFields(tableFields.filter(x => x.application === APP));

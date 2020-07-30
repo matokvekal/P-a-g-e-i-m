@@ -40,7 +40,7 @@ function App() {
         console.log('no user token App.js')
       }
       else {
-        console.log('MENU APP>JS')
+        // console.log('MENU APP>JS')
         //const URL = `${API_ENDPOINT}/applications/menuApplications?appname=races`;
         //const URL=url('public','menu','data');
         const URL = `${API_ENDPOINT}/public/menu/data`;

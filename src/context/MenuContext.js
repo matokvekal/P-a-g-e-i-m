@@ -13,14 +13,11 @@ const MenuContextProvider = (props) => {
     useEffect(() => {
 
 
-        // if (localStorage['menu'] && localStorage['menu'] !== null  && localStorage['menu'] !== "[]")
-        // setMenuList(JSON.stringify(localStorage['menu']))
-        // else {
             if (!localStorage["freeUserToken"] || localStorage["freeUserToken"] === null || localStorage["freeUserToken"] === "undefined") {
                 console.log('no user token Menu context')
             }
             else {
-                debugger
+                // debugger
                 
                 const URL = `${API_ENDPOINT}/applications/menuApplications?appname=races`;
                 //const URL = `${API_ENDPOINT}/public/menu/data`;
@@ -29,9 +26,10 @@ const MenuContextProvider = (props) => {
                     method: 'GET',
                     headers: { Authorization: "Bearer " + localStorage['freeUserToken'] }
                 })
-                    .then(response => {debugger
+                    .then(response => {
                         return response.json()})
-                    .then(data => {debugger 
+                    .then(data => {
+                        // debugger 
                         return setMenuList(data.appsresult[0])})
                     .catch((error) => {
                         console.error('Error:', error);

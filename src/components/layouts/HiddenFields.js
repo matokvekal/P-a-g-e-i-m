@@ -11,7 +11,7 @@ import SettingsBackupRestoreIcon from '@material-ui/icons/SettingsBackupRestore'
 const ITEM_HEIGHT = 48;
 
 export default function HiddenFields() {
-  debugger
+  // debugger
   const [ tableFields ,setTableFields] = useContext(ConfigContext);
   const { global, settingGlobal } = useContext(GlobalContext);
   const [hideItem, setHideItem] = useState('')

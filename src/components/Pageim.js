@@ -1,7 +1,7 @@
 import React,{useState} from 'react';
 import Table2 from '../components/main/tabale-elemnts/tables/Table2';
 import Table3 from './main/tabale-elemnts/tables/Table3';
-import Card2 from '../components/main/cards/Card2';
+import Card2 from './main/cards/Card2';
 
 export const Pageim = (props) => {
     const [app] = useState(props.app)

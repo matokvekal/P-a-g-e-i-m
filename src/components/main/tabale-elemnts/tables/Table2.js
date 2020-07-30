@@ -30,10 +30,9 @@ export const Table2 = (props) => {
   const [tableFields, setTableFields] = useContext(ConfigContext);
 
 
-
   useEffect(() => {
     if (!tableFields || tableFields.length === 0) {
-      if (!localStorage['fields'] || localStorage['fields'].length === 0)
+      if (localStorage['fields'] && localStorage['fields'].length === 0)
         tableFields = JSON.parse(localStorage['fields']);
     }
     if (tableFields) {
@@ -76,7 +75,6 @@ export const Table2 = (props) => {
     const res = editRow(newRow)
   }
   const HandleFilter = (field) => {
-
     let h = AppFields.filter(x => x.name === field)[0];
     if (!h.clientFilter) {
       h.clientFilter = field;
@@ -195,7 +193,6 @@ export const Table2 = (props) => {
   // }
 
   const handleChangeOrder = (target_id, source_id) => {
-
     let order = 1;
     if (AppFields && AppFields.length > 0) {
       let newOrder = AppFields.filter(x => x.clientId === target_id)[0].order;
