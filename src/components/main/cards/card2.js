@@ -7,31 +7,51 @@ import { pageimEndPoint } from '../../../../src/Config';
 import Checkboxes from './cards-extra';
 
 
-export const Card2 = () => {
-    const { config } = useContext(ConfigContext);
+export const Card2 = (props) => {
+    let app = props.app ? props.app : '';
+    let APP = app ? app.substr(1) : '';
+    APP = APP.toLowerCase();
+    const [ tableFields ,setTableFields] = useContext(ConfigContext);
+
+    // const { config } = useContext(ConfigContext);
+    const [AppFields, setAppFields] = useState([]);
+    useEffect(() => {
+        if (!tableFields || tableFields.length===0){
+          if(!localStorage['fields'] || localStorage['fields'].length===0)
+              tableFields =JSON.parse(localStorage['fields']) ;
+        }
+        if (tableFields){
+          setAppFields(tableFields.filter(x => x.application === APP));
+        }
+    
+      }, [tableFields])
 
     const [data, setData] = useState([]);
     const API_ENDPOINT = pageimEndPoint();
-    // const requestOptions = {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify({ order: 'Last Name' })
-    // };
-    //post
-    // useEffect(() => {
-    //   fetch(`${API_ENDPOINT}/rows`, requestOptions)
-    // .then(response => response.json())
-    // .then(data => this.setData(data.res));
-    // }, [data]);
+    const [trigerFetch, setTrigerFetch] = useState([]);
 
-    {/*get*/ }
     useEffect(() => {
-        // console.log('cards2  useEffect 32')
-        fetch(`${API_ENDPOINT}/rows`)
+        if (app === '/'||app==='/Templates')
+          return
+        if (!localStorage["freeUserToken"] || localStorage["freeUserToken"] === null || localStorage["freeUserToken"] === "undefined") {
+          console.log('no freeUserToken table2')
+        }
+        else {
+          const URL = `${API_ENDPOINT}/public${app}/data`;
+          fetch(URL, {
+            method: 'POST',
+            headers: { Authorization: "Bearer " + localStorage['freeUserToken'] }
+          }
+          )
             .then(response => response.json())
-            .then(data => setData(data.res))
-    }, [data]);
-
+            .then(res => setData(res))
+            .catch((error) => {
+              console.error('Error:', error);
+            });
+        }
+    
+      }, [AppFields, trigerFetch, global]);
+    
     return (
         <>
             <div className="container">
@@ -45,7 +65,7 @@ export const Card2 = () => {
                                     </div>
                                 </div>
                                 <div className=' card_content'>
-                                    {config.map((header, i) => (
+                                    {AppFields.sort((a, b) => (a.order > b.order) ? 1 : -1).map((header, index1) => (
                                         <>
                                         <span className='cardLine'>
                                             <label className='label' >{header.name}:</label>

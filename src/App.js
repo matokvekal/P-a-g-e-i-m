@@ -13,15 +13,17 @@ import toDoWatsApp from './components/main/external/toDoWatsApp';
 import DynamicComponent from './components/main/DynamicComponent';
 // import { getFields } from './services/getFields-old';
 import { pageimEndPoint } from './Config';
+import {url} from './helpers/Helpers';
 
 // import RouterApp from './components/main/RouterApp';
 
 function App() {
-  console.log('at App.js')
-
+  
   const [renderCounter, setRenderCounter] = useState([])
   const API_ENDPOINT = pageimEndPoint();
-  const [menu, setMenu] = useState([]);
+  const [menuList, setMenuList] = useState([]);
+  // window.mainApp345 = menuList;
+  //setMenuList([])
   const location = window.location.pathname;
   const [freeUserToken] = useState(null)
 
@@ -38,15 +40,22 @@ function App() {
         console.log('no user token App.js')
       }
       else {
-
+        console.log('MENU APP>JS')
+        //const URL = `${API_ENDPOINT}/applications/menuApplications?appname=races`;
+        //const URL=url('public','menu','data');
         const URL = `${API_ENDPOINT}/public/menu/data`;
+        // const URL = `${API_ENDPOINT}/applications/menuApplications?appname=menu`;
         fetch(URL, {
-          method: 'POST',
+          method: 'GET',
           headers: { Authorization: "Bearer " + localStorage['freeUserToken'] }
         }
         )
-          .then(response => response.json())
-          .then(data => setMenu(data))
+        .then(response => {
+          // debugger 
+          return response.json()})
+        .then(data =>{
+          // debugger
+          return  setMenuList(data)})
           .catch((error) => {
             console.error('Error:', error);
           });
@@ -71,9 +80,9 @@ function App() {
             </Switch>
             <Route path="/toDoWatsApp" component={toDoWatsApp}/>
           
-              <PrimarySearchAppBar setAppDirection={setAppDirection} AppDirection={AppDirection} setScreenType={setScreenType} screenType={screenType} />
+              <PrimarySearchAppBar  setAppDirection={setAppDirection} AppDirection={AppDirection} setScreenType={setScreenType} screenType={screenType} />
               <Switch>
-                {(menu && menu.length > 0 ) ? menu.map((item, index) => (
+                {(menuList && menuList.length > 0 ) ? menuList.map((item, index) => (
                   item.mainApp==='pageim'
                   ?
                   <Route exact path={'/' + item.app}><Pageim app={'/' + item.app} appPermission={item.permission} screenType={screenType} key={index} /> </Route>

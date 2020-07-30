@@ -9,10 +9,10 @@ const API_ENDPOINT = pageimEndPoint();
 
 const MenuContextProvider = (props) => {
     const [menuList, setMenuList] = useState([]);
-    // const [setHasError] = useState(false);
-    // const [setErrorMsg] = useState('');
 
     useEffect(() => {
+
+
         // if (localStorage['menu'] && localStorage['menu'] !== null  && localStorage['menu'] !== "[]")
         // setMenuList(JSON.stringify(localStorage['menu']))
         // else {
@@ -20,13 +20,19 @@ const MenuContextProvider = (props) => {
                 console.log('no user token Menu context')
             }
             else {
-                const URL = `${API_ENDPOINT}/public/menu/data`;
+                debugger
+                
+                const URL = `${API_ENDPOINT}/applications/menuApplications?appname=races`;
+                //const URL = `${API_ENDPOINT}/public/menu/data`;
+                 //const URL = `${API_ENDPOINT}/applications/menuApplications?appname=menu`;
                 fetch(URL, {
-                    method: 'POST',
+                    method: 'GET',
                     headers: { Authorization: "Bearer " + localStorage['freeUserToken'] }
                 })
-                    .then(response => response.json())
-                    .then(data => setMenuList(data))
+                    .then(response => {debugger
+                        return response.json()})
+                    .then(data => {debugger 
+                        return setMenuList(data.appsresult[0])})
                     .catch((error) => {
                         console.error('Error:', error);
                     });

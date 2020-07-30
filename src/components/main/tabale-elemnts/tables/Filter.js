@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Table2.css';
+// import './Table2.css';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -14,17 +14,17 @@ import Filter1TwoToneIcon from '@material-ui/icons/Filter1TwoTone';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    maxWidth: 250,
-    minWidth: 120,
+    // display: 'flex',
+    // flexWrap: 'wrap',
+    // maxWidth: 250,
+    // minWidth: 120,
   },
   formControl: {
     // margin: theme.spacing(1),
     // minWidth: 120,
-    maxWidth: 200,
-    // direction:'ltr',
-    display: 'flex'
+    maxWidth: 30,
+    // // direction:'ltr',
+    // display: 'flex'
   },
   upperFilte11: {
     minHeight: '2rem',

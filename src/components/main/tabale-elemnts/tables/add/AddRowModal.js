@@ -16,7 +16,7 @@ const AddRowModal = (props) => {
     return (
         <>
             <Modal
-                header='Add new row'
+                header='Add row'
                 visible={visible}
                 dismiss={dismiss}
                 children={<AddRowModalForm cancelModal={dismiss}/>}

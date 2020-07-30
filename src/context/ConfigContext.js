@@ -10,6 +10,7 @@ const ConfigContextProvider = (props) => {
     useEffect(() => {
             if(localStorage['freeUserToken']){
             const URL = `${API_ENDPOINT}/public/fields/data`;
+            // url: "/applications/fieldsOfTable?appname="+$scope.selectedApplication.name
             fetch(URL, {
                 method: 'POST',
                 headers: { Authorization: "Bearer " + localStorage['freeUserToken'] }

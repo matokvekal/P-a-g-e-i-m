@@ -11,16 +11,17 @@ import SettingsBackupRestoreIcon from '@material-ui/icons/SettingsBackupRestore'
 const ITEM_HEIGHT = 48;
 
 export default function HiddenFields() {
+  debugger
   const [ tableFields ,setTableFields] = useContext(ConfigContext);
   const { global, settingGlobal } = useContext(GlobalContext);
   const [hideItem, setHideItem] = useState('')
   let APP = window.location.pathname.toString();
   APP = APP ? APP.substr(1) : '';
   APP = APP.toLowerCase();
-  // const [appFields, setAppFields] = useState([]);
+  const [appFields, setAppFields] = useState([]);
 
   // setAppFields(tableFields.filter(x => x.application === APP));
-  const appFields=tableFields.filter(x => x.application === APP);
+  setAppFields(tableFields?tableFields.filter(x => x.application === APP):null);
   let hiddenFields = appFields.filter(x => x.clientTableHideColumn === true).map(x => x.name);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -36,10 +37,11 @@ export default function HiddenFields() {
   const handleRemoveOption = (option) => {
     appFields.filter(x => x.name === option)[0].clientTableHideColumn = false;
     settingGlobal(countHidden);
-  }
+  } 
   return (
-    <div>
-      <IconButton disabled={false}
+    <>
+    {hiddenFields ||hiddenFields.length>0?
+      <><IconButton disabled={false}
         aria-label="more"
         aria-controls="long-menu"
         aria-haspopup="true"
@@ -68,6 +70,9 @@ export default function HiddenFields() {
           </MenuItem>
         ))}
       </Menu>
-    </div>
+      </>
+        :
+        <p>3</p>}
+        </>
   );
 }

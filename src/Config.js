@@ -1,6 +1,6 @@
 
 export const pageimEndPoint = () => {
-    return 'http://104.248.161.10:8080';
+    return 'http://anan.systems';
 }
 
 export const configHeader = () => {

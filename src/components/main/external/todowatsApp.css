@@ -5,14 +5,19 @@
   box-sizing: border-box;
 }
 
-body {
+/* body {
   background: #C5DDEB;
   font: 14px/20px "Lato", Arial, sans-serif;
 
   color: white;
-}
+} */
 .todo {
     padding:60px ;
+
+      background: #C5DDEB;
+      font: 14px/20px "Lato", Arial, sans-serif;
+          color: white;
+    
   }
 
 .container {

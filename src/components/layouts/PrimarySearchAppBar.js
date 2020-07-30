@@ -22,6 +22,8 @@ import Divider from '@material-ui/core/Divider';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import StorageSharpIcon from '@material-ui/icons/StorageSharp';
+import AddIcon from '@material-ui/icons/Add';
+
 
 import Navbar3 from './Navbar3';
 
@@ -62,6 +64,7 @@ const useStyles = makeStyles((theme) => ({
       width: 'auto',
     },
   },
+  
   searchIcon: {
     padding: theme.spacing(0, 2),
     height: '100%',
@@ -235,13 +238,13 @@ export default function PrimarySearchAppBar(props) {
 
     <div className={classes.grow}>
 
-      <AppBar >
+      <AppBar style={{ backgroundColor: "#42a5f5" }}>
 
         <Toolbar>
           <IconButton onClick={handleDrawerOpen} edge="start" className={classes.menuButton} color="inherit" aria-label="open drawer"> <MenuIcon /> </IconButton>
 
           <Badge badgeContent={global[0].countHiddenFields} color="secondary" size="small">
-            <HiddenFields />
+          {/*  <HiddenFields />*/}
           </Badge>
 
 
@@ -264,7 +267,7 @@ export default function PrimarySearchAppBar(props) {
           </div>
 
        
-          <Button color="default" onClick={showHideModal}>ADD NEW ROW</Button>
+          <Button color="default" onClick={showHideModal} ><AddIcon/></Button>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
 
@@ -292,7 +295,7 @@ export default function PrimarySearchAppBar(props) {
 
 
       <AddRowModal
-        header='Add new row'
+        header='Add row'
         visible={modalVisible}
         dismiss={showHideModalAddRow}
         children='modalAddRowVisible'

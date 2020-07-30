@@ -25,9 +25,7 @@ const API_ENDPOINT = pageimEndPoint();
             .catch((response) => {
                 return response;
               })
-    
-            // return 'Error:add new row';
-         
+             
         }
 
     }

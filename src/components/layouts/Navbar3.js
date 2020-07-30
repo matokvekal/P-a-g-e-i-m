@@ -15,8 +15,8 @@ import {
 } from '@ant-design/icons';
 
 const { SubMenu } = Menu;
-
 export const Navbar3 = () => {
+    // debugger
     const [collapsed, setCollapsed] = useState(false);
     const { menuList } = useContext(MenuContext);
     const toggleCollapsed = () => {
@@ -31,11 +31,11 @@ export const Navbar3 = () => {
                 // defaultSelectedKeys={['1']}
                 // defaultOpenKeys={['sub1']}
                 mode="inline"
-                theme="dark"
+                 theme="light"
                 inlineCollapsed={collapsed}
             >
                 {
-                    menuList?  menuList.sort((a, b) => (a.key > b.key) ? 1 : -1).map((item, index) => (
+                    menuList && menuList.length>0?  menuList.sort((a, b) => (a.key > b.key) ? 1 : -1).map((item, index) => (
                         <Menu.Item key={item.id} icon={<DesktopOutlined />}>
                             <Link to={'/' + item.linkTo} params={"table"} key={item.key} app={item.app}>
                                 {item.text}

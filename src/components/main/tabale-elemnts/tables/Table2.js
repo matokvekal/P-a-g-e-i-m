@@ -10,6 +10,9 @@ import Stars from './Stars';
 import Checkbox from '@material-ui/core/Checkbox';
 import { ConfigContext } from '../../../../context/ConfigContext';
 import { editRow } from './../../../../services/editRowService';
+import { makeStyles } from '@material-ui/core/styles';
+import 'antd/dist/antd.css';
+import { Pagination } from 'antd';
 
 export const Table2 = (props) => {
   let app = props.app ? props.app : '';
@@ -21,19 +24,19 @@ export const Table2 = (props) => {
   const [data, setData] = useState([]);
   const API_ENDPOINT = pageimEndPoint();
   const [pageSize, setPageSize] = useState(100);
-  const extra_header_width = 80;
+  // const extra_header_width = 80;
   const [AppFields, setAppFields] = useState([]);
   const [errorMsg, setErrorMsg] = useState('');
-  const [ tableFields ,setTableFields] = useContext(ConfigContext);
+  const [tableFields, setTableFields] = useContext(ConfigContext);
 
 
 
   useEffect(() => {
-    if (!tableFields || tableFields.length===0){
-      if(!localStorage['fields'] || localStorage['fields'].length===0)
-          tableFields =JSON.parse(localStorage['fields']) ;
+    if (!tableFields || tableFields.length === 0) {
+      if (!localStorage['fields'] || localStorage['fields'].length === 0)
+        tableFields = JSON.parse(localStorage['fields']);
     }
-    if (tableFields){
+    if (tableFields) {
       setAppFields(tableFields.filter(x => x.application === APP));
     }
 
@@ -67,13 +70,13 @@ export const Table2 = (props) => {
       h.clientAggrigationIcon = 'far fa-square';
       h.clientAggregation = false;
     }
-    setTrigerFetch('HandleAggregation'+Date.now());
+    setTrigerFetch('HandleAggregation' + Date.now());
   }
   const saveRow = async e => {
     const res = editRow(newRow)
   }
   const HandleFilter = (field) => {
-    
+
     let h = AppFields.filter(x => x.name === field)[0];
     if (!h.clientFilter) {
       h.clientFilter = field;
@@ -83,13 +86,13 @@ export const Table2 = (props) => {
       h.clientFilter = false;
       h.clientFilterIconColor = 'colorWhite';
     }
-    setTrigerFetch('HandleFilter'+Date.now());
+    setTrigerFetch('HandleFilter' + Date.now());
   }
 
   const HandleHideColumn = (field) => {
-        let h = AppFields.filter(x => x.name === field)[0];
+    let h = AppFields.filter(x => x.name === field)[0];
     h.clientTableHideColumn = true;
-    setTrigerFetch('HandleHideColumn'+Date.now());
+    setTrigerFetch('HandleHideColumn' + Date.now());
   }
 
 
@@ -106,14 +109,14 @@ export const Table2 = (props) => {
       setSortOrder(x => x + 1);
       h.clientSortOrder = sortOrder;
     }
-    setTrigerFetch('HandleSort'+Date.now());
+    setTrigerFetch('HandleSort' + Date.now());
   }
 
   const handleDragStart = e => {
-    
+
     const { id } = e.target;
     e.dataTransfer.setData("data", id);
-    setTrigerFetch('handleDragStart'+Date.now());
+    setTrigerFetch('handleDragStart' + Date.now());
   }
   const HandleOnDragOver = (e) => {
     e.preventDefault();
@@ -150,13 +153,13 @@ export const Table2 = (props) => {
   const clickDelete = (row) => {
   }
   const clickSave = () => {
-  
+
     saveRow();
-  
-       setNewRow({ ...state, newRow });
+
+    setNewRow({ ...state, newRow });
     setRowInEditMode({ ...state, newRow });
-    setTrigerFetch('clickSave'+Date.now());
-   
+    setTrigerFetch('clickSave' + Date.now());
+
   }
   const clickEdit = (row) => {
     setRowBeforeEdit({ ...row });
@@ -192,7 +195,7 @@ export const Table2 = (props) => {
   // }
 
   const handleChangeOrder = (target_id, source_id) => {
-  
+
     let order = 1;
     if (AppFields && AppFields.length > 0) {
       let newOrder = AppFields.filter(x => x.clientId === target_id)[0].order;
@@ -213,7 +216,7 @@ export const Table2 = (props) => {
 
 
   useEffect(() => {
-    if (app === '/'||app==='/Templates')
+    if (app === '/' || app === '/Templates')
       return
     if (!localStorage["freeUserToken"] || localStorage["freeUserToken"] === null || localStorage["freeUserToken"] === "undefined") {
       console.log('no freeUserToken table2')
@@ -225,8 +228,14 @@ export const Table2 = (props) => {
         headers: { Authorization: "Bearer " + localStorage['freeUserToken'] }
       }
       )
-        .then(response => response.json())
-        .then(res => setData(res))
+        .then(response => {
+          debugger
+          return response.json()
+        })
+        .then(res => {
+          debugger
+          return setData(res)
+        })
         .catch((error) => {
           console.error('Error:', error);
         });
@@ -239,7 +248,7 @@ export const Table2 = (props) => {
 
   return (
     <>
-      {!AppFields ||AppFields.length===0?
+      {!AppFields || AppFields.length === 0 ?
         <span className='error'>Error occured : {errorMsg}</span> :
         <table id="main" className="display" >
           <thead>
@@ -254,14 +263,14 @@ export const Table2 = (props) => {
                     onDragOver={HandleOnDragOver}
                     onDragEnter={handleDragEnter}
                     onDrop={handleDrop}
-                    style={{ maxWidth: `300px`, minWidth: `140px` }}
+                    // style={{ maxWidth: `300px`, minWidth: `140px` }}
                     key={index1}>
-                    <span className='header-unit' >
-                      <span
-                        style={{ Width: `120px` }} className='header-data'>
-                        {header.label}
-                      </span>
+
+                    <span
+                      className='header-item header-label'>
+                      {header.label}
                     </span>
+
                   </th>
                   :
                   <th
@@ -271,46 +280,44 @@ export const Table2 = (props) => {
                     onDragOver={HandleOnDragOver}
                     onDragEnter={handleDragEnter}
                     onDrop={handleDrop}
-                    style={{ maxWidth: `${header.width + extra_header_width}px`, minWidth: `${header.width + extra_header_width}px` }}
+                    // style={{ maxWidth: `${header.width + extra_header_width}px`, minWidth: `${header.width + extra_header_width}px` }}
                     key={index1}>
 
-                    <span className='header-unit' key={index1 * 999}>
-                      <span
-                        style={{ Width: `${header.width}px` }} className='header-data' onClick={() => header.can_sort === 1 ? HandleSort(header.name) : ''}>
-                        {header.label}
-                      </span>
-                      <span className='header-action' >
-                        {header.can_sort === 1 ? <span className="sort-icon" onClick={() => HandleSort(header.name)} >
-                          <i className={header.clientSortIcon}>
-                            <span className='sort-order'>{header.clientSortOrder}</span>
-                          </i>
-                        </span> : null
-                        }
-                        <span onClick={() => HandleHideColumn(header.name)} className='HandleHideColumn'>
-                          <i className="far fa-times-circle" ></i>
-                        </span>
-                        <span onClick={() => HandleAggregation(header.name)}>
-                          <i className={header.clientAggrigationIcon}></i>
-                        </span>
-                        <span onClick={() => HandleFilter(header.name)} className='filterIcon' >
-                          <Filter name={header.name} filterCheckBox={header.clientFilterHeaderCheckbox} />
-                        </span>
-                      </span>
+
+
+                    <span className='header-item header-label' onClick={() => header.can_sort === 1 ? HandleSort(header.name) : ''}>
+                      {header.label}
                     </span>
+                    {header.can_sort === 1 ? <span className="header-item sort-icon " onClick={() => HandleSort(header.name)} >
+                      <i className={header.clientSortIcon}>
+                        <span className='sort-order'>{header.clientSortOrder}</span>
+                      </i>
+                    </span> : null
+                    }
+                    <span onClick={() => HandleHideColumn(header.name)} className='header-item HandleHideColumn'>
+                      <i className="far fa-times-circle" ></i>
+                    </span>
+                    <span onClick={() => HandleAggregation(header.name)} className='header-item'>
+                      <i className={header.clientAggrigationIcon}></i>
+                    </span>
+                    <span onClick={() => HandleFilter(header.name)} className='header-item filterIcon' >
+                      <Filter name={header.name} filterCheckBox={header.clientFilterHeaderCheckbox} />
+                    </span>
+
                   </th>) : null
               ))
               }
             </tr>
           </thead>
           <tbody>
-            {!data || data.length === 0  ?<tr className='noData'>Wait...</tr> :
+            {!data || data.length === 0 ? <tr className='noData'>Wait...</tr> :
               data.slice(0, pageSize).map((row, index2) => (
                 <>
                   <tr className='tablerow' key={index2} >
                     {AppFields.map((header, index3) => (!header.clientTableHideColumn ?
                       header.name === 'action'
                         ?
-                        <td style={{ maxWidth: `300px` }} key={header + index3}>
+                        <td key={header + index3}>
 
                           {(rowInEditMode.id === row.id)
                             ?
@@ -335,8 +342,8 @@ export const Table2 = (props) => {
 
                         </td>
                         :
-                        <td style={{ maxWidth: `${header.width + extra_header_width}px`, minWidth: `${header.width + extra_header_width}px` }} key={header + index3}>
-                          <span>{/**row in edit mode **/}
+                        <td key={header + index3}>
+                          <>{/**row in edit mode **/}
                             {(rowInEditMode.id === row.id)
                               ?/**header can edit**/
                               (header.is_edit && header.is_edit === 1)
@@ -350,10 +357,10 @@ export const Table2 = (props) => {
                                     <Checkbox name={header.name} checked={newRow[header.name] === 1 ? true : false} onChange={handleChange} />
                                     :
                                     (header.type === 'stars')
-                                    ?
-                                    <Stars stars={row[header.name]} />
-                                    :
-                                    <input name={header.name} value={newRow[header.name]} onChange={handleChange} />
+                                      ?
+                                      <Stars stars={row[header.name]} />
+                                      :
+                                      <input name={header.name} value={newRow[header.name]} onChange={handleChange} />
                                 :   /**row in edit mode  but header can not edit **/
 
                                 (header.type === 'checkBox')
@@ -370,18 +377,22 @@ export const Table2 = (props) => {
                                 <Checkbox disabled checked={row[header.name] && row[header.name] === 1} />
                                 :
                                 (header.type === 'stars')
-                                ?
-                                <Stars stars={row[header.name]} />
-                                :
-                                <span>{row[header.name]}</span>
+                                  ?
+                                  <Stars stars={row[header.name]} />
+                                  :
+                                  <span>{row[header.name]}</span>
                             }
-                          </span>
+                          </>
                         </td> : null
                     ))}
                   </tr>
+                  
                 </>
               ))}
+            <div >     <Pagination style={{display: "flex"}}size="small" total={50} showSizeChanger showQuickJumper /></div>
+
           </tbody>
+
         </table>
       }</>
   )
