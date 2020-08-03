@@ -3,16 +3,10 @@ import { pageimEndPoint } from '../Config';
 
 export const MenuContext = createContext();
 
-
 const API_ENDPOINT = pageimEndPoint();
-
-
 const MenuContextProvider = (props) => {
     const [menuList, setMenuList] = useState([]);
-
     useEffect(() => {
-
-
             if (!localStorage["freeUserToken"] || localStorage["freeUserToken"] === null || localStorage["freeUserToken"] === "undefined") {
                 console.log('no user token Menu context')
             }
@@ -35,7 +29,6 @@ const MenuContextProvider = (props) => {
                         console.error('Error:', error);
                     });
              }
-        // }
     }, []);
 
 

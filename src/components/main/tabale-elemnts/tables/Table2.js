@@ -29,18 +29,31 @@ export const Table2 = (props) => {
   const [errorMsg, setErrorMsg] = useState('');
   const [tableFields, setTableFields] = useContext(ConfigContext);
 
+  // useEffect(() => {
+  //   if (!tableFields || tableFields.length === 0) {
+  //     if (localStorage['fields'] && localStorage['fields'].length === 0)
+  //       tableFields = JSON.parse(localStorage['fields']);
+  //   }
+  //   if (tableFields) {
+  //     setAppFields(tableFields.filter(x => x.application === APP));
+  //   }
 
+  // }, [tableFields])
   useEffect(() => {
+    debugger
     if (!tableFields || tableFields.length === 0) {
-      if (localStorage['fields'] && localStorage['fields'].length === 0)
-        tableFields = JSON.parse(localStorage['fields']);
+      if (localStorage['fields'] )  //&& localStorage['fields'].length === 0
+          {
+            let data=JSON.parse(localStorage['fields']);
+            setTableFields(data);
+          };
     }
-    if (tableFields) {
-      setAppFields(tableFields.filter(x => x.application === APP));
-    }
+    if(APP)
+     { 
+       debugger
+      setAppFields(tableFields.filter(x => x.application === APP));}
 
   }, [tableFields])
-
   const [trigerFetch, setTrigerFetch] = useState([]);
   const [rowInEditMode, setRowInEditMode] = useState('');
   const [rowBeforeEdit, setRowBeforeEdit] = useState('');

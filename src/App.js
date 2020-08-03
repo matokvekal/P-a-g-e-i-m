@@ -7,23 +7,18 @@ import './App.css';
 import UploadFile from './components/UploadFile';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Pageim from './components/Pageim';
-import './App.css';
 import Templates from './components/main/Templates';
-import toDoWatsApp from './components/main/external/toDoWatsApp';
+import TodoWatsApp from './components/main/external/TodoWatsApp';
 import DynamicComponent from './components/main/DynamicComponent';
-// import { getFields } from './services/getFields-old';
 import { pageimEndPoint } from './Config';
 import {url} from './helpers/Helpers';
 
-// import RouterApp from './components/main/RouterApp';
 
 function App() {
   
   const [renderCounter, setRenderCounter] = useState([])
   const API_ENDPOINT = pageimEndPoint();
   const [menuList, setMenuList] = useState([]);
-  // window.mainApp345 = menuList;
-  //setMenuList([])
   const location = window.location.pathname;
   const [freeUserToken] = useState(null)
 
@@ -35,15 +30,13 @@ function App() {
 
 
   useEffect(() => {
-    console.log('at useEffect App.js')
       if (!localStorage['freeUserToken'] || localStorage['freeUserToken'] === null || localStorage['freeUserToken'] === "undefined") {
         console.log('no user token App.js')
       }
       else {
-        // console.log('MENU APP>JS')
-        //const URL = `${API_ENDPOINT}/applications/menuApplications?appname=races`;
+        const URL = `${API_ENDPOINT}/applications/menuApplications?appname=races`;
         //const URL=url('public','menu','data');
-        const URL = `${API_ENDPOINT}/public/menu/data`;
+        //const URL = `${API_ENDPOINT}/public/menu/data`;
         // const URL = `${API_ENDPOINT}/applications/menuApplications?appname=menu`;
         fetch(URL, {
           method: 'GET',
@@ -54,14 +47,14 @@ function App() {
           // debugger 
           return response.json()})
         .then(data =>{
-          // debugger
-          return  setMenuList(data)})
+          debugger
+          //return  setMenuList(data)})
+          return setMenuList(data.appsresult[0])})
           .catch((error) => {
             console.error('Error:', error);
           });
       }
-    // }
-    // setTrigerFetch('');
+
   }, []);
 
   let screenView = 'table';
@@ -78,16 +71,16 @@ function App() {
               <Route exact path="/" component={Templates} />
               <Route path="/Templates" component={Templates} />
             </Switch>
-            <Route path="/toDoWatsApp" component={toDoWatsApp}/>
+            <Route path="/TodoWatsApp" component={TodoWatsApp}/>
           
               <PrimarySearchAppBar  setAppDirection={setAppDirection} AppDirection={AppDirection} setScreenType={setScreenType} screenType={screenType} />
               <Switch>
                 {(menuList && menuList.length > 0 ) ? menuList.map((item, index) => (
                   item.mainApp==='pageim'
                   ?
-                  <Route exact path={'/' + item.app}><Pageim app={'/' + item.app} appPermission={item.permission} screenType={screenType} key={index} /> </Route>
+                  <Route exact path={'/' + item.name}><Pageim app={'/' + item.name} appPermission={item.permission} screenType={screenType} key={index} /> </Route>
                   :
-                  <Route exact path={'/' + item.app}><DynamicComponent html={item.html}/> </Route>
+                  <Route exact path={'/' + item.name}><DynamicComponent html={item.html}/> </Route>
                 )) : console.log('menu error')}
               </Switch>
             </ConfigContextProvider>

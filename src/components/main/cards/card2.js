@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
-import './Card2.css';
+import './card2.css';
 //import socketIOClient from 'socket.io-client';
 import { ConfigContext } from '../../../context/ConfigContext';
-// import { pageimEndPoint } from '../../../../Config';
 import { pageimEndPoint } from '../../../Config';
 import Checkboxes from './cards-extra';
 

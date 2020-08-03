@@ -4,7 +4,9 @@
 *, *:before, *:after {
   box-sizing: border-box;
 }
-
+ul {
+  list-style-type: none;
+}
 /* body {
   background: #C5DDEB;
   font: 14px/20px "Lato", Arial, sans-serif;
@@ -36,13 +38,13 @@
     padding: 20px;
   }
   
-  input {
+  input.todoInput {
     border-radius: 3px;
     border: none;
     padding: 14px;
     color: white;
     background: #6A6C75;
-    width: 90%;
+    width: 20%;
     font-size: 14px;
   }
   
@@ -51,11 +53,14 @@
     left: -25px;
   }
   
-  ul {
+  ul.list {
     padding: 20px;
     height: 770px;
   }
- 
+  .chat-history ul{
+    padding: 20px;
+    height: 770px;
+  }
     
     
     
@@ -213,6 +218,16 @@
       font-weight: bold;
       background: #F2F5F8;
     }
+    .btnDelTodo {
+      /* float: right; */
+      color: rgb(241, 238, 21);
+      font-size: 16px;
+      text-transform: uppercase;
+      cursor: pointer;
+      font-weight: bold;
+      background: red;
+      height: 20px;
+    }
       
     button:hover {
         color: darken(blue, 7%);
@@ -259,3 +274,33 @@
 	height: 0;
 }
 
+.mainTodo{
+  max-height: 200px;
+  overflow-y: scroll;
+border:3px dotted yellow;
+}
+.headerTodo{
+  color:yellow;
+  font-weight: bolder;
+  text-align: center;
+  margin-top: 10px;
+
+}
+
+.btnTodo{
+  width: 50px;
+  background: rgb(37, 198, 219);
+  height: 40px;
+  margin-top: 5px;
+}
+li.newTodoList{
+  text-decoration: none;
+  display: flex;
+  flex-wrap: nowrap;
+  background-color: rgb(238, 239, 240);
+  justify-content: left;
+}
+.todoLebel{
+  width:300px;
+  color:blue;
+}
