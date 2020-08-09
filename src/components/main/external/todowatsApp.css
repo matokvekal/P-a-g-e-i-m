@@ -4,6 +4,7 @@
 *, *:before, *:after {
   box-sizing: border-box;
 }
+
 ul {
   list-style-type: none;
 }
@@ -13,6 +14,44 @@ ul {
 
   color: white;
 } */
+.folder-list {
+  width:30%;
+  float: left;
+  overflow-y: scroll;
+  max-height: 715px;
+  /* direction: ltr */
+}
+.ltr{
+  direction: ltr;
+}
+.rtl{
+  direction: rtl;
+}
+ul.list {
+  padding: 20px;
+  height: 770px;
+  display:flex;
+  flex-direction:column;
+}
+.chat-history ul{
+  padding: 5px;
+  height: 439px;
+}
+.chat-history {
+  padding: 10px 10px 10px;
+  border-bottom: 2px solid white;
+  overflow-y: scroll;
+  max-height: 475px;
+}
+.mainTodo{
+  max-height: 200px;
+  overflow-y: scroll;
+border:3px dotted yellow;
+}
+.chat-message{
+  padding: 0 !important;
+  color:orange;font-size: 15px
+}
 .todo {
     padding:60px ;
 
@@ -24,21 +63,44 @@ ul {
 
 .container {
   margin: 0 auto;
-  width: 750px;
+  max-width: 720px;
+  min-width: 360px;
+  width: 100%;
   background: #444753;
-  border-radius: 5px;
+  border-radius: 5 5 5 0;
 }
-
-.people-list {
-  width:260px;
-  float: left;
+.todoLebel{
+  width:40%;
+  color:blue;
+}
+.gold{
+  color: orange;
 }
   
   .search {
     padding: 20px;
   }
-  
-  input.todoInput {
+  .searchButton{
+    color: black;
+  }
+  input.addFolder{
+    color: black;
+    width: 17%;
+    margin-left: 15px;
+    margin-top: 1px;
+    height: 30px;
+  }
+  .chat {
+    width: 70%;
+    float:left;
+    background: #F2F5F8;
+    border-top-right-radius: 5px;
+    max-height: 715px;
+    color: #434651;
+    height: 715px;
+  }
+    
+  nput.todoInput {
     border-radius: 3px;
     border: none;
     padding: 14px;
@@ -53,14 +115,7 @@ ul {
     left: -25px;
   }
   
-  ul.list {
-    padding: 20px;
-    height: 770px;
-  }
-  .chat-history ul{
-    padding: 20px;
-    height: 770px;
-  }
+
     
     
     
@@ -72,10 +127,12 @@ ul {
   img {
     float: left;
   }
-  
+  .todoCheck{
+    width:20px;
+    height: 20px;
+  }
   .about {
     float: left;
-    margin-top: 8px;
   }
   
   .about {
@@ -86,20 +143,21 @@ ul {
     color: #92959E;
   }
   
-
-
-.chat {
-  width: 490px;
-  float:left;
-  background: #F2F5F8;
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-  
-  color: #434651;
+.selectAllButton{
+  float:none;
+  margin-left: 20px;
 }
-  
+.addButton{
+  /* float:none; */
+  margin-left: 11px;
+  color :orange;
+  margin-bottom: 5px;
+}
+
   .chat-header {
-    padding: 20px;
+    display:flex;
+    flex-wrap: wrap;
+    padding: 2px;
     border-bottom: 2px solid white;
   }
     img {
@@ -128,15 +186,13 @@ ul {
       margin-top: 12px;
     }
   
-  .chat-history {
-    padding: 30px 30px 20px;
-    border-bottom: 2px solid white;
-    overflow-y: scroll;
-    height: 575px;
-  }
+ 
     
     .message-data {
-      margin-bottom: 15px;
+       display: flex;
+       justify-content: space-between;
+      margin-bottom: 1px;
+      
     }
     
     .message-data-time {
@@ -146,12 +202,12 @@ ul {
     
     .message {      
       color: white;
-      padding: 18px 20px;
-      line-height: 26px;
-      font-size: 16px;
-      border-radius: 7px;
-      margin-bottom: 30px;
-      width: 90%;
+      padding: 5px 5px;
+      line-height: 20px;
+      font-size: 14px;
+      border-radius: 5px;
+      /* margin-bottom: 2px; */
+      width: 95%;
       position: relative;
     }
       
@@ -170,15 +226,15 @@ ul {
       }
     
     
-    .my-message {
+    .green-message {
       background: #86BB71;
     }
     
-    .other-message {
+    .blue-message {
       background: blue;
     }
       
-    .other-message:after {
+    .blue-message:after {
         border-bottom-color: blue;
         left: 93%;
       }
@@ -187,7 +243,7 @@ ul {
   
   
   .chat-message {
-    padding: 30px;
+    padding: 3px !important;
   }
     
     textarea {
@@ -195,7 +251,7 @@ ul {
       border: none;
       padding: 10px 20px;
       font: 14px/22px "Lato", Arial, sans-serif;
-      margin-bottom: 10px;
+      margin-bottom: 5px;
       border-radius: 5px;
       resize: none;
       
@@ -233,12 +289,15 @@ ul {
         color: darken(blue, 7%);
       }
     
-  
+  .addFolder{
+    /* position:sticky; */
+    /* margin-bottom: -26px; */
+  }
 
 
 .online, .offline, .me {
     margin-right: 3px;
-    font-size: 10px;
+    font-size: 16px;
   }
   
 .online {
@@ -264,21 +323,24 @@ ul {
 .float-right {
   float: right;
 }
-
-.clearfix:after {
+.clearfix{
+  min-width: 10px;
+}
+.list .name{
+  min-width: 80px;
+  overflow: hidden;
+  max-height: 20px;
+}
+/* .clearfix:after {
 	visibility: hidden;
 	display: block;
 	font-size: 0;
 	content: " ";
 	clear: both;
 	height: 0;
-}
+} */
 
-.mainTodo{
-  max-height: 200px;
-  overflow-y: scroll;
-border:3px dotted yellow;
-}
+
 .headerTodo{
   color:yellow;
   font-weight: bolder;
@@ -288,7 +350,7 @@ border:3px dotted yellow;
 }
 
 .btnTodo{
-  width: 50px;
+  width: 7%;
   background: rgb(37, 198, 219);
   height: 40px;
   margin-top: 5px;
@@ -300,7 +362,21 @@ li.newTodoList{
   background-color: rgb(238, 239, 240);
   justify-content: left;
 }
-.todoLebel{
-  width:300px;
-  color:blue;
+
+.footer{
+  height: 46px;
+  padding: 10px;
+  display: flex;
+  justify-content: flex-start;
+  margin: 0 auto;
+  width: 100%;
+  min-width: 30%;
+
+  max-width: 720px;
+  background: #444753;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+#message-to-send{
+  color:black;
 }

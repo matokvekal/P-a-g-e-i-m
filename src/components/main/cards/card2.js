@@ -17,7 +17,7 @@ export const Card2 = (props) => {
     useEffect(() => {
         debugger
         if (!tableFields || tableFields.length === 0) {
-            if (localStorage['fields'] && localStorage['fields'].length === 0)
+            if (localStorage['fields'] && localStorage['fields'].length !== 0)
               tableFields = JSON.parse(localStorage['fields']);
         }
         if (tableFields){

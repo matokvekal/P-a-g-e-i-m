@@ -12,6 +12,8 @@ import TodoWatsApp from './components/main/external/TodoWatsApp';
 import DynamicComponent from './components/main/DynamicComponent';
 import { pageimEndPoint } from './Config';
 import {url} from './helpers/Helpers';
+import { RecoilRoot } from "recoil";
+
 
 
 function App() {
@@ -47,7 +49,7 @@ function App() {
           // debugger 
           return response.json()})
         .then(data =>{
-          debugger
+          // debugger
           //return  setMenuList(data)})
           return setMenuList(data.appsresult[0])})
           .catch((error) => {
@@ -71,8 +73,9 @@ function App() {
               <Route exact path="/" component={Templates} />
               <Route path="/Templates" component={Templates} />
             </Switch>
+            <RecoilRoot>
             <Route path="/TodoWatsApp" component={TodoWatsApp}/>
-          
+            </RecoilRoot>
               <PrimarySearchAppBar  setAppDirection={setAppDirection} AppDirection={AppDirection} setScreenType={setScreenType} screenType={screenType} />
               <Switch>
                 {(menuList && menuList.length > 0 ) ? menuList.map((item, index) => (
