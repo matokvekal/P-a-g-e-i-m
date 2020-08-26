@@ -22,17 +22,17 @@ const useStyles = makeStyles(theme => ({
   formControl: {
     // margin: theme.spacing(1),
     // minWidth: 120,
-    maxWidth: 30,
+    // maxWidth: 30,
     // // direction:'ltr',
     // display: 'flex'
   },
   upperFilte11: {
-    minHeight: '2rem',
-    minWidth: 120,
-    maxWidth: 250,
-    backgroundColor: "lightblue",
-    position: 'sticky',
-    top: 0,
+    // minHeight: '2rem',
+    // minWidth: 120,
+    // maxWidth: 250,
+    // backgroundColor: "lightblue",
+    // position: 'sticky',
+    // top: 0,
   },
 }));
 

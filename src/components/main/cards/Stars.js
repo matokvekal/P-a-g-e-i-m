@@ -17,7 +17,7 @@ import './stars.css';
         {/* {stars.map(x=>x)} */}
    
         <div className="rating__star star-ratings-sprite">{}
-         <span style={{width: percent+"%"}} className="star-ratings-sprite-rating">
+         <span style={{width: percent+"%"}} className="star-ratings-sprite-rating" title="PIC">
          </span>
         </div>
         </>

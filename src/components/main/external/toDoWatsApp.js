@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './TodoWatsApp.css';
+// import './TodoWatsApp.css';
 import { now } from 'moment';
 import { atom, useRecoilValue, useSetRecoilState, useRecoilState } from 'recoil';
 import AddItem from './AddItem';
@@ -10,7 +10,7 @@ import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 import CheckIcon from '@material-ui/icons/Check';
 import Switch from '@material-ui/core/Switch';
-import 'antd/dist/antd.css';
+// import 'antd/dist/antd.css';
 import { Button, Input } from 'antd';
 
 const imgFolder = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAAABmJLR0QA/wD/AP+gvaeTAAABAElEQVRYhWNgGAWjYGABIwMDA4N7x/H/xGpgZWbq21JqXkw7J6ECFhgjP8ScoOLvP38zrNp/Ld275yTj1hLzIpq6DAqYSFHMyc7KEOaoxc3DwZbm3XOyj1aOQgbwKCYmBGHg/advDGsOXf/77ccfZpq5jIGBYWeFJSMLYWWo4PaTtwyHLjxkMFISYg6zkmdgYyEpEogGGTNOMjAwIKXBiWtOEqVRXICTIdtTjUFRnIcmDkMHcAfOyCA+iukJaBM/VASjDqQUjDqQUjDqQErBqAMpBaMOpBSMOpBSMOpASsGoAykFow6kFIw6kFIw6kBKwaB3ILzjDhtqGAWjYBSgAgAXxS82HNeMiAAAAABJRU5ErkJggg==";

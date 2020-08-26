@@ -21,6 +21,7 @@
     "contentful": "^7.14.4",
     "faker": "^4.1.0",
     "font-awesome": "^4.7.0",
+    "lesshat": "^4.1.0",
     "material-ui-color-picker": "^3.5.0",
     "mdbreact": "^4.27.0",
     "moment": "^2.25.3",
@@ -37,7 +38,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "GENERATE_SOURCEMAP=false react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

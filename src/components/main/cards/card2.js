@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import './card2.css';
+// import './card2.css';
 //import socketIOClient from 'socket.io-client';
 import { ConfigContext } from '../../../context/ConfigContext';
 import { pageimEndPoint } from '../../../Config';
@@ -71,7 +71,7 @@ export const Card2 = (props) => {
                                             <label className='label' >{header.name}:</label>
                                             <span className='input'
                                                 key={i}>
-                                                {el[header.name]}
+                                                {el[header.name] }
                                             </span>
                                             </span>
                                         </>

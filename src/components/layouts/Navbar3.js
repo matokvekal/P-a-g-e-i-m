@@ -1,6 +1,6 @@
 import React, { useState ,useContext} from 'react';
 
-import 'antd/dist/antd.css';
+// import 'antd/dist/antd.css';
 import { Link } from 'react-router-dom';
 import { Menu, Button } from 'antd';
 import { MenuContext } from '../../context/MenuContext';
@@ -26,7 +26,7 @@ export const Navbar3 = () => {
 
 
     return (
-        <div style={{ width: 170 }}>
+        <div >
             <Menu
                 // defaultSelectedKeys={['1']}
                 // defaultOpenKeys={['sub1']}

@@ -9,14 +9,20 @@ const ConfigContextProvider = (props) => {
 
     useEffect(() => {
             if(localStorage['freeUserToken']){
-            const URL = `${API_ENDPOINT}/public/fields/data`;
+            // const URL = `${API_ENDPOINT}/public/fields/data`;
             // url: "/applications/fieldsOfTable?appname="+$scope.selectedApplication.name
+            const URL= `${API_ENDPOINT}/applications/fieldsOfTable?appname=races`;
             fetch(URL, {
-                method: 'POST',
+                method: 'GET',
                 headers: { Authorization: "Bearer " + localStorage['freeUserToken'] }
             })
-                .then(response => response.json())
-                .then(data => setTableFields(data))
+                .then(response =>{
+                    debugger
+                    return response.json()})
+                // .then(data => setTableFields(data))
+                .then(data => {
+                    debugger
+                    setTableFields(data.data)})
                 .catch((error) => {
                     console.error('Error:', error);
                 });

@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import moment from 'moment';
 import Actions from './Actions';
-import './Table2.css';
+// import './Table2.css';
 import { GlobalContext } from '../../../../context/GlobalContext';
 import { pageimEndPoint } from '../../../../Config';
 import Filter from './Filter';
@@ -11,10 +11,11 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { ConfigContext } from '../../../../context/ConfigContext';
 import { editRow } from './../../../../services/editRowService';
 import { makeStyles } from '@material-ui/core/styles';
-import 'antd/dist/antd.css';
+// import 'antd/dist/antd.css';
 import { Pagination } from 'antd';
 
 export const Table2 = (props) => {
+  debugger
   let app = props.app ? props.app : '';
   let APP = app ? app.substr(1) : '';
   APP = APP.toLowerCase();
@@ -26,7 +27,7 @@ export const Table2 = (props) => {
   const [pageSize, setPageSize] = useState(100);
   // const extra_header_width = 80;
   const [AppFields, setAppFields] = useState([]);
-  const [errorMsg, setErrorMsg] = useState('');
+  const [errorMsg, setErrorMsg] = useState('Error table2');
   const [tableFields, setTableFields] = useContext(ConfigContext);
 
   // useEffect(() => {
@@ -40,7 +41,6 @@ export const Table2 = (props) => {
 
   // }, [tableFields])
   useEffect(() => {
-    debugger
     if (!tableFields || tableFields.length === 0) {
       if (localStorage['fields'] )  //&& localStorage['fields'].length === 0
           {

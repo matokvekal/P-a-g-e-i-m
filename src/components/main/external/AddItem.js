@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { atom, useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil'
 import { dataState } from "./TodoWatsApp";
 import { statusComplite } from "./TodoWatsApp";
-import 'antd/dist/antd.css';
+// import 'antd/dist/antd.css';
 import { Button } from 'antd';
 
 function AddItem(props) {

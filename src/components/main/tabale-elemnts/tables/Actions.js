@@ -1,5 +1,5 @@
 import React,{useState} from 'react'
-import './action.css'
+// import './action.css'
 function Actions(props) {
   
   const {appPermissionEdit,appPermissionDel,handleEditMode,row}=props;
