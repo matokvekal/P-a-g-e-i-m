@@ -1,9 +1,27 @@
 import React, { useEffect } from 'react';
 import CardsSearch from './CardsSearch';
 import usePagination from './../../hooks/Pagination';
+import CardsFilter from './../main/cards/CardsFilter';
+import { RecoilRoot } from "recoil";
+import { atom, useRecoilState } from 'recoil';
+
+
+
 const CardsHeader = () => {
-
-
+    // const showHideFilter = atom({
+    //     key: "ShowHideFilter",
+    //     default: "",
+    //  });
+       const showHideFilter2 = atom({
+      key: "ShowHideFilter",
+      default: 'true',
+   });
+    const [showFilter, setShowFilter] = useRecoilState(showHideFilter2);
+   const handleFilter=()=>{
+    setShowFilter(x=>x==='true'?'false':'true');
+   };
+  
+   
  const { next, prev, jump, currentPage,setCurrentPage, maxPage ,itemsPerPage,setItemsPerPage} = usePagination();
 
     return (
@@ -27,8 +45,8 @@ const CardsHeader = () => {
                 <div className="four__square">
                     <i className="fas fa-th-large"></i>
                 </div>
-                <div className="filter__form">
-                    <input type="text" id="filter" placeholder="Filter" />
+                <div className="filter__form active" onClick={handleFilter}>
+                    <input type="text" id="filter" placeholder={showFilter} />
                 </div>
                 <div className="Sort__form">
                     <input type="text" id="sort" placeholder="Sort" />
@@ -53,6 +71,7 @@ const CardsHeader = () => {
                     <i className="fas fa-bars"></i>
                 </div>
             </div>
+            <CardsFilter/>
 
 
 

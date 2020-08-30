@@ -28,8 +28,8 @@ export const Card3 = (props) => {
   const [AppFields, setAppFields] = useState([]);
   const [errorMsg, setErrorMsg] = useState('Err card3');
   const [popupCard, setPopupCard] = useState('');
-  const [responsItems,setResponseItems]=useState(1500);
-  const { items,setItems,currentPage ,itemsPerPage} = usePagination();
+  const [responsItems, setResponseItems] = useState(1500);
+  const { items, setItems, currentPage, itemsPerPage } = usePagination();
   let app = props.app ? props.app : '';
   let APP = app ? app.substr(1) : '';
   APP = APP.toLowerCase();
@@ -37,8 +37,8 @@ export const Card3 = (props) => {
   const newSearch = atom({
     key: "searchState",
     default: "",
- });
- const [searchNew, setSearchNew] = useRecoilState(newSearch);
+  });
+  const [searchNew, setSearchNew] = useRecoilState(newSearch);
   useEffect(() => {
     if (!tableFields || tableFields.length === 0) {
       if (localStorage['fields']) {
@@ -62,30 +62,30 @@ export const Card3 = (props) => {
     }
     else {
       // const URL = `${API_ENDPOINT}/public${app}/data`;
-    //const URL = `${API_ENDPOINT}/devicedata${app}/data`; //work fine but just get data no search or staate
+      //const URL = `${API_ENDPOINT}/devicedata${app}/data`; //work fine but just get data no search or staate
       //const URL = `${API_ENDPOINT}/stateUpdate`;
-     const URL = `${API_ENDPOINT}/devicedata/stateUpdate?app=${APP}&search=${searchNew}&currentpage=${currentPage}&itemsperpage=${itemsPerPage}`;
+      const URL = `${API_ENDPOINT}/devicedata/stateUpdate?app=${APP}&search=${searchNew}&currentpage=${currentPage}&itemsperpage=${itemsPerPage}`;
       //const URL = `${API_ENDPOINT}/devicedata/search?search=${searchNew}`;
       fetch(URL, {
         method: 'POST',
         headers: { Authorization: "Bearer " + localStorage['freeUserToken'] },
       }
-      
+
       )
         .then(response => {
           debugger
           return response.json()
         })
         .then(res => {
-           debugger
-          setData(res.res?res.res:null);setItems(res.total[0].totalRows)
+          debugger
+          setData(res.res ? res.res : null); setItems(res.total[0].totalRows)
         })
         .catch((error) => {
           console.error('Error:', error);
         });
     }
 
-  }, [AppFields,searchNew,currentPage,itemsPerPage]);
+  }, [AppFields, searchNew, currentPage, itemsPerPage]);
 
 
 
@@ -98,10 +98,11 @@ export const Card3 = (props) => {
         <span className='error'>Error occured : {errorMsg}</span> :
 
         <div className="cards__area">
+                  
           <div className="cards">
             {data.map((el, index) => (
               <>
-                <div className={popupCard === index ? 'card__item active' :data.length<5?'card__item card_item_width': 'card__item'} id={popupCard === index ? 'popup' : null}>
+                <div className={popupCard === index ? 'card__item active' : data.length < 5 ? 'card__item card_item_width' : 'card__item'} id={popupCard === index ? 'popup' : null}>
 
                   {/*<!-- Card Header-->*/}
                   <div className="card__header">
@@ -176,7 +177,8 @@ export const Card3 = (props) => {
                   <div className="card__footer">
                     <div className="icons">
                       <i className="fas fa-share-alt-square share"></i>
-                      <i className="far fa-square square"></i>
+                      <input className="check" type="checkbox" name="completed" id="" />
+
                     </div>
                     <div className="card__footer__main">
 
@@ -191,7 +193,7 @@ export const Card3 = (props) => {
                         <p>112+</p>
 
                       </div>
-                      <Stars rating={(el['total_finish_cat'] - el['pic'] ) * 100 / el['total_finish_cat']} />
+                      <Stars rating={(el['total_finish_cat'] - el['pic']+1) * 100 / el['total_finish_cat']} />
 
 
                     </div>

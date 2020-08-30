@@ -319,6 +319,11 @@ input[type=text]{
     transition: box-shadow .6s;
    
 }
+.check{
+    height: 2rem;
+    width: 2rem;
+    margin-left: 0.5rem;
+}
 .card_item_width{
     max-width: 275px;
 }
@@ -614,6 +619,7 @@ margin-left: 30px;
 }
 .catagory.active{
     display: block;
+    margin: auto;
 }
 .catagory input[type=checkbox]{
     margin-right: 1rem;
@@ -804,6 +810,9 @@ margin-left: 30px;
     .chat__box .form{
         right: 1rem;
         bottom: 7rem;
+    }
+    .catagory.active {
+        left: 50%;
     }
 }
 
