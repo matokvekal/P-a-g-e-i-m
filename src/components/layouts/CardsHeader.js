@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import CardsSearch from './CardsSearch';
 import usePagination from './../../hooks/Pagination';
-import CardsFilter from './../main/cards/CardsFilter';
+import CardsFilter from './CardsFilter';
+
 import { RecoilRoot } from "recoil";
 import { atom, useRecoilState } from 'recoil';
 

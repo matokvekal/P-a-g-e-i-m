@@ -8,9 +8,8 @@ const ConfigContextProvider = (props) => {
     const [tableFields, setTableFields] = useState([]);
 
     useEffect(() => {
+        debugger
             if(localStorage['freeUserToken']){
-            // const URL = `${API_ENDPOINT}/public/fields/data`;
-            // url: "/applications/fieldsOfTable?appname="+$scope.selectedApplication.name
             const URL= `${API_ENDPOINT}/applications/fieldsOfTable?appname=races`;
             fetch(URL, {
                 method: 'GET',

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ConfigContextProvider from './context/ConfigContext';
-import MenuContextProvider from './context/MenuContext';
+import FilterontextProvider from './context/FilterContext';
+//import MenuContextProvider from './context/MenuContext';
 import GlobalContextProvider from './context/GlobalContext';
 // import PrimarySearchAppBar from './components/layouts/PrimarySearchAppBar';
 // import './App.css';
@@ -127,7 +128,9 @@ function App() {
           
             <GlobalContextProvider>
               <Router>
+              <FilterontextProvider>
                 <ConfigContextProvider>
+               
                   <Switch>
                     <Route exact path="/" component={Templates} />
                     <Route path="/Templates" component={Templates} />
@@ -152,8 +155,9 @@ function App() {
                   <CardsFooter />
                   <CardsChat />
                   </RecoilRoot>
-
+            
                 </ConfigContextProvider>
+                </FilterontextProvider>
               </Router>
               {/*</MenuContextProvider>*/}
             </GlobalContextProvider>

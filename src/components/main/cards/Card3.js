@@ -14,11 +14,6 @@ import { RecoilRoot } from "recoil";
 import { atom, useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil'
 import usePagination from './../../../hooks/Pagination';
 
-// let total_items=1000;
-// let item_in_page=20;
-// let total_pages=total_items/item_in_page;
-// let current_page=3;
-// let offset=0;
 
 export const Card3 = (props) => {
   const [data, setData] = useState([]);
@@ -48,7 +43,10 @@ export const Card3 = (props) => {
     }
     if (APP) {
       setAppFields(tableFields.filter(x => x.application === APP));
+      //new test if now fields of current App it may new app, so go to server to bring all
     }
+    if(!tableFields ||tableFields.length===0)
+    localStorage.removeItem("fields");
   }, [tableFields])
 
 
