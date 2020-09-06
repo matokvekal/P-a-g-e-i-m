@@ -253,6 +253,7 @@ input[type=text]{
     padding: 0 2rem;
     color: var(--header-footer-text-color);
 }
+
 .page__count{
     font-size: var(--header-footer-font-size);
     display: flex;
@@ -450,6 +451,7 @@ margin-left: 30px;
     justify-content: center;
     align-items: center;
     font-size: 1.5rem;
+    margin-left: 0.5rem;;
 }
 .like__sec i{
     font-size: 2rem;
@@ -691,6 +693,7 @@ margin-left: 30px;
 .sub__sort{
     margin-left: 2rem;
 }
+
 /* Media Queries */
 @media screen and (max-width:669px){
     .header{
@@ -766,6 +769,21 @@ margin-left: 30px;
     .footer{
         display: none;
     }
+
+    .footerMobile{
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        height: 5rem;
+        width: 100%;
+        background: var(--bg-primary);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0 2rem;
+        color: var(--header-footer-text-color);
+    }
+
     .cards{
         display: flex;
         flex-direction: column;
@@ -899,6 +917,19 @@ margin-left: 30px;
     }
     .footer{
         display: none;
+    }
+    .footerMobile{
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        height: 5rem;
+        width: 100%;
+        background: var(--bg-primary);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0 2rem;
+        color: var(--header-footer-text-color);
     }
     .cards__area{
         margin: 0 1rem;

@@ -24,7 +24,7 @@ export const Card3 = (props) => {
   const [errorMsg, setErrorMsg] = useState('Err card3');
   const [popupCard, setPopupCard] = useState('');
   const [responsItems, setResponseItems] = useState(1500);
-  const { items, setItems, currentPage, itemsPerPage } = usePagination();
+  const { items, setItems, currentPage, itemsPerPage ,mobilePage} = usePagination();
   let app = props.app ? props.app : '';
   let APP = app ? app.substr(1) : '';
   APP = APP.toLowerCase();
@@ -78,15 +78,21 @@ export const Card3 = (props) => {
           return response.json()
         })
         .then(res => {
-          //debugger
-          setData(res.res ? res.res : null); setItems(res.total[0].totalRows)
+          debugger
+          mobilePage
+          ?
+          setData(res.res?[...data,...res.res]:[...data])
+          :
+          setData(res.res ? res.res : null);
+         setItems(res.total[0].totalRows)  ;// react- in mobile page just add data insted of replace
         })
         .catch((error) => {
           console.error('Error:', error);
         });
     }
 
-  }, [AppFields, searchNew, currentPage, itemsPerPage]);
+  }, [AppFields, searchNew, currentPage, itemsPerPage,mobilePage]);
+
 
   useEffect(() => {
     //debugger

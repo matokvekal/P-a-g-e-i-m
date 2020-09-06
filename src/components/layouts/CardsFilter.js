@@ -1,12 +1,13 @@
-import React, { useState, useContext } from 'react';
+import React, { useEffect, useRef, useState, useContext } from 'react';
 import { FilterContext } from '../../context/FilterContext';
 //import { MenuContext } from '../../context/MenuContext';
 import { RecoilRoot } from "recoil";
 import { atom, useRecoilState } from 'recoil';
+// import useOnClickOutside from './../../hooks/ClickOutSide';
 
 
-
-const CardsFilter = () => {
+const CardsFilter = (props) => {
+    const filterRef = useRef(null);
     const showHideFilter = atom({
         key: "ShowHideFilter",
         default: "",
@@ -20,8 +21,32 @@ const CardsFilter = () => {
     const [showFilter, setShowFilter] = useRecoilState(showHideFilter);
     const [filters, setFilters] = useContext(FilterContext);
     const [filterCheckbox, setFilterCheckbox] = useState(filters.filter(x => x.checked === true).length === 0 ? false : true)
+    //  const[showHideCheckbox,setShowHideheckbox]=useState(filters.filter(x => x.checked === true).length === 0 ? false : true)
+
+
+
+    useEffect(() => {
+        const listener = event => {
+            if (!event.target || !event.target.classList.contains('filterModal')) {
+                setShowFilter(false)
+            }
+        };
+
+        document.addEventListener('mousedown', listener);
+        document.addEventListener('touchstart', listener);
+
+        // return () => {
+        //   document.removeEventListener('mousedown', listener);
+        //   document.removeEventListener('touchstart', listener);
+        // };
+    },
+
+        []
+    );
+
     function removeAllFilters(e) {//condidere to remove this// copy atom as remove all//go to server to same SP but flag remove all,the return  no selected filter/in useEffect it will change all 
         debugger
+        //setShowHideheckbox(false);
         setFilter({
             checked: e.target.checked,
             name: 'ALL',
@@ -47,7 +72,7 @@ const CardsFilter = () => {
     }
     function handleSelectFilter(e) {
         //after filter change it will handle in card3.js filterUpdate
-   
+
 
         setFilter({
             checked: e.target.checked,
@@ -77,24 +102,24 @@ const CardsFilter = () => {
 
     return (
         <>
-            <div className="sub__menu">
-                <div className={`catagory  ${showFilter === 'true' ? "active" : ""}`} id="catagory ">
+            <div className="sub__menu filterModal">
+                <div className={`filterModal  catagory  ${showFilter === 'true' ? "active" : ""}`} id="catagory " >
                     {filters && filters.length > 0 ?
                         <>
-                            <h1 className='filterheader'>Filters: ({filters.length} )   <input className="filterCheckbox" type="checkbox" checked={filters.filter(x => x.checked === true).length === 0 ? false : true} onClick={removeAllFilters} /> </h1>
+                            <h1 className='filterheader filterModal'>Filters: ({filters.length} )   <input disabled={filters.filter(x => x.checked === true).length === 0 ? true : false} className="filterCheckbox filterModal" type="checkbox" checked={filters.filter(x => x.checked === true).length === 0 ? false : true} onClick={removeAllFilters} /> </h1>
 
                             {categorys.map((category, index1) => (
                                 <>
-                                    <div className={index1 % 2 === 0 ? 'sub__catagory__1' : 'sub__catagory__2'} key={7623 * index1}>
+                                    <div className={index1 % 2 === 0 ? 'sub__catagory__1 filterModal' : 'sub__catagory__2 filterModal'} key={7623 * index1}>
 
-                                        <label htmlFor={index1 % 2 === 0 ? 'A' : 'B'}>{category}</label>
-                                        <ul className="sub__catagory">
+                                        <label htmlFor={index1 % 2 === 0 ? 'A' : 'B'} className='filterModal'>{category}</label>
+                                        <ul className="sub__catagory filterModal">
                                             {filters.filter(item => item.field === category).map((item, index) => (
 
 
-                                                <li className="cat__item" key={index * 1999}>
-                                                    <input type="checkbox" id={item.filterId} value={item.data} name={category} onClick={handleSelectFilter} checked={item.checked} />
-                                                    <label htmlFor={index1 % 2 === 0 ? 'sub__1' : 'sub__2'}>{item.data}({item.count})</label>
+                                                <li className="cat__item filterModal" key={index * 1999}>
+                                                    <input className='filterModal' type="checkbox" id={item.filterId} value={item.data} name={category} onClick={handleSelectFilter} checked={item.checked} />
+                                                    <label className='filterModal' htmlFor={index1 % 2 === 0 ? 'sub__1' : 'sub__2'}>{item.data}({item.count})</label>
                                                 </li>
 
                                             ))}

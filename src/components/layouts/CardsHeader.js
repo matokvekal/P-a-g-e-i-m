@@ -76,7 +76,7 @@ const CardsHeader = () => {
                     <i className="fas fa-bars"></i>
                 </div>
             </div>
-            <CardsFilter/>
+            <CardsFilter />
 
 
 
