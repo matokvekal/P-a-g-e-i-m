@@ -15,7 +15,7 @@ export const Card2 = (props) => {
     // const { config } = useContext(ConfigContext);
     const [AppFields, setAppFields] = useState([]);
     useEffect(() => {
-        debugger
+       // debugger
         if (!tableFields || tableFields.length === 0) {
             if (localStorage['fields'] && localStorage['fields'].length !== 0)
               tableFields = JSON.parse(localStorage['fields']);

@@ -15,7 +15,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Pagination } from 'antd';
 
 export const Table2 = (props) => {
-  debugger
   let app = props.app ? props.app : '';
   let APP = app ? app.substr(1) : '';
   APP = APP.toLowerCase();
@@ -50,7 +49,7 @@ export const Table2 = (props) => {
     }
     if(APP)
      { 
-       debugger
+       
       setAppFields(tableFields.filter(x => x.application === APP));}
 
   }, [tableFields])
@@ -239,11 +238,11 @@ export const Table2 = (props) => {
       }
       )
         .then(response => {
-          debugger
+          //debugger
           return response.json()
         })
         .then(res => {
-          debugger
+          //debugger
           return setData(res)
         })
         .catch((error) => {

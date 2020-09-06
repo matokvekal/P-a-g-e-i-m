@@ -312,7 +312,7 @@ function setLocalStorage(dataToStore){
     }
   }
   const deleteFolder = (id) => {
-    debugger
+    //debugger
     try {
       if (id === 'All' || taskCount !== 0)
         return;

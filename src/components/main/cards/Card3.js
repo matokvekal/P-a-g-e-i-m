@@ -34,6 +34,13 @@ export const Card3 = (props) => {
     default: "",
   });
   const [searchNew, setSearchNew] = useRecoilState(newSearch);
+
+  const newFilter = atom({
+    key: "filterState",
+    default: "",
+  });
+  const [filter, setFilter] = useRecoilState(newFilter);
+  
   useEffect(() => {
     if (!tableFields || tableFields.length === 0) {
       if (localStorage['fields']) {
@@ -59,11 +66,7 @@ export const Card3 = (props) => {
       console.log('no freeUserToken card3')
     }
     else {
-      // const URL = `${API_ENDPOINT}/public${app}/data`;
-      //const URL = `${API_ENDPOINT}/devicedata${app}/data`; //work fine but just get data no search or staate
-      //const URL = `${API_ENDPOINT}/stateUpdate`;
       const URL = `${API_ENDPOINT}/devicedata/stateUpdate?app=${APP}&search=${searchNew}&currentpage=${currentPage}&itemsperpage=${itemsPerPage}`;
-      //const URL = `${API_ENDPOINT}/devicedata/search?search=${searchNew}`;
       fetch(URL, {
         method: 'POST',
         headers: { Authorization: "Bearer " + localStorage['freeUserToken'] },
@@ -71,11 +74,11 @@ export const Card3 = (props) => {
 
       )
         .then(response => {
-          debugger
+          //debugger
           return response.json()
         })
         .then(res => {
-          debugger
+          //debugger
           setData(res.res ? res.res : null); setItems(res.total[0].totalRows)
         })
         .catch((error) => {
@@ -85,14 +88,45 @@ export const Card3 = (props) => {
 
   }, [AppFields, searchNew, currentPage, itemsPerPage]);
 
+  useEffect(() => {
+    //debugger
+    if (app === '/' || app === '/Templates'||filter.value=='undefined' || filter.name=='undefined' ||!filter.value || !filter.name)
+      return
+    if (!localStorage["freeUserToken"] || localStorage["freeUserToken"] === null || localStorage["freeUserToken"] === "undefined") {
+      console.log('no freeUserToken card3')
+    }
+    else {
+      debugger
+      let data=filter;
+      const URL = `${API_ENDPOINT}/devicedata/filterUpdate?app=${APP}&checked=${filter.checked}&name=${filter.name}&value=${filter.value}&itemsperpage=${itemsPerPage}`;
+      fetch(URL, {
+        method: 'POST',
+        headers: { Authorization: "Bearer " + localStorage['freeUserToken'] },
+      }
 
+      )
+        .then(response => {
+          //debugger
+          return response.json()
+        })
+        .then(res => {
+          //debugger
+          setData(res.res ? res.res : null); setItems(res.total[0].totalRows)
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+    }
+
+  }, [filter]);
 
 
 
 
   return (
     <>
-      {!AppFields || AppFields.length === 0 ?
+      {!AppFields || AppFields.length === 0 ||!data  
+      ?
         <span className='error'>Error occured : {errorMsg}</span> :
 
         <div className="cards__area">

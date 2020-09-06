@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from 'react';
 
 function DynamicComponent(props) {
-    debugger
+    //debugger
     const [html] = useState(props.html);
    
     useEffect(() => {

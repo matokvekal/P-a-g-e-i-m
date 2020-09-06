@@ -1,19 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect,useContext } from 'react';
 import CardsSearch from './CardsSearch';
 import usePagination from './../../hooks/Pagination';
 import CardsFilter from './CardsFilter';
 
 import { RecoilRoot } from "recoil";
 import { atom, useRecoilState } from 'recoil';
+import { FilterContext } from '../../context/FilterContext';
 
 
 
 const CardsHeader = () => {
-    // const showHideFilter = atom({
-    //     key: "ShowHideFilter",
-    //     default: "",
-    //  });
-       const showHideFilter2 = atom({
+    const [filters] = useContext(FilterContext);
+    const showHideFilter2 = atom({
       key: "ShowHideFilter",
       default: 'true',
    });
@@ -22,6 +20,12 @@ const CardsHeader = () => {
     setShowFilter(x=>x==='true'?'false':'true');
    };
   
+//    useEffect(() => {
+//     const main=document.getElementById('maindiv');
+//     if(html)
+//        main.innerHTML=html;
+// }, [html])
+
    
  const { next, prev, jump, currentPage,setCurrentPage, maxPage ,itemsPerPage,setItemsPerPage} = usePagination();
 
@@ -47,7 +51,7 @@ const CardsHeader = () => {
                     <i className="fas fa-th-large"></i>
                 </div>
                 <div className="filter__form active" onClick={handleFilter}>
-                    <input type="text" id="filter" placeholder={showFilter} />
+                    <input type="text" id="filter" placeholder='Filter' disabled value={`${filters.filter(x=>x.checked===true).length} filters selected`}/>
                 </div>
                 <div className="Sort__form">
                     <input type="text" id="sort" placeholder="Sort" />

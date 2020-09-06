@@ -8,7 +8,7 @@ const ConfigContextProvider = (props) => {
     const [tableFields, setTableFields] = useState([]);
 
     useEffect(() => {
-        debugger
+        //debugger
             if(localStorage['freeUserToken']){
             const URL= `${API_ENDPOINT}/applications/fieldsOfTable?appname=races`;
             fetch(URL, {
@@ -16,11 +16,11 @@ const ConfigContextProvider = (props) => {
                 headers: { Authorization: "Bearer " + localStorage['freeUserToken'] }
             })
                 .then(response =>{
-                    debugger
+                    //debugger
                     return response.json()})
                 // .then(data => setTableFields(data))
                 .then(data => {
-                    debugger
+                    //debugger
                     setTableFields(data.data)})
                 .catch((error) => {
                     console.error('Error:', error);

@@ -3,25 +3,22 @@ import { RecoilRoot } from "recoil";
 import { atom, useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
 
 const CardsSearch = () => {
-const [search, setSearch] = useState('');
-const newSearch = atom({
+const search = atom({
    key: "searchState",
    default: "",
 });
-const [searchNew, setSearchNew] = useRecoilState(newSearch);
+const [searchNew, setSearchNew] = useRecoilState(search);
 
 function handleSearch(e){
-setSearch(e.target.value);
 setSearchNew(e.target.value);
-// console.dir(search);
 }
 
    return (
       <>
          <div className="search__box">
             <form action="#">
-               <input type="text" className="input" value={search} placeholder={'search'} onChange={handleSearch} />
-               <i className="fas fa-search"></i>{searchNew}
+               <input type="text" className="input" value={searchNew} placeholder={'search'} onChange={handleSearch} />
+               <i className="fas fa-search"></i>
             </form>
          </div>
          <div className="search__box__res">

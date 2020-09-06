@@ -7,23 +7,72 @@ import { atom, useRecoilState } from 'recoil';
 
 
 const CardsFilter = () => {
-    const showHideFilter1 = atom({
+    const showHideFilter = atom({
         key: "ShowHideFilter",
         default: "",
     });
-    const [showFilter, setShowFilter] = useRecoilState(showHideFilter1);
+    const newFilter = atom({
+        key: "filterState",
+
+        default: "",
+    });
+    const [filter, setFilter] = useRecoilState(newFilter);
+    const [showFilter, setShowFilter] = useRecoilState(showHideFilter);
     const [filters, setFilters] = useContext(FilterContext);
-    let prevCat=null;
-    debugger
-    //const [categorys, setCategorys] = useState([...new Set(filters.map(cat => cat.field))]);
-   // let categorys=[...new Set(filters.map(cat => cat.field))];
-    //let categorys2 = new Set([...filters].filter(x => !categorys2.has(x)));
-    let categorys=[...new Set(filters.map(cat => cat.field).filter(x=>x))];
-    //let categorys= [...new Set(filters.map(cat => cat.field))];
-    //const { menuList } = useContext(MenuContext);
+    const [filterCheckbox, setFilterCheckbox] = useState(filters.filter(x => x.checked === true).length === 0 ? false : true)
+    function removeAllFilters(e) {//condidere to remove this// copy atom as remove all//go to server to same SP but flag remove all,the return  no selected filter/in useEffect it will change all 
+        debugger
+        setFilter({
+            checked: e.target.checked,
+            name: 'ALL',
+            value: 'ALL',
+        })
+        setFilters((x) => {
+            const newFilters = filters.map((item) => {
 
-    //const [Appfilters, setAppfilters] = useState([]);
+                return {
+                    count: item.count,
+                    data: item.data,
+                    field: item.field,
+                    filterId: item.filterId,
 
+                }
+
+
+            });
+            return newFilters;
+        });
+        // setFilterCheckbox(false)
+
+    }
+    function handleSelectFilter(e) {
+        //after filter change it will handle in card3.js filterUpdate
+   
+
+        setFilter({
+            checked: e.target.checked,
+            name: e.target.name,
+            value: e.target.value,
+        })
+        setFilters((x) => {
+            const newFilters = filters.map((item) => {
+                if (item.filterId.toString() === e.target.id) {
+                    return {
+                        ...item,
+                        checked: e.target.checked,
+                    }
+                }
+                else {
+                    return item;
+                }
+            });
+            return newFilters;
+        }
+
+        )
+    }
+
+    let categorys = [...new Set(filters.map(cat => cat.field).filter(x => x))];
 
 
     return (
@@ -32,24 +81,25 @@ const CardsFilter = () => {
                 <div className={`catagory  ${showFilter === 'true' ? "active" : ""}`} id="catagory ">
                     {filters && filters.length > 0 ?
                         <>
-                        
+                            <h1 className='filterheader'>Filters: ({filters.length} )   <input className="filterCheckbox" type="checkbox" checked={filters.filter(x => x.checked === true).length === 0 ? false : true} onClick={removeAllFilters} /> </h1>
+
                             {categorys.map((category, index1) => (
                                 <>
-                                <div className={index1%2===0?'sub__catagory__1':'sub__catagory__2'} key={7623*index1}>
-                                    <input type="checkbox" id={index1%2===0?'A':'B'}  />
-                                    <label htmlFor={index1%2===0?'A':'B'}>{category}</label>
-                                    <ul className="sub__catagory">
-                                    {filters.filter(item=>item.field===category).map((item, index) => (
+                                    <div className={index1 % 2 === 0 ? 'sub__catagory__1' : 'sub__catagory__2'} key={7623 * index1}>
+
+                                        <label htmlFor={index1 % 2 === 0 ? 'A' : 'B'}>{category}</label>
+                                        <ul className="sub__catagory">
+                                            {filters.filter(item => item.field === category).map((item, index) => (
 
 
-                                        <li className="cat__item" key={index*1999}>
-                                            <input type="checkbox" id={index1%2===0?'sub__1':'sub__2'}/>
-                                            <label htmlFor={index1%2===0?'sub__1':'sub__2'}>{item.data}({item.count})</label>
-                                        </li>
+                                                <li className="cat__item" key={index * 1999}>
+                                                    <input type="checkbox" id={item.filterId} value={item.data} name={category} onClick={handleSelectFilter} checked={item.checked} />
+                                                    <label htmlFor={index1 % 2 === 0 ? 'sub__1' : 'sub__2'}>{item.data}({item.count})</label>
+                                                </li>
 
-                                    ))}
-                                </ul>
-                                </div>
+                                            ))}
+                                        </ul>
+                                    </div>
                                 </>
                             ))}
                         </>
@@ -57,54 +107,7 @@ const CardsFilter = () => {
 
 
                 </div>
-                <div className="catagory" id="catagory">
-                    <div className="sub__catagory__1">
-                        <input type="checkbox" id="A" />
-                        <label htmlFor="A">Catagory 1</label>
-                        <ul className="sub__catagory">
-                            <li className="cat__item">
-                                <input type="checkbox" id="sub__1" />
-                                <label htmlFor="sub__1">Sub Catagory 1-11</label>
-                            </li>
-                            <li className="cat__item">
-                                <input type="checkbox" id="sub__2" />
-                                <label htmlFor="sub__1">Sub Catagory 1-21</label>
-                            </li>
-                        </ul>
-                    </div>
-                    <div className="sub__catagory__2">
-                        <input type="checkbox" id="B" />
-                        <label htmlFor="B">Catagory 2</label>
-                        <ul className="sub__catagory">
-                            <li className="cat__item">
-                                <input type="checkbox" id="sub__2" />
-                                <label htmlFor="sub__2">Sub Catagory 2-1</label>
-                            </li>
-                            <li className="cat__item">
-                                <input type="checkbox" id="sub__2" />
-                                <label htmlFor="sub__2">Sub Catagory 2-2</label>
-                            </li>
-                            <li className="cat__item">
-                                <input type="checkbox" id="sub__2" />
-                                <label htmlFor="sub__2">Sub Catagory 2-3</label>
-                            </li>
-                        </ul>
-                    </div>
-                    <div className="sub__catagory__3">
-                        <input type="checkbox" id="C" />
-                        <label htmlFor="C">Catagory 3</label>
-                        <ul className="sub__catagory">
-                            <li className="cat__item">
-                                <input type="checkbox" id="sub__3" />
-                                <label htmlFor="sub__1">Sub Catagory 3-1</label>
-                            </li>
-                            <li className="cat__item">
-                                <input type="checkbox" id="sub__3" />
-                                <label htmlFor="sub__1">Sub Catagory 3-2</label>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+
             </div>
         </>
     )
