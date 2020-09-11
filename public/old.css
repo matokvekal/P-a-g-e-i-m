@@ -208,8 +208,7 @@ input[type=text]{
     height: 2.5rem;
     margin: 0;
     padding: .5rem;
-    /* width: 90%; */
-    width: 100%;
+    width: 90%;
     border: none;
     outline: none;
 }
@@ -275,9 +274,7 @@ input[type=text]{
     font-size: 2rem;
     display: none;
 }
-.race__branch,.race__category{
-    display:none;
- }
+
 /* Footer area */
 .footer{
     position: fixed;
@@ -293,10 +290,7 @@ input[type=text]{
     padding: 0 2rem;
     color: var(--header-footer-text-color);
 }
-Button.footer__botton{
-    display: none;
 
-}
 .page__count{
     font-size: var(--header-footer-font-size);
     display: flex;
@@ -327,7 +321,7 @@ Button.footer__botton{
     min-height: 100vh - 10rem;
     /* background-color: #dfe6e9; */
 }
-/* ---old val ---*/
+/* ---old val ---
 .cards{
     margin: 6rem auto;
     width: 100%;
@@ -344,8 +338,8 @@ Button.footer__botton{
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
     cursor: pointer;
     transition: box-shadow .6s;
-} 
-/* .cards{
+} */
+.cards{
     margin: 6rem auto;
     width: 100%;
     height: auto;
@@ -356,13 +350,13 @@ Button.footer__botton{
 }
 .card__item{
     min-height: 30rem;
-    min-width: 26rem; 
+    /* min-width: 26rem; */
     background: #fff;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
     cursor: pointer;
     transition: box-shadow .6s;
    
-} */
+}
 .check{
     height: 2rem;
     width: 2rem;
@@ -390,11 +384,7 @@ Button.footer__botton{
     border: 2px solid rgb(24, 13, 54);
     border-radius: 5rem;
 }
-.user__name{	
-    font-size: 2rem;	
-    font-weight: 700;	
-    margin-right: .5rem;	
-}
+
 .name__place{
     display: flex;
     justify-content: center;
@@ -414,7 +404,7 @@ margin-left: 30px;
     display: flex;
     align-items: center;
     padding: 0 .5rem;
-    font-size: 1.4rem;
+    font-size: 2rem;
 }
 .race__name{
     margin-right: .5rem;
@@ -445,7 +435,7 @@ margin-left: 30px;
     display: flex;
     justify-content: space-between;
     font-size: 1.5rem;
-    padding: 2rem 1rem;
+    padding: 1rem 1rem;
     font-weight: 600;
     overflow: hidden;
 }
@@ -770,20 +760,6 @@ margin-left: 30px;
         margin-right: 2rem;
         width:calc(100%-75%);
     }
-    .race__name__year{
-
-        font-size: 2.4rem;
-    }
-    Button.footer__botton{
-        display: block;
-    
-    }
-     .race__branch,.race__category{
-        font-size: 2rem;
-     }
-    .race__name{
-        margin-right: .5rem;
-    }
     .selection__form{
 
         max-width: 10rem;
@@ -865,12 +841,12 @@ margin-left: 30px;
     }
     .card__item{
         padding: 1rem;
-            /* max-width: 100%; */
+            max-width: 100%;
     }
   
     
     .card__item#popup{
-        padding: 1rem;
+        padding: 2rem;
     }
     #popup .card__footer .icons{
         font-size: 2.5rem;
@@ -889,8 +865,8 @@ margin-left: 30px;
         min-height: 3rem;
     }
     .card__item#popup{
-        padding-top: 2rem;
-        width: 90%;
+        padding-top: 5rem;
+        width: 80%;
         /* height: 100vh; */
         max-width: 100vh;
         margin-top: 10%;
@@ -928,7 +904,10 @@ margin-left: 30px;
         font-weight: bolder;
        
     }
-
+     p.user__name{
+        font-size: 2.5rem;
+        font-weight: 600;
+    }
     .chat__box .form{
         right: 1rem;
         bottom: 7rem;
@@ -948,10 +927,6 @@ margin-left: 30px;
     }
     .header .pages{
         display: none;
-    }
-    Button.footer__botton{
-        display: block;
-    
     }
     .header .price__box,
     .header .bars,

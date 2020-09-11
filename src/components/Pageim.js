@@ -8,7 +8,7 @@ export const Pageim = (props) => {
     const [appPermission] = useState(props.appPermission)
     return (
         < >
-           {props.screenType==='table'? <Card3 app={app} appPermission={appPermission}/>:<Card2 app={app}/>}
+           {props.screenType==='table'? <Card3 app={app} appPermission={appPermission}/>:<Card3 app={app}/>}
           {/*} {props.screenType==='table'? <Table2 app={app} appPermission={appPermission}/>:<Card2 app={app}/>}*/}
         </>
     )

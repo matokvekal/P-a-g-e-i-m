@@ -1,10 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CardsPaging from './CardsPaging';
 import usePagination from './../../hooks/Pagination';
+import { atom, useRecoilState ,RecoilRoot} from 'recoil';
 import 'antd/dist/antd.css';
 import { Button } from 'antd';
 const CardsFooter = () => {
-    const { setItemsPerPage,nextMobile } = usePagination();
+    const { setItemsPerPage, nextMobile } = usePagination();
+    const [hildeScroll, setHideScroll] = useState('scrollHide');
+    // const handleScroll = () => {
+    //     const position = window.pageYOffset;
+    //     setSrollPosition(position);
+    // };
+
+    useEffect(() => {
+        window.onscroll = function () { manageScroll() };
+    }, []);
+
+    const showHideFilter2 = atom({
+        key: "ShowHideFilter",
+        default: 'true',
+    });
+    const menuOpenClose = atom({
+        key: "menuOpenClose",
+        default: 'true',
+    });
+    const [showFilter, setShowFilter] = useRecoilState(showHideFilter2);
+
+
+    const manageScroll = () => {
+        setHideScroll(document.documentElement.scrollHeight - document.documentElement.clientHeight - window.scrollY>100?'scrollHide':null)
+        setShowFilter('false' );
+    }
 
     const items = [20, 50, 100];
     const handleItems = (event) => {
@@ -27,15 +53,13 @@ const CardsFooter = () => {
                     </>
                 </div>
             </div>
-            <div className="footerMobile">
+            <div className={hildeScroll==='scrollHide'?'scrollHide':'footerMobile'} >
+                <div className="page__box" className={hildeScroll}>
 
-                <div className="page__box">
-                    <>
+                    <Button className='footer__botton' type="primary" onClick={nextMobile} >
+                        MORE
+                    </Button>
 
-                        <Button type="primary" onClick={nextMobile}>
-                        MORE 
-                        </Button>
-                    </>
                 </div>
             </div>
         </>

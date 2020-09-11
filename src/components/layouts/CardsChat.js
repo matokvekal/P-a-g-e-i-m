@@ -5,6 +5,9 @@ const CardsChat=()=>{
 
    return(
       <>
+         <div className="mobile-up" id="chat__btn1">
+        <a href="#"><i className="fas fa-chevron-up"></i></a>
+      </div>
         <div className="chat__btn" id="chat__btn">
         <a href="#"><i className="far fa-comment-alt"></i></a>
       </div>

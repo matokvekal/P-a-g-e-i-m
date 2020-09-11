@@ -17,6 +17,11 @@ const CardsFilter = (props) => {
 
         default: "",
     });
+    const hideCardModal = atom({
+        key: "HideCardModal",
+        default: "",
+    });
+    const [popupCard, setPopupCard] = useRecoilState(hideCardModal);
     const [filter, setFilter] = useRecoilState(newFilter);
     const [showFilter, setShowFilter] = useRecoilState(showHideFilter);
     const [filters, setFilters] = useContext(FilterContext);
@@ -30,22 +35,24 @@ const CardsFilter = (props) => {
             if (!event.target || !event.target.classList.contains('filterModal')) {
                 setShowFilter(false)
             }
+            event.path.map(x=>x.classList?x.classList.value:1).includes('card__item active')
+            if (!event.path || !event.path.map(x=>x.classList?x.classList.value:1).includes('card__item active')) {
+                setPopupCard('');
+            }
+           
         };
 
         document.addEventListener('mousedown', listener);
         document.addEventListener('touchstart', listener);
 
-        // return () => {
-        //   document.removeEventListener('mousedown', listener);
-        //   document.removeEventListener('touchstart', listener);
-        // };
-    },
-
-        []
-    );
+        return () => {
+          document.removeEventListener('mousedown', listener);
+          document.removeEventListener('touchstart', listener);
+        };
+    },[filters]);
 
     function removeAllFilters(e) {//condidere to remove this// copy atom as remove all//go to server to same SP but flag remove all,the return  no selected filter/in useEffect it will change all 
-        debugger
+        //debugger
         //setShowHideheckbox(false);
         setFilter({
             checked: e.target.checked,
@@ -60,6 +67,7 @@ const CardsFilter = (props) => {
                     data: item.data,
                     field: item.field,
                     filterId: item.filterId,
+                    checked:false
 
                 }
 

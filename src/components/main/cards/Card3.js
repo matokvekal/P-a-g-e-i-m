@@ -13,6 +13,9 @@ import Stars from './Stars';
 import { RecoilRoot } from "recoil";
 import { atom, useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil'
 import usePagination from './../../../hooks/Pagination';
+import CircularProgress from '../../reusable/Progress';
+
+
 
 
 export const Card3 = (props) => {
@@ -22,7 +25,15 @@ export const Card3 = (props) => {
   const [tableFields, setTableFields] = useContext(ConfigContext);
   const [AppFields, setAppFields] = useState([]);
   const [errorMsg, setErrorMsg] = useState('Err card3');
-  const [popupCard, setPopupCard] = useState('');
+  const hideCardModal = atom({
+    key: "HideCardModal",
+    default: "",
+  });
+  const sortSelected = atom({
+    key: "sortSelected",
+    default: '',
+});
+  const [popupCard, setPopupCard] = useRecoilState(hideCardModal);
   const [responsItems, setResponseItems] = useState(1500);
   const { items, setItems, currentPage, itemsPerPage ,mobilePage} = usePagination();
   let app = props.app ? props.app : '';
@@ -41,6 +52,7 @@ export const Card3 = (props) => {
   });
   const [filter, setFilter] = useRecoilState(newFilter);
   
+  const [order_by] = useRecoilState(sortSelected);
   useEffect(() => {
     if (!tableFields || tableFields.length === 0) {
       if (localStorage['fields']) {
@@ -66,7 +78,7 @@ export const Card3 = (props) => {
       console.log('no freeUserToken card3')
     }
     else {
-      const URL = `${API_ENDPOINT}/devicedata/stateUpdate?app=${APP}&search=${searchNew}&currentpage=${currentPage}&itemsperpage=${itemsPerPage}`;
+      const URL = `${API_ENDPOINT}/devicedata/stateUpdate?app=${APP}&search=${searchNew}&currentpage=${currentPage}&itemsperpage=${itemsPerPage}&order_by=${order_by}`;
       fetch(URL, {
         method: 'POST',
         headers: { Authorization: "Bearer " + localStorage['freeUserToken'] },
@@ -78,7 +90,7 @@ export const Card3 = (props) => {
           return response.json()
         })
         .then(res => {
-          debugger
+          //debugger
           mobilePage
           ?
           setData(res.res?[...data,...res.res]:[...data])
@@ -91,7 +103,7 @@ export const Card3 = (props) => {
         });
     }
 
-  }, [AppFields, searchNew, currentPage, itemsPerPage,mobilePage]);
+  }, [AppFields, searchNew, currentPage, itemsPerPage,mobilePage,order_by]);
 
 
   useEffect(() => {
@@ -131,22 +143,24 @@ export const Card3 = (props) => {
 
   return (
     <>
+
       {!AppFields || AppFields.length === 0 ||!data  
       ?
-        <span className='error'>Error occured : {errorMsg}</span> :
+        <span className='error'>Error occured : {errorMsg} <CircularProgress /></span> :
 
         <div className="cards__area">
-                  
+                 
           <div className="cards">
             {data.map((el, index) => (
               <>
-                <div className={popupCard === index ? 'card__item active' : data.length < 5 ? 'card__item card_item_width' : 'card__item'} id={popupCard === index ? 'popup' : null}>
+                <div className={popupCard === index ? 'card__item active' : data.length < 5 ? 'card__item card_item_width' : 'card__item'} id={popupCard === index ? 'popup' : null} data={index}>
 
                   {/*<!-- Card Header-->*/}
-                  <div className="card__header">
+                  <div className="card__header" >
                     <div className="profile__img">
                       <img src={person} alt="" />
-                    </div>
+                    </div> 
+
                     <div className="name__trophy">
                       <div className="name__place">
                         <p>({el['total_finish_race']})</p>
@@ -171,7 +185,8 @@ export const Card3 = (props) => {
                               <img className="quantity" src={medal3} alt="" />
                               : null
                         }
-                        <p className="race__branch">{el['branch']}</p>
+                        <p className="race__branch">{el['branch']+' ,'}</p> 
+                        <p className="race__category">{el['category']+ ' '}</p>
                       </div>
                     </div>
                     <div className="flag__status">

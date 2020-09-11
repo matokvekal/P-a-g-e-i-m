@@ -15,6 +15,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Pagination } from 'antd';
 
 export const Table2 = (props) => {
+
   let app = props.app ? props.app : '';
   let APP = app ? app.substr(1) : '';
   APP = APP.toLowerCase();
@@ -43,6 +44,7 @@ export const Table2 = (props) => {
     if (!tableFields || tableFields.length === 0) {
       if (localStorage['fields'] )  //&& localStorage['fields'].length === 0
           {
+            debugger
             let data=JSON.parse(localStorage['fields']);
             setTableFields(data);
           };
@@ -231,19 +233,18 @@ export const Table2 = (props) => {
       console.log('no freeUserToken table2')
     }
     else {
-      const URL = `${API_ENDPOINT}/public${app}/data`;
+      const URL = `${API_ENDPOINT}/devicedata/stateUpdate?app=${APP}&search=${''}&currentpage=${1}&itemsperpage=${20}`;
       fetch(URL, {
         method: 'POST',
         headers: { Authorization: "Bearer " + localStorage['freeUserToken'] }
       }
       )
         .then(response => {
-          //debugger
           return response.json()
         })
         .then(res => {
-          //debugger
-          return setData(res)
+          debugger
+          return     setData(res.res ? res.res : null);
         })
         .catch((error) => {
           console.error('Error:', error);
@@ -251,8 +252,7 @@ export const Table2 = (props) => {
     }
 
   }, [AppFields, trigerFetch, global]);
-
-
+ 
 
 
   return (

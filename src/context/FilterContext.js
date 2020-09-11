@@ -1,11 +1,14 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { pageimEndPoint } from '../Config';
 export const FilterContext = createContext();
+export const SortContext = createContext();
 const API_ENDPOINT = pageimEndPoint();
+
 
 
 const FilterContextProvider = (props) => {
     const [filters, setFilters] = useState([]);
+    const [sortList, setSortList] = useState();
 
     useEffect(() => {
         if (localStorage['freeUserToken']) {
@@ -19,23 +22,28 @@ const FilterContextProvider = (props) => {
                     return response.json()
                 })
                 .then(data => {
+                    if (data && data.sortList) {
+                        //debugger
+                        setSortList( [...data.sortList.map(x => ([x.name,x.label]))])
+                        // setSortList([...data.sortList.map(x => (x.name))]);
+                    }
                     if (data && data.filters && data.selectedfilters) {
                         setFilters((x) => {
                             //debugger
                             const newFilters = data.filters.map((item, index) => {
                                 //debugger
-                              if (data.selectedfilters.find((x) => x.field === item.field && x.data === item.data)) {
-                                return {
-                                  ...item,
-                                  checked: true,
-                                  filterId:index,
+                                if (data.selectedfilters.find((x) => x.field === item.field && x.data === item.data)) {
+                                    return {
+                                        ...item,
+                                        checked: true,
+                                        filterId: index,
+                                    };
+                                } else {
+                                    return {
+                                        ...item,
+                                        filterId: index,
+                                    };
                                 };
-                              } else {
-                                return {
-                                    ...item,
-                                    filterId:index,
-                                  };
-                              };
                             });
                             return newFilters;
                         })
@@ -86,8 +94,10 @@ const FilterContextProvider = (props) => {
 
     return (
         <FilterContext.Provider value={[filters, setFilters]} >
-            {props.children}
-        </FilterContext.Provider>
+            <SortContext.Provider value={[sortList]} >
+                {props.children}
+            </SortContext.Provider>
+        </FilterContext.Provider >
     )
 }
 export default FilterContextProvider;

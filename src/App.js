@@ -20,6 +20,8 @@ import CardsFilter from './components/layouts/CardsFilter';
 import CardsSort from './components/layouts/CardsSort';
 import CardsChat from './components/layouts/CardsChat';
 import CardsFooter from './components/layouts/CardsFooter';
+import { atom, useRecoilState } from 'recoil';
+
 const colorPalet = [];
 colorPalet.basic = {
   '--color-primary': '#f89514',
@@ -59,6 +61,7 @@ colorPalet.tryit = {
 }
 
 
+
 function App() {
   //aaca1b #f89514;
   let set = 'tryit';
@@ -71,9 +74,16 @@ function App() {
   }
 
 
+  const menuListAtom = atom({
+    key: "menuList",
+    default: '',
+  });
+ 
+
+
   const [renderCounter, setRenderCounter] = useState([])
   const API_ENDPOINT = pageimEndPoint();
-  const [menuList, setMenuList] = useState([]);
+  const [menuList, setMenuList] = useRecoilState(menuListAtom);
   const location = window.location.pathname;
   const [freeUserToken] = useState(null)
 
@@ -105,7 +115,7 @@ function App() {
           return response.json()
         })
         .then(data => {
-          // debugger
+          debugger
 
           return setMenuList(data.appsresult[1])
         })
@@ -135,10 +145,10 @@ function App() {
                     <Route exact path="/" component={Templates} />
                     <Route path="/Templates" component={Templates} />
                   </Switch>
-                  <RecoilRoot>
+             
                     <Route path="/TodoWatsApp" component={TodoWatsApp} />
               
-                  <CardsSideNav />
+                
                   <CardsHeader />
                   <CardsFilter />
                   <CardsSort />
@@ -154,12 +164,11 @@ function App() {
                   </Switch>
                   <CardsFooter />
                   <CardsChat />
-                  </RecoilRoot>
+               
             
                 </ConfigContextProvider>
                 </FilterontextProvider>
               </Router>
-              {/*</MenuContextProvider>*/}
             </GlobalContextProvider>
            
           
