@@ -7,6 +7,10 @@ import Checkboxes from './cards-extra';
 
 
 export const Card2 = (props) => {
+    //debugger  
+    // let APP = window.location.pathname.toString();
+    // APP= APP?APP.substr(1).toLowerCase():'';
+
     let app = props.app ? props.app : '';
     let APP = app ? app.substr(1) : '';
     APP = APP.toLowerCase();

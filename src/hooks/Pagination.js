@@ -33,7 +33,7 @@ function usePagination() {
     setMobilePage(false);
   }
   function nextMobile() {
-    debugger
+    //debugger
     setCurrentPage((currentPage) => Math.min(currentPage + 1, maxPage));
     setMobilePage(true);
   }

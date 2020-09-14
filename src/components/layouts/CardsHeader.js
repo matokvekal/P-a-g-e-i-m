@@ -4,14 +4,16 @@ import usePagination from './../../hooks/Pagination';
 import CardsFilter from './CardsFilter';
 import CardsSideNav from './CardsSideNav';
 
-import { atom, useRecoilState ,RecoilRoot} from 'recoil';
+import { atom, useRecoilState, RecoilRoot } from 'recoil';
 import { FilterContext } from '../../context/FilterContext';
-import { SortContext } from '../../context/FilterContext';
+import { SortContext } from '../../context/SortContext';
 
 
 const CardsHeader = () => {
     const [filters] = useContext(FilterContext);
-    const [sortList] = useContext(SortContext);
+
+    const [sortList]=useContext(SortContext);
+    //debugger
     const showHideFilter2 = atom({
         key: "ShowHideFilter",
         default: 'true',
@@ -34,7 +36,7 @@ const CardsHeader = () => {
     function handleMenu() {
         setMenuToggle(menuToggle === '' ? 'active' : '');
     }
-    function sortSelect(event){
+    function sortSelect(event) {
         setOrder_by(event.target.value)
     }
     //    useEffect(() => {
@@ -66,34 +68,27 @@ const CardsHeader = () => {
                 <div className="four__square">
                     <i className="fas fa-th-large"></i>
                 </div> */}
-               <a href="#"><div className="filter__form active" onClick={handleFilter}>
-             
+                <a href="#"><div className="filter__form active" onClick={handleFilter}>
                     <input type="text" id="filter" placeholder='Filter' disabled value={`${filters.filter(x => x.checked === true).length} filters selected`} />
                 </div>   </a>
-             
-        
-                    <div className="sort__box" >
+
+                <div className="sort__box" >
                     <select className="selection__form" name="price" id="price" onChange={sortSelect}>
-                    <option className="opt" value="">Sort</option>
-                    {
-                        sortList &&sortList.length>0?sortList.map((item,index)=>(
-                            <>
-                            <option className="opt" value={item[0]+' asc'}>{item[1]} &uarr; </option>
-                            <option className="opt" value={item[0]+' desc'}>{item[1]} &darr; </option>
-                            </>
-                        )):null
-                    }
-                    
-                       
-
-
-
-{/* 
+                        <option className="opt" value="">Sort</option>
+                        {
+                            sortList && sortList.length > 0 ? sortList.map((item, index) => (
+                                <>
+                                    <option className="opt" value={item[0] + ' asc'}>{item[1]} &uarr; </option>
+                                    <option className="opt" value={item[0] + ' desc'}>{item[1]} &darr; </option>
+                                </>
+                            )) : null
+                        }
+                        {/* 
                         <option className="opt" value="a1">Place &uarr; </option>
                         <option className="opt" value="high to low">Place &darr;</option> */}
                     </select>
                 </div>
-              
+
 
 
                 <CardsSearch />

@@ -36,9 +36,11 @@ export const Card3 = (props) => {
   const [popupCard, setPopupCard] = useRecoilState(hideCardModal);
   const [responsItems, setResponseItems] = useState(1500);
   const { items, setItems, currentPage, itemsPerPage ,mobilePage} = usePagination();
-  let app = props.app ? props.app : '';
-  let APP = app ? app.substr(1) : '';
-  APP = APP.toLowerCase();
+  // let APP = window.location.pathname.toString();
+  //   APP= APP?APP.substr(1).toLowerCase():'';
+    let app = props.app ? props.app : '';
+    let APP = app ? app.substr(1) : '';
+    APP = APP.toLowerCase();
 
   const newSearch = atom({
     key: "searchState",
@@ -71,7 +73,7 @@ export const Card3 = (props) => {
 
 
   useEffect(() => {
-    // debugger
+   // debugger
     if (app === '/' || app === '/Templates')
       return
     if (!localStorage["freeUserToken"] || localStorage["freeUserToken"] === null || localStorage["freeUserToken"] === "undefined") {
@@ -163,7 +165,7 @@ export const Card3 = (props) => {
 
                     <div className="name__trophy">
                       <div className="name__place">
-                        <p>({el['total_finish_race']})</p>
+                        <p>({el['total_finish_cat']})</p>
                         <p className="user__place" >{el['pos']}</p>
                         <p className="user__name">{el['full_name']}</p>
                       </div>

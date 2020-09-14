@@ -1,19 +1,22 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { pageimEndPoint } from '../Config';
 export const FilterContext = createContext();
-export const SortContext = createContext();
+// export const SortContext = createContext();
 const API_ENDPOINT = pageimEndPoint();
 
 
 
 const FilterContextProvider = (props) => {
     const [filters, setFilters] = useState([]);
-    const [sortList, setSortList] = useState();
-
+    // const [sortList, setSortList] = useState();
+    // let app = props.app ? props.app : '';
+    // let APP = app ? app.substr(1) : '';
+    // APP = APP.toLowerCase();
+    let APP = window.location.pathname.toString();
+    APP= APP?APP.substr(1).toLowerCase():'';
     useEffect(() => {
         if (localStorage['freeUserToken']) {
-
-            const URL = `${API_ENDPOINT}/applications/filterapp?appname=races`;
+            const URL = `${API_ENDPOINT}/applications/filterapp?appname=${APP}`;
             fetch(URL, {
                 method: 'GET',
                 headers: { Authorization: "Bearer " + localStorage['freeUserToken'] }
@@ -22,14 +25,14 @@ const FilterContextProvider = (props) => {
                     return response.json()
                 })
                 .then(data => {
-                    if (data && data.sortList) {
-                        //debugger
-                        setSortList( [...data.sortList.map(x => ([x.name,x.label]))])
-                        // setSortList([...data.sortList.map(x => (x.name))]);
-                    }
+                    // if (data && data.sortList) {
+                    //     debugger
+                    //     setSortList( [...data.sortList.map(x => ([x.name,x.label]))])
+                    //     // setSortList([...data.sortList.map(x => (x.name))]);
+                    // }
                     if (data && data.filters && data.selectedfilters) {
                         setFilters((x) => {
-                            //debugger
+                           // debugger
                             const newFilters = data.filters.map((item, index) => {
                                 //debugger
                                 if (data.selectedfilters.find((x) => x.field === item.field && x.data === item.data)) {
@@ -47,19 +50,6 @@ const FilterContextProvider = (props) => {
                             });
                             return newFilters;
                         })
-                        // const merged = data.filters.map((item, index) => {
-                        //     debugger
-                        //     const findCompared = data.data.find((x) => x.field === item.field && x.data === item.data, index);
-                        //     if (typeof findCompared !== "undefined") {
-                        //         debugger
-                        //         return {
-                        //             ...item, ...findCompared, selected: true
-                        //         };
-                        //     }
-                        //     return item;
-                        // }
-                        // );
-                        // setFilters(merged)
                     }
                 }
                 )
@@ -68,35 +58,37 @@ const FilterContextProvider = (props) => {
                 });
         }
     }, []);
-    //---------------------------
 
+    // useEffect(() => {
+    //     if (localStorage['freeUserToken']) {
+    //         const URL = `${API_ENDPOINT}/applications/getSort?appname=${APP}`;
+    //         fetch(URL, {
+    //             method: 'GET',
+    //             headers: { Authorization: "Bearer " + localStorage['freeUserToken'] }
+    //         })
+    //             .then(response => {
+    //                 return response.json()
+    //             })
+    //             .then(data => {
+    //                 if (data && data.sortList) {
+    //                     setSortList( [...data.sortList.map(x => ([x.name,x.label]))])
 
-
-    ///-------------------
-    //  useEffect(() => {
-    //     get data from state and insert into filter at start
-    //    if (filters && filters.length > 0) {
-    //      for (let row of filters) {
-    //          filters.selected = false;//TODO TEST ONLY this shuld be remove ,we will update from userState
-
-    //          }
-    //          setFilters(filters);
-    //    }
-    //    else
-    //    {
-    //        console.log('No filters')
-    //    }
-
-    //  }, [])
-
-
+    //                 }
+    //             }
+    //             )
+    //             .catch((error) => {
+    //                 console.error('Error:', error);
+    //             });
+    //     }
+    // }, []);
+  
 
 
     return (
         <FilterContext.Provider value={[filters, setFilters]} >
-            <SortContext.Provider value={[sortList]} >
+            {/* <SortContext.Provider value={[sortList]} > */}
                 {props.children}
-            </SortContext.Provider>
+            {/* </SortContext.Provider> */}
         </FilterContext.Provider >
     )
 }

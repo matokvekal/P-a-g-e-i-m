@@ -19,6 +19,8 @@ export const Table2 = (props) => {
   let app = props.app ? props.app : '';
   let APP = app ? app.substr(1) : '';
   APP = APP.toLowerCase();
+  // let APP = window.location.pathname.toString();
+  // APP= APP?APP.substr(1).toLowerCase():'';
   const appPermission = props.appPermission;
   const [sortOrder, setSortOrder] = useState(0);
   const [filter, setFilter] = useState(<Filter />)
@@ -44,7 +46,7 @@ export const Table2 = (props) => {
     if (!tableFields || tableFields.length === 0) {
       if (localStorage['fields'] )  //&& localStorage['fields'].length === 0
           {
-            debugger
+           // debugger
             let data=JSON.parse(localStorage['fields']);
             setTableFields(data);
           };
@@ -227,6 +229,7 @@ export const Table2 = (props) => {
 
 
   useEffect(() => {
+    debugger
     if (app === '/' || app === '/Templates')
       return
     if (!localStorage["freeUserToken"] || localStorage["freeUserToken"] === null || localStorage["freeUserToken"] === "undefined") {
@@ -243,7 +246,7 @@ export const Table2 = (props) => {
           return response.json()
         })
         .then(res => {
-          debugger
+          //debugger
           return     setData(res.res ? res.res : null);
         })
         .catch((error) => {

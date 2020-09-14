@@ -3,14 +3,17 @@ import { pageimEndPoint } from '../Config';
 export const ConfigContext = createContext();
 const API_ENDPOINT = pageimEndPoint();
 
+ 
 
 const ConfigContextProvider = (props) => {
     const [tableFields, setTableFields] = useState([]);
 
+      let APP = window.location.pathname.toString();
+    APP= APP?APP.substr(1).toLowerCase():'';
+  
     useEffect(() => {
-        //debugger
             if(localStorage['freeUserToken']){
-            const URL= `${API_ENDPOINT}/applications/fieldsOfTable?appname=races`;
+            const URL= `${API_ENDPOINT}/applications/fieldsOfTable?appname=${APP}`;
             fetch(URL, {
                 method: 'GET',
                 headers: { Authorization: "Bearer " + localStorage['freeUserToken'] }

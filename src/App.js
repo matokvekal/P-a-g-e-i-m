@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ConfigContextProvider from './context/ConfigContext';
 import FilterontextProvider from './context/FilterContext';
+import SortContextProvider from './context/SortContext';
 //import MenuContextProvider from './context/MenuContext';
 import GlobalContextProvider from './context/GlobalContext';
 // import PrimarySearchAppBar from './components/layouts/PrimarySearchAppBar';
@@ -17,7 +18,7 @@ import { RecoilRoot } from "recoil";
 import CardsHeader from './components/layouts/CardsHeader';
 import CardsSideNav from './components/layouts/CardsSideNav';
 import CardsFilter from './components/layouts/CardsFilter';
-import CardsSort from './components/layouts/CardsSort';
+
 import CardsChat from './components/layouts/CardsChat';
 import CardsFooter from './components/layouts/CardsFooter';
 import { atom, useRecoilState } from 'recoil';
@@ -78,7 +79,7 @@ function App() {
     key: "menuList",
     default: '',
   });
- 
+
 
 
   const [renderCounter, setRenderCounter] = useState([])
@@ -96,12 +97,12 @@ function App() {
 
   useEffect(() => {
     let APP = window.location.pathname.toString();
-    APP= APP?APP.substr(1).toLowerCase():'';
+    APP = APP ? APP.substr(1).toLowerCase() : '';
     if (!localStorage['freeUserToken'] || localStorage['freeUserToken'] === null || localStorage['freeUserToken'] === "undefined") {
       console.log('no user token App.js')
     }
     else {
-      const URL = `${API_ENDPOINT}/applications/menuApplications?appname=races`;
+      const URL = `${API_ENDPOINT}/applications/menuApplications?appname=${APP}`;
       //const URL=url('public','menu','data');
       //const URL = `${API_ENDPOINT}/public/menu/data`;
       // const URL = `${API_ENDPOINT}/applications/menuApplications?appname=menu`;
@@ -115,7 +116,7 @@ function App() {
           return response.json()
         })
         .then(data => {
-          debugger
+          // debugger
 
           return setMenuList(data.appsresult[1])
         })
@@ -135,47 +136,50 @@ function App() {
 
         <main>
           <div className="whole__content" id="blur">
-          
+
             <GlobalContextProvider>
               <Router>
-              <FilterontextProvider>
+
                 <ConfigContextProvider>
-               
-                  <Switch>
-                    <Route exact path="/" component={Templates} />
-                    <Route path="/Templates" component={Templates} />
-                  </Switch>
-             
-                    <Route path="/TodoWatsApp" component={TodoWatsApp} />
-              
-                
-                  <CardsHeader />
-                  <CardsFilter />
-                  <CardsSort />
-                 
-                  <Switch>
-                    {(menuList && menuList.length > 0) ? menuList.map((item, index) => (
-                      item.mainApp === 'pageim'
-                        ?
-                        <Route exact path={'/' + item.app}><Pageim app={'/' + item.app} appPermission={item.permission} screenType={screenType} key={index} /> </Route>
-                        :
-                        <Route exact path={'/' + item.name}><DynamicComponent html={item.html} /> </Route>
-                    )) : console.log('menu error')}
-                  </Switch>
-                  <CardsFooter />
-                  <CardsChat />
-               
-            
+                <SortContextProvider>
+                  <FilterontextProvider>
+                    
+                      <Switch>
+                        <Route exact path="/" component={Templates} />
+                        <Route path="/Templates" component={Templates} />
+                      </Switch>
+
+                      <Route path="/TodoWatsApp" component={TodoWatsApp} />
+
+
+                      <CardsHeader />
+                      <CardsFilter />
+
+
+                      <Switch>
+                        {(menuList && menuList.length > 0) ? menuList.map((item, index) => (
+                          item.mainApp === 'pageim'
+                            ?
+                            <Route exact path={'/' + item.app}><Pageim app={'/' + item.app} appPermission={item.permission} screenType={screenType} key={index} /> </Route>
+                            :
+                            <Route exact path={'/' + item.name}><DynamicComponent html={item.html} /> </Route>
+                        )) : console.log('menu error')}
+                      </Switch>
+                      <CardsFooter />
+                      <CardsChat />
+                    
+                  </FilterontextProvider>
+                  </SortContextProvider>
                 </ConfigContextProvider>
-                </FilterontextProvider>
+
               </Router>
             </GlobalContextProvider>
-           
-          
+
+
           </div>
         </main>
       </div>
-   
+
       <script src="./main.js"></script>
     </>
   );

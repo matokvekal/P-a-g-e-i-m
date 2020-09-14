@@ -7,9 +7,11 @@ const API_ENDPOINT = pageimEndPoint();
         console.log('no freeUserToken add row')
         else
         {
-            let APP = window.location.pathname.toString();
-            APP= APP?APP.substr(1):'';
-            APP = APP.toLowerCase();
+          let APP = window.location.pathname.toString();
+          APP= APP?APP.substr(1).toLowerCase():'';
+            // let APP = window.location.pathname.toString();
+            // APP= APP?APP.substr(1):'';
+            // APP = APP.toLowerCase();
             const URL = `${API_ENDPOINT}/public/${APP}/add`;
             axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage['freeUserToken']}` 
             // const config={
