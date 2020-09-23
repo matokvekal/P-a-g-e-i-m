@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext,useRef } from 'react';
 import CardsSearch from './CardsSearch';
 import usePagination from './../../hooks/Pagination';
 import CardsFilter from './CardsFilter';
@@ -10,8 +10,8 @@ import { SortContext } from '../../context/SortContext';
 
 
 const CardsHeader = () => {
-    const [filters] = useContext(FilterContext);
 
+    const [filters, setFilters] = useContext(FilterContext);
     const [sortList]=useContext(SortContext);
     //debugger
     const showHideFilter2 = atom({
@@ -26,9 +26,23 @@ const CardsHeader = () => {
         key: "sortSelected",
         default: '',
     });
+    const newFilter = atom({
+        key: "filterState",
+
+        default: "",
+    });
+    const search = atom({
+        key: "searchState",
+        default: "",
+     });
+     const [searchNew, setSearchNew] = useRecoilState(search);
     const [showFilter, setShowFilter] = useRecoilState(showHideFilter2);
     const [menuToggle, setMenuToggle] = useRecoilState(menuOpenClose);
     const [order_by, setOrder_by] = useRecoilState(sortSelected);
+    const [filter, setFilter] = useRecoilState(newFilter);
+
+    const selectRef = useRef();
+
     const handleFilter = () => {
         setShowFilter(x => x === 'true' ? 'false' : 'true');
     };
@@ -39,11 +53,31 @@ const CardsHeader = () => {
     function sortSelect(event) {
         setOrder_by(event.target.value)
     }
-    //    useEffect(() => {
-    //     const main=document.getElementById('maindiv');
-    //     if(html)
-    //        main.innerHTML=html;
-    // }, [html])
+    function resetAllQuerys(){
+        debugger
+        //selectRef.current.style.backgroundColor = "blue";
+        selectRef.current.value = "";
+        setSearchNew('');
+        setOrder_by('');
+        setFilter({
+            checked: false,
+            name: 'ALL',
+            value: 'ALL',
+        })
+        setFilters((x) => {
+            const newFilters = filters.map((item) => {
+                return {
+                    count: item.count,
+                    data: item.data,
+                    field: item.field,
+                    filterId: item.filterId,
+                    checked:false
+                }
+            });
+            return newFilters;
+        });
+    }
+
 
     const { next, prev, jump, currentPage, setCurrentPage, maxPage, itemsPerPage, setItemsPerPage } = usePagination();
 
@@ -64,16 +98,16 @@ const CardsHeader = () => {
                 </div> */}
                 {/* <div className="bars">
                     <i className="fas fa-bars"></i>
-                </div>
-                <div className="four__square">
+                </div>*/}
+                <div className="four__square" title='Reset all filter,sort' onClick={resetAllQuerys}>
                     <i className="fas fa-th-large"></i>
-                </div> */}
+                </div> 
                 <a href="#"><div className="filter__form active" onClick={handleFilter}>
                     <input type="text" id="filter" placeholder='Filter' disabled value={`${filters.filter(x => x.checked === true).length} filters selected`} />
                 </div>   </a>
 
                 <div className="sort__box" >
-                    <select className="selection__form" name="price" id="price" onChange={sortSelect}>
+                    <select className="selection__form" name="price" id="price" ref={selectRef} onChange={sortSelect}>
                         <option className="opt" value="">Sort</option>
                         {
                             sortList && sortList.length > 0 ? sortList.map((item, index) => (

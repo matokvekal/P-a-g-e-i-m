@@ -68,10 +68,7 @@ const CardsFilter = (props) => {
                     field: item.field,
                     filterId: item.filterId,
                     checked:false
-
                 }
-
-
             });
             return newFilters;
         });

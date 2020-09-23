@@ -14,7 +14,7 @@ import { RecoilRoot } from "recoil";
 import { atom, useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil'
 import usePagination from './../../../hooks/Pagination';
 import CircularProgress from '../../reusable/Progress';
-
+import deviceIdentity from '../../../helpers/Helpers';
 
 
 
@@ -25,6 +25,7 @@ export const Card3 = (props) => {
   const [tableFields, setTableFields] = useContext(ConfigContext);
   const [AppFields, setAppFields] = useState([]);
   const [errorMsg, setErrorMsg] = useState('Err card3');
+
   const hideCardModal = atom({
     key: "HideCardModal",
     default: "",
@@ -32,15 +33,15 @@ export const Card3 = (props) => {
   const sortSelected = atom({
     key: "sortSelected",
     default: '',
-});
+  });
   const [popupCard, setPopupCard] = useRecoilState(hideCardModal);
   const [responsItems, setResponseItems] = useState(1500);
-  const { items, setItems, currentPage, itemsPerPage ,mobilePage} = usePagination();
+  const { items, setItems, currentPage, itemsPerPage, mobilePage } = usePagination();
   // let APP = window.location.pathname.toString();
   //   APP= APP?APP.substr(1).toLowerCase():'';
-    let app = props.app ? props.app : '';
-    let APP = app ? app.substr(1) : '';
-    APP = APP.toLowerCase();
+  let app = props.app ? props.app : '';
+  let APP = app ? app.substr(1) : '';
+  APP = APP.toLowerCase();
 
   const newSearch = atom({
     key: "searchState",
@@ -53,75 +54,129 @@ export const Card3 = (props) => {
     default: "",
   });
   const [filter, setFilter] = useRecoilState(newFilter);
-  
+
   const [order_by] = useRecoilState(sortSelected);
-  useEffect(() => {
-    if (!tableFields || tableFields.length === 0) {
-      if (localStorage['fields']) {
-        let data = JSON.parse(localStorage['fields']);
-        setTableFields(data);
-      };
-    }
-    if (APP) {
-      setAppFields(tableFields.filter(x => x.application === APP));
-      //new test if now fields of current App it may new app, so go to server to bring all
-    }
-    if(!tableFields ||tableFields.length===0)
-    localStorage.removeItem("fields");
-  }, [tableFields])
 
+  const [likeChange, setLikechange] = useState('');
 
-
-  useEffect(() => {
-   // debugger
-    if (app === '/' || app === '/Templates')
+  const updateLike = (id) => {
+    debugger
+    if (app === '/' || app === '/Templates' || !id)
       return
-    if (!localStorage["freeUserToken"] || localStorage["freeUserToken"] === null || localStorage["freeUserToken"] === "undefined") {
-      console.log('no freeUserToken card3')
-    }
-    else {
-      const URL = `${API_ENDPOINT}/devicedata/stateUpdate?app=${APP}&search=${searchNew}&currentpage=${currentPage}&itemsperpage=${itemsPerPage}&order_by=${order_by}`;
+    if (!deviceIdentity())
+      return
+    if (id) {
+      const URL = `${API_ENDPOINT}/pageim/likesUpdate?appname=${APP}&id=${id}`;
       fetch(URL, {
         method: 'POST',
-        headers: { Authorization: "Bearer " + localStorage['freeUserToken'] },
+        headers: { Authorization: "Bearer " + localStorage['deviceIdentity'] },
       }
 
       )
         .then(response => {
-          //debugger
-          return response.json()
-        })
-        .then(res => {
-          //debugger
-          mobilePage
-          ?
-          setData(res.res?[...data,...res.res]:[...data])
-          :
-          setData(res.res ? res.res : null);
-         setItems(res.total[0].totalRows)  ;// react- in mobile page just add data insted of replace
+          return response.json();
         })
         .catch((error) => {
           console.error('Error:', error);
         });
     }
+  }
 
-  }, [AppFields, searchNew, currentPage, itemsPerPage,mobilePage,order_by]);
+  function addLike(el) {
+    if (!localStorage['registeredUser']) {
+      alert('please register, its simple, then give a big like!');
+      return
+    }
+    debugger
+    let updateSucceed = false;
+    var array = [];
+    if (!localStorage['info']) {
+      array.push(el['id']);
+      el['likes'] = 1;
+      localStorage.setItem('info', JSON.stringify(array));
+      updateLike(el['id']);
+      setLikechange(new Date().getTime());
+    }
+    else {
+      array = JSON.parse(localStorage.getItem('info')) || [];
+      if (!array.includes(el['id'])) {
+        el['likes'] = Number(el['likes']) + 1;
+        array.push(el['id']);
+        localStorage.setItem('info', JSON.stringify(array));
+        updateLike(el['id']);
+        setLikechange(new Date().getTime());
+        //goto server
+      }
+
+    }
+  }
+
+  useEffect(() => {
+    debugger
+    if (!tableFields || tableFields.length === 0) {
+      if (localStorage['fields']) {
+        let data = JSON.parse(localStorage['fields']);
+        setTableFields(data);
+        if (APP) {
+          setAppFields(data.filter(x => x.application === APP));
+        }
+      };
+    }
+    else if (APP)
+      setAppFields(tableFields.filter(x => x.application === APP));
+
+    if (!tableFields || tableFields.length === 0)
+      localStorage.removeItem("fields");
+  }, [tableFields])
+
+
+
+  useEffect(() => {
+    // debugger
+    if (app === '/' || app === '/Templates')
+      return
+    if (!deviceIdentity())
+      return
+    const URL = `${API_ENDPOINT}/pageim/stateUpdate?appname=${APP}&search=${searchNew}&currentpage=${currentPage}&itemsperpage=${itemsPerPage}&order_by=${order_by}`;
+    fetch(URL, {
+      method: 'POST',
+      headers: { Authorization: "Bearer " + localStorage['deviceIdentity'] },
+    }
+
+    )
+      .then(response => {
+        //debugger
+        return response.json()
+      })
+      .then(res => {
+        //debugger
+        mobilePage
+          ?
+          setData(res.res ? [...data, ...res.res] : [...data])
+          :
+          setData(res.res ? res.res : null);
+        setItems(res.total[0].totalRows);// react- in mobile page just add data insted of replace
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+
+
+  }, [AppFields, searchNew, currentPage, itemsPerPage, mobilePage, order_by]);
 
 
   useEffect(() => {
     //debugger
-    if (app === '/' || app === '/Templates'||filter.value=='undefined' || filter.name=='undefined' ||!filter.value || !filter.name)
+    if (app === '/' || app === '/Templates' || filter.value == 'undefined' || filter.name == 'undefined' || !filter.value || !filter.name)
       return
-    if (!localStorage["freeUserToken"] || localStorage["freeUserToken"] === null || localStorage["freeUserToken"] === "undefined") {
-      console.log('no freeUserToken card3')
-    }
-    else {
+      if (!deviceIdentity())  
+      return
       debugger
-      let data=filter;
-      const URL = `${API_ENDPOINT}/devicedata/filterUpdate?app=${APP}&checked=${filter.checked}&name=${filter.name}&value=${filter.value}&itemsperpage=${itemsPerPage}`;
+      let data = filter;
+      const URL = `${API_ENDPOINT}/pageim/filterUpdate?appname=${APP}&checked=${filter.checked}&name=${filter.name}&value=${filter.value}&itemsperpage=${itemsPerPage}`;
       fetch(URL, {
         method: 'POST',
-        headers: { Authorization: "Bearer " + localStorage['freeUserToken'] },
+        headers: { Authorization: "Bearer " + localStorage['deviceIdentity'] },
       }
 
       )
@@ -136,9 +191,9 @@ export const Card3 = (props) => {
         .catch((error) => {
           console.error('Error:', error);
         });
-    }
+    
 
-  }, [filter]);
+  }, [filter, likeChange]);
 
 
 
@@ -146,12 +201,12 @@ export const Card3 = (props) => {
   return (
     <>
 
-      {!AppFields || AppFields.length === 0 ||!data  
-      ?
+      {!AppFields || AppFields.length === 0 || !data
+        ?
         <span className='error'>Error occured : {errorMsg} <CircularProgress /></span> :
 
         <div className="cards__area">
-                 
+
           <div className="cards">
             {data.map((el, index) => (
               <>
@@ -161,35 +216,36 @@ export const Card3 = (props) => {
                   <div className="card__header" >
                     <div className="profile__img">
                       <img src={person} alt="" />
-                    </div> 
+                    </div>
 
                     <div className="name__trophy">
                       <div className="name__place">
                         <p>({el['total_finish_cat']})</p>
                         <p className="user__place" >{el['pos']}</p>
                         <p className="user__name">{el['full_name']}</p>
+                        <div className="trophy__quantity">
+                          {el['pos'] === '1'
+                            ?
+                            <img className="trophy" src={trophy} alt="" />
+                            :
+                            el['pos'] === '2'
+                              ?
+                              <img className="quantity" src={medal2} alt="" />
+                              :
+                              el['pos'] === '3'
+                                ?
+                                <img className="quantity" src={medal3} alt="" />
+                                : null
+                          }
+                          <p className="race__branch">{el['branch'] + ' ,'}</p>
+                          <p className="race__category">{el['category'] + ' '}</p>
+                        </div>
                       </div>
                       <div className="race__name__year">
                         <p className="race__name">{el['race_name']}</p>
                         <p className="race__year">{el['year']}</p>
                       </div>
-                      <div className="trophy__quantity">
-                        {el['pos'] === '1'
-                          ?
-                          <img className="trophy" src={trophy} alt="" />
-                          :
-                          el['pos'] === '2'
-                            ?
-                            <img className="quantity" src={medal2} alt="" />
-                            :
-                            el['pos'] === '3'
-                              ?
-                              <img className="quantity" src={medal3} alt="" />
-                              : null
-                        }
-                        <p className="race__branch">{el['branch']+' ,'}</p> 
-                        <p className="race__category">{el['category']+ ' '}</p>
-                      </div>
+
                     </div>
                     <div className="flag__status">
                       <i className="fa fa-circle" aria-hidden="true"></i>
@@ -229,11 +285,22 @@ export const Card3 = (props) => {
 
 
                   </div>
+
+
+
+
+
+
+
+
+
+
+
                   <div className="card__footer">
                     <div className="icons">
-                      <i className="fas fa-share-alt-square share"></i>
+                       <a href={`https://wa.me/?text=${window.location.href}`} target="_blank"><i className="fas fa-share-alt-square share"></i></a>
                       <input className="check" type="checkbox" name="completed" id="" />
-
+  
                     </div>
                     <div className="card__footer__main">
 
@@ -243,12 +310,12 @@ export const Card3 = (props) => {
                         :
                         <a className="more__button" href="#" onClick={() => { setPopupCard(index) }}>More</a>
                       }
-                      <div className="like__sec">
+                      <div className="like__sec" onClick={() => addLike(el)}>
                         <i className="fas fa-heart"></i>
-                        <p>112+</p>
+                    <p>{Number(el['likes'])>0?el['likes']:''}</p>
 
                       </div>
-                      <Stars rating={(el['total_finish_cat'] - el['pic']+1) * 100 / el['total_finish_cat']} />
+                      <Stars rating={(el['total_finish_cat'] - el['pic'] + 1) * 100 / el['total_finish_cat']} />
 
 
                     </div>

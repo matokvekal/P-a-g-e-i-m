@@ -1,9 +1,11 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { pageimEndPoint } from '../Config';
+import deviceIdentity from './../helpers/Helpers';
 export const ConfigContext = createContext();
+
 const API_ENDPOINT = pageimEndPoint();
 
- 
+
 
 const ConfigContextProvider = (props) => {
     const [tableFields, setTableFields] = useState([]);
@@ -12,11 +14,12 @@ const ConfigContextProvider = (props) => {
     APP= APP?APP.substr(1).toLowerCase():'';
   
     useEffect(() => {
-            if(localStorage['freeUserToken']){
-            const URL= `${API_ENDPOINT}/applications/fieldsOfTable?appname=${APP}`;
+        if (!deviceIdentity())  
+        return
+            const URL= `${API_ENDPOINT}/pageim/fieldsOfTable?appname=${APP}`;
             fetch(URL, {
                 method: 'GET',
-                headers: { Authorization: "Bearer " + localStorage['freeUserToken'] }
+                headers: { Authorization: "Bearer " + localStorage['deviceIdentity'] }
             })
                 .then(response =>{
                     //debugger
@@ -28,7 +31,7 @@ const ConfigContextProvider = (props) => {
                 .catch((error) => {
                     console.error('Error:', error);
                 });
-        }
+        
   
     }, []);
     

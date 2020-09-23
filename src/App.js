@@ -22,6 +22,7 @@ import CardsFilter from './components/layouts/CardsFilter';
 import CardsChat from './components/layouts/CardsChat';
 import CardsFooter from './components/layouts/CardsFooter';
 import { atom, useRecoilState } from 'recoil';
+import deviceIdentity from './helpers/Helpers';
 
 const colorPalet = [];
 colorPalet.basic = {
@@ -93,22 +94,19 @@ function App() {
     currentDir = 'ltr';
 
 
-
+    
 
   useEffect(() => {
     let APP = window.location.pathname.toString();
     APP = APP ? APP.substr(1).toLowerCase() : '';
-    if (!localStorage['freeUserToken'] || localStorage['freeUserToken'] === null || localStorage['freeUserToken'] === "undefined") {
-      console.log('no user token App.js')
-    }
-    else {
-      const URL = `${API_ENDPOINT}/applications/menuApplications?appname=${APP}`;
-      //const URL=url('public','menu','data');
-      //const URL = `${API_ENDPOINT}/public/menu/data`;
-      // const URL = `${API_ENDPOINT}/applications/menuApplications?appname=menu`;
+    if (!deviceIdentity())  
+      return
+    
+     
+      const URL = `${API_ENDPOINT}/pageim/menuApplications?appname=${APP}`;
       fetch(URL, {
         method: 'GET',
-        headers: { Authorization: "Bearer " + localStorage['freeUserToken'] },
+        headers: { Authorization: "Bearer " + localStorage['deviceIdentity'] },
       }
       )
         .then(response => {
@@ -123,7 +121,7 @@ function App() {
         .catch((error) => {
           console.error('Error:', error);
         });
-    }
+    
 
   }, []);
 

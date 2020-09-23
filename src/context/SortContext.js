@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { pageimEndPoint } from '../Config';
+import deviceIdentity from './../helpers/Helpers';
 export const SortContext = createContext();
 
 // export const MenuContext = createContext();
@@ -15,11 +16,12 @@ const SortContextProvider = (props) => {
 
 
     useEffect(() => {
-        if (localStorage['freeUserToken']) {
-            const URL = `${API_ENDPOINT}/applications/getSort?appname=${APP}`;
+        if (!deviceIdentity())  
+        return
+            const URL = `${API_ENDPOINT}/pageim/getSort?appname=${APP}`;
             fetch(URL, {
                 method: 'GET',
-                headers: { Authorization: "Bearer " + localStorage['freeUserToken'] }
+                headers: { Authorization: "Bearer " + localStorage['deviceIdentity'] }
             })
                 .then(response => {
                     return response.json()
@@ -35,8 +37,8 @@ const SortContextProvider = (props) => {
                 .catch((error) => {
                     console.error('Error:', error);
                 });
-        }
-    }, [sortList]);
+        
+    }, []);
   
 
 

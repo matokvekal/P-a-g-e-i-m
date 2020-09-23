@@ -3,15 +3,43 @@ import { RecoilRoot } from "recoil";
 import { atom, useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
 
 const CardsSearch = () => {
-const search = atom({
-   key: "searchState",
-   default: "",
-});
-const [searchNew, setSearchNew] = useRecoilState(search);
+   const search = atom({
+      key: "searchState",
+      default: "",
+   });
+   const [searchNew, setSearchNew] = useRecoilState(search);
 
-function handleSearch(e){
-setSearchNew(e.target.value);
-}
+   const WaitSearch = atom({
+      key: "waitState",
+      default: "",
+   });
+   const [wait, setWait] = useRecoilState(WaitSearch);
+
+
+   const handleSearch = (e) => {
+      debugger
+      if (!wait) {
+         debugger
+         setWait(true);
+         doSearch(e.target.value);
+      }
+      else {
+         debugger
+         clearTimeout(doSearch);
+         doSearch(e.target.value)
+      }
+      function doSearch(val) {
+         setTimeout(function () {
+            setSearchNew(val);
+            setWait(false);
+         }, 100);
+   }
+
+   }
+
+   // function handleSearch(e){
+   // setSearchNew(e.target.value);
+   // }
 
    return (
       <>

@@ -603,7 +603,7 @@ margin-left: 30px;
     resize: none;
     padding: 1.5rem;
     font-size: 1.5rem;
-    background: #da0505;
+    background: #d6fccc;
     height: 30rem;
     width: 30rem;
     font-size: 1.5rem;
@@ -663,11 +663,11 @@ margin-left: 30px;
     position: absolute;
 }
 .catagory{
-    position: relative;
+    position: fixed;
     top: 5rem;
     left: 57rem;
     height: 40rem;
-    width: 30rem;
+    width: 27rem;
     background-color: #ffffff;
     display: block;
     box-shadow: 0 1.5rem 5rem #757575;
@@ -676,7 +676,9 @@ margin-left: 30px;
 }
 .sub__catagory__1{
     background-color: #757575;
-    padding: 2rem;
+    /* padding: 2rem; */
+    padding-left: 2rem;
+    padding-right: 2rem;
 }
 .sub__catagory__1 label{
     color: #ffffff;;
@@ -684,18 +686,21 @@ margin-left: 30px;
 .catagory.active{
     display: block;
     margin: auto;
-    max-height: 30rem;
+    max-height: 60rem;
     overflow-y: scroll;
+    left:30%;
 }
 .catagory input[type=checkbox]{
     margin-right: 1rem;
 }
 .sub__catagory__2{
-    padding: 2rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
 }
 .sub__catagory__3{
     background-color: #757575;
-    padding: 2rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
 }
 .sub__catagory__3 label{
     color: #ffffff;
@@ -758,21 +763,41 @@ margin-left: 30px;
     }
     .header .pages,
     .header .price__box,
-    .header .bars,
-    .header .four__square
+    .header .bars
     {
         display:none;
     }
+
     .header .search__box__res,
     .header .filter__form,
     .header .search__box{
         display: block;
-        margin-right: 2rem;
-        width:calc(100%-75%);
+        width: 15rem;
     }
+    .header .selection__form{
+    }
+
+    .header .filter__form{
+        display: block;
+
+    }
+    .card_item_width{
+        max-width: 100%;
+    }
+    .header .sort__box,
+    .header .filter__form,
+    .header .selection__form{
+        max-width: 4rem;
+    }
+
+
+
+
+
+
     .race__name__year{
 
-        font-size: 2.4rem;
+        font-size: 1.5rem;
     }
     Button.footer__botton{
         display: block;
@@ -784,10 +809,7 @@ margin-left: 30px;
     .race__name{
         margin-right: .5rem;
     }
-    .selection__form{
-
-        max-width: 10rem;
-    }
+ 
     .input[type=text]{
         padding: 0 1rem;
         border-radius: 1rem;
@@ -857,11 +879,29 @@ margin-left: 30px;
         padding: 0 2rem;
         color: var(--header-footer-text-color);
     }
+.page__box {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-left: 5rem;
+
+}
+.total__mobile{
+    font-size: var(--header-footer-font-size);
+    display: flex;
+    align-items: center;
+    margin: 0 .7rem;
+    border: .1rem solid var(--header-footer-icon);
+    padding: 0 1rem;
+    border-radius: 1rem;
+    color: gray;
+}
+
 
     .cards{
         display: flex;
         flex-direction: column;
-        margin-bottom: 1rem;
+        /* margin-bottom: 1rem; */
     }
     .card__item{
         padding: 1rem;
@@ -887,6 +927,7 @@ margin-left: 30px;
     .card__item{
         width: 100%;
         min-height: 3rem;
+        /* max-height: 15rem; */
     }
     .card__item#popup{
         padding-top: 2rem;
@@ -934,7 +975,11 @@ margin-left: 30px;
         bottom: 7rem;
     }
     .catagory.active {
-        left: 50%;
+        display: block;
+        margin: auto;
+        max-height: 60rem;
+        overflow-y: scroll;
+        left:7%;
     }
 }
 
@@ -1058,6 +1103,23 @@ margin-left: 30px;
     .card__item{
         width: 100%;
         min-height: 3rem;
+    }
+    .page__box {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-left: 5rem;
+    
+    }
+    .total__mobile{
+        font-size: var(--header-footer-font-size);
+        display: flex;
+        align-items: center;
+        margin: 0 .7rem;
+        border: .1rem solid var(--header-footer-icon);
+        padding: 0 1rem;
+        border-radius: 1rem;
+        color: gray;
     }
     .card__item#popup .card__content{
         display: flex;

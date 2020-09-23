@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { pageimEndPoint } from '../Config';
+import deviceIdentity from './../helpers/Helpers';
 export const FilterContext = createContext();
 // export const SortContext = createContext();
 const API_ENDPOINT = pageimEndPoint();
@@ -15,21 +16,17 @@ const FilterContextProvider = (props) => {
     let APP = window.location.pathname.toString();
     APP= APP?APP.substr(1).toLowerCase():'';
     useEffect(() => {
-        if (localStorage['freeUserToken']) {
-            const URL = `${API_ENDPOINT}/applications/filterapp?appname=${APP}`;
+        if (localStorage['deviceIdentity']) {
+            const URL = `${API_ENDPOINT}/pageim/filterapp?appname=${APP}`;
             fetch(URL, {
                 method: 'GET',
-                headers: { Authorization: "Bearer " + localStorage['freeUserToken'] }
+                headers: { Authorization: "Bearer " + localStorage['deviceIdentity'] }
             })
                 .then(response => {
                     return response.json()
                 })
                 .then(data => {
-                    // if (data && data.sortList) {
-                    //     debugger
-                    //     setSortList( [...data.sortList.map(x => ([x.name,x.label]))])
-                    //     // setSortList([...data.sortList.map(x => (x.name))]);
-                    // }
+
                     if (data && data.filters && data.selectedfilters) {
                         setFilters((x) => {
                            // debugger
@@ -60,11 +57,11 @@ const FilterContextProvider = (props) => {
     }, []);
 
     // useEffect(() => {
-    //     if (localStorage['freeUserToken']) {
+    //     if (localStorage['deviceIdentity']) {
     //         const URL = `${API_ENDPOINT}/applications/getSort?appname=${APP}`;
     //         fetch(URL, {
     //             method: 'GET',
-    //             headers: { Authorization: "Bearer " + localStorage['freeUserToken'] }
+    //             headers: { Authorization: "Bearer " + localStorage['deviceIdentity'] }
     //         })
     //             .then(response => {
     //                 return response.json()

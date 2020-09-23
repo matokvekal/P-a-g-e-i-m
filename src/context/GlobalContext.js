@@ -1,5 +1,6 @@
 import React, { createContext, useState ,useEffect} from 'react';
 import { pageimEndPoint } from '../Config';
+import deviceIdentity from './../../src/helpers/Helpers';
 const API_ENDPOINT = pageimEndPoint();
 
 export const GlobalContext = createContext(null);
@@ -11,7 +12,8 @@ const GlobalContextProvider = (props) => {
         setGlobal([{countHiddenFields:count},]);
     }
 useEffect(() => {
-    if (!localStorage["freeUserToken"] || localStorage["freeUserToken"] === null || localStorage["freeUserToken"] === "undefined") {
+    debugger
+    if (!deviceIdentity()) {
         const AUTHURL = `${API_ENDPOINT}/session/createNewUserDevice`;
         fetch(AUTHURL)
             .then(async response => {
@@ -20,7 +22,7 @@ useEffect(() => {
                     console.log('Error: config context', data.message)
                 }
                 else {
-                    localStorage["freeUserToken"] = data.token;
+                    localStorage["deviceIdentity"] = data.token;
                     window.location.reload();
                 }
             })

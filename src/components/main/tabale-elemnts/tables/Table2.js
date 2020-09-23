@@ -11,6 +11,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { ConfigContext } from '../../../../context/ConfigContext';
 import { editRow } from './../../../../services/editRowService';
 import { makeStyles } from '@material-ui/core/styles';
+import deviceIdentity from '../../../../helpers/Helpers';
 // import 'antd/dist/antd.css';
 import { Pagination } from 'antd';
 
@@ -19,8 +20,7 @@ export const Table2 = (props) => {
   let app = props.app ? props.app : '';
   let APP = app ? app.substr(1) : '';
   APP = APP.toLowerCase();
-  // let APP = window.location.pathname.toString();
-  // APP= APP?APP.substr(1).toLowerCase():'';
+
   const appPermission = props.appPermission;
   const [sortOrder, setSortOrder] = useState(0);
   const [filter, setFilter] = useState(<Filter />)
@@ -32,29 +32,20 @@ export const Table2 = (props) => {
   const [errorMsg, setErrorMsg] = useState('Error table2');
   const [tableFields, setTableFields] = useContext(ConfigContext);
 
-  // useEffect(() => {
-  //   if (!tableFields || tableFields.length === 0) {
-  //     if (localStorage['fields'] && localStorage['fields'].length === 0)
-  //       tableFields = JSON.parse(localStorage['fields']);
-  //   }
-  //   if (tableFields) {
-  //     setAppFields(tableFields.filter(x => x.application === APP));
-  //   }
 
-  // }, [tableFields])
   useEffect(() => {
     if (!tableFields || tableFields.length === 0) {
-      if (localStorage['fields'] )  //&& localStorage['fields'].length === 0
-          {
-           // debugger
-            let data=JSON.parse(localStorage['fields']);
-            setTableFields(data);
-          };
+      if (localStorage['fields'])  //&& localStorage['fields'].length === 0
+      {
+        // debugger
+        let data = JSON.parse(localStorage['fields']);
+        setTableFields(data);
+      };
     }
-    if(APP)
-     { 
-       
-      setAppFields(tableFields.filter(x => x.application === APP));}
+    if (APP) {
+
+      setAppFields(tableFields.filter(x => x.application === APP));
+    }
 
   }, [tableFields])
   const [trigerFetch, setTrigerFetch] = useState([]);
@@ -232,30 +223,28 @@ export const Table2 = (props) => {
     debugger
     if (app === '/' || app === '/Templates')
       return
-    if (!localStorage["freeUserToken"] || localStorage["freeUserToken"] === null || localStorage["freeUserToken"] === "undefined") {
-      console.log('no freeUserToken table2')
+    if (!deviceIdentity())
+      return
+    const URL = `${API_ENDPOINT}/pageim/stateUpdate?appname=${APP}&search=${''}&currentpage=${1}&itemsperpage=${20}`;
+    fetch(URL, {
+      method: 'POST',
+      headers: { Authorization: "Bearer " + localStorage['deviceIdentity'] }
     }
-    else {
-      const URL = `${API_ENDPOINT}/devicedata/stateUpdate?app=${APP}&search=${''}&currentpage=${1}&itemsperpage=${20}`;
-      fetch(URL, {
-        method: 'POST',
-        headers: { Authorization: "Bearer " + localStorage['freeUserToken'] }
-      }
-      )
-        .then(response => {
-          return response.json()
-        })
-        .then(res => {
-          //debugger
-          return     setData(res.res ? res.res : null);
-        })
-        .catch((error) => {
-          console.error('Error:', error);
-        });
-    }
+    )
+      .then(response => {
+        return response.json()
+      })
+      .then(res => {
+        //debugger
+        return setData(res.res ? res.res : null);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+
 
   }, [AppFields, trigerFetch, global]);
- 
+
 
 
   return (
@@ -398,10 +387,10 @@ export const Table2 = (props) => {
                         </td> : null
                     ))}
                   </tr>
-                  
+
                 </>
               ))}
-            <div >     <Pagination style={{display: "flex"}}size="small" total={50} showSizeChanger showQuickJumper /></div>
+            <div >     <Pagination style={{ display: "flex" }} size="small" total={50} showSizeChanger showQuickJumper /></div>
 
           </tbody>
 
