@@ -57,13 +57,13 @@ const CardsFooter = () => {
             <div className={hildeScroll === 'scrollHide' ? 'scrollHide' : 'footerMobile'} >
                 <div className="page__box" className={hildeScroll}>
                     <div className='page__box'>
-                        <Button className='footer__botton' type="primary" onClick={nextMobile} >
-                             {itemsPerPage*currentPage>items?'finish':'more'}
+                        <Button className={itemsPerPage*currentPage>items?'footer__botton__hide':`footer__botton`}   type="primary" onClick={nextMobile} >
+                             {itemsPerPage*currentPage>items?'0':<>more</>}
                        </Button>
 
-                        <div className="total__mobile">
+                        <div className="total__mobile_left">
 
-                         {itemsPerPage*currentPage>items?'finish':'more'}-   {items}-{itemsPerPage}-{currentPage}
+                         {itemsPerPage*currentPage>items?'':` ${items-itemsPerPage-currentPage}`}   
 
                         </div>
                     </div>

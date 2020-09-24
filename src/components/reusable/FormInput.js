@@ -41,7 +41,7 @@ const FormInput = props => {
                         name='color'
                         defaultValue='pick color'
                         // value={this.state.color} - for controlled component
-                        onChange={color => console.log(color)}
+                        //onChange={color => console.log(color)}
                         // placeholder="Placeholder"
                         // helperText="Full width!"
                         variant="outlined"

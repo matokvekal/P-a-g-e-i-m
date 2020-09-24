@@ -14,6 +14,7 @@ const ConfigContextProvider = (props) => {
     APP= APP?APP.substr(1).toLowerCase():'';
   
     useEffect(() => {
+        //debugger
         if (!deviceIdentity())  
         return
             const URL= `${API_ENDPOINT}/pageim/fieldsOfTable?appname=${APP}`;

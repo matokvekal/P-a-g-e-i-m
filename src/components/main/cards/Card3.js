@@ -25,7 +25,7 @@ export const Card3 = (props) => {
   const [tableFields, setTableFields] = useContext(ConfigContext);
   const [AppFields, setAppFields] = useState([]);
   const [errorMsg, setErrorMsg] = useState('Err card3');
-
+  const [loader,setLoader]=useState(false);
   const hideCardModal = atom({
     key: "HideCardModal",
     default: "",
@@ -36,7 +36,7 @@ export const Card3 = (props) => {
   });
   const [popupCard, setPopupCard] = useRecoilState(hideCardModal);
   const [responsItems, setResponseItems] = useState(1500);
-  const { items, setItems, currentPage, itemsPerPage, mobilePage } = usePagination();
+  const { items, setItems, currentPage, itemsPerPage, mobilePage ,setCurrentPage,setMobilePage} = usePagination();
   // let APP = window.location.pathname.toString();
   //   APP= APP?APP.substr(1).toLowerCase():'';
   let app = props.app ? props.app : '';
@@ -60,7 +60,7 @@ export const Card3 = (props) => {
   const [likeChange, setLikechange] = useState('');
 
   const updateLike = (id) => {
-    debugger
+    //debugger
     if (app === '/' || app === '/Templates' || !id)
       return
     if (!deviceIdentity())
@@ -87,7 +87,7 @@ export const Card3 = (props) => {
       alert('please register, its simple, then give a big like!');
       return
     }
-    debugger
+    //debugger
     let updateSucceed = false;
     var array = [];
     if (!localStorage['info']) {
@@ -112,7 +112,7 @@ export const Card3 = (props) => {
   }
 
   useEffect(() => {
-    debugger
+    //debugger
     if (!tableFields || tableFields.length === 0) {
       if (localStorage['fields']) {
         let data = JSON.parse(localStorage['fields']);
@@ -137,6 +137,7 @@ export const Card3 = (props) => {
       return
     if (!deviceIdentity())
       return
+      setLoader(true);  
     const URL = `${API_ENDPOINT}/pageim/stateUpdate?appname=${APP}&search=${searchNew}&currentpage=${currentPage}&itemsperpage=${itemsPerPage}&order_by=${order_by}`;
     fetch(URL, {
       method: 'POST',
@@ -149,13 +150,16 @@ export const Card3 = (props) => {
         return response.json()
       })
       .then(res => {
-        //debugger
+        if(res && res.res &&res.res[0]&& res.res[0].success===false)
+           console.log('Err in stateUpdate sp');
+    
         mobilePage
           ?
           setData(res.res ? [...data, ...res.res] : [...data])
           :
           setData(res.res ? res.res : null);
         setItems(res.total[0].totalRows);// react- in mobile page just add data insted of replace
+        setLoader(false); 
       })
       .catch((error) => {
         console.error('Error:', error);
@@ -171,8 +175,9 @@ export const Card3 = (props) => {
       return
       if (!deviceIdentity())  
       return
-      debugger
+      //debugger
       let data = filter;
+      setLoader(true) ;
       const URL = `${API_ENDPOINT}/pageim/filterUpdate?appname=${APP}&checked=${filter.checked}&name=${filter.name}&value=${filter.value}&itemsperpage=${itemsPerPage}`;
       fetch(URL, {
         method: 'POST',
@@ -186,7 +191,11 @@ export const Card3 = (props) => {
         })
         .then(res => {
           //debugger
-          setData(res.res ? res.res : null); setItems(res.total[0].totalRows)
+
+          setCurrentPage(1);
+          setMobilePage("");
+          setData(res.res ? res.res : null); setItems(res.total[0].totalRows);
+          setLoader(false); 
         })
         .catch((error) => {
           console.error('Error:', error);
@@ -200,10 +209,11 @@ export const Card3 = (props) => {
 
   return (
     <>
-
+        {loader?<CircularProgress />:null}
       {!AppFields || AppFields.length === 0 || !data
         ?
         <span className='error'>Error occured : {errorMsg} <CircularProgress /></span> :
+        
 
         <div className="cards__area">
 
@@ -281,9 +291,6 @@ export const Card3 = (props) => {
                         </>
                       ))}
                     </div>
-
-
-
                   </div>
 
 

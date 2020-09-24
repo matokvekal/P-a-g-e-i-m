@@ -220,7 +220,7 @@ export const Table2 = (props) => {
 
 
   useEffect(() => {
-    debugger
+    //debugger
     if (app === '/' || app === '/Templates')
       return
     if (!deviceIdentity())

@@ -54,7 +54,7 @@ const CardsHeader = () => {
         setOrder_by(event.target.value)
     }
     function resetAllQuerys(){
-        debugger
+       // debugger
         //selectRef.current.style.backgroundColor = "blue";
         selectRef.current.value = "";
         setSearchNew('');

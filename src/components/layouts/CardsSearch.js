@@ -17,14 +17,14 @@ const CardsSearch = () => {
 
 
    const handleSearch = (e) => {
-      debugger
+      //debugger
       if (!wait) {
-         debugger
+         //debugger
          setWait(true);
          doSearch(e.target.value);
       }
       else {
-         debugger
+         //debugger
          clearTimeout(doSearch);
          doSearch(e.target.value)
       }

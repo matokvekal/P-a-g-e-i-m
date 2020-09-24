@@ -6,7 +6,7 @@ function Actions(props) {
 
   
   const handleEdit=(e)=>{
-    console.log(e)
+    //console.log(e)
     handleEditMode(x=>(x===row?'':row));
      }
 

@@ -12,7 +12,7 @@ const GlobalContextProvider = (props) => {
         setGlobal([{countHiddenFields:count},]);
     }
 useEffect(() => {
-    debugger
+    //debugger
     if (!deviceIdentity()) {
         const AUTHURL = `${API_ENDPOINT}/session/createNewUserDevice`;
         fetch(AUTHURL)

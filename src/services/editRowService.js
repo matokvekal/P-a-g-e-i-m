@@ -16,11 +16,11 @@ const API_ENDPOINT = pageimEndPoint();
  
             const response = await axios.post(URL,data)
             .then((response) => {
-                console.log("RESPONSE RECEIVED: ", response);
+                //console.log("RESPONSE RECEIVED: ", response);
                 return response;
               })
             .catch((response) => {
-                console.log("AXIOS ERROR: ", response);
+                //console.log("AXIOS ERROR: ", response);
                 return response;
               })
 

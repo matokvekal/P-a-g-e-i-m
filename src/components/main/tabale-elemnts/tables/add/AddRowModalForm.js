@@ -53,7 +53,7 @@ const AddRowModalForm = (props) => {
         setComponentSize(size);
     };
     function checkedChange(e) {
-        console.log(`checked = ${e.target.checked}`);
+        //console.log(`checked = ${e.target.checked}`);
     }
     return (
         <>

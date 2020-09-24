@@ -27,7 +27,7 @@ const SortContextProvider = (props) => {
                     return response.json()
                 })
                 .then(data => {
-                   debugger
+                   //debugger
                     if (data && data.sortList) {
                         setSortList( [...data.sortList.map(x => ([x.name,x.label]))])
 

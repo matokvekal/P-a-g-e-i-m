@@ -8,7 +8,7 @@ export const url = (db,appName,action) => {
 }
 
 export default function deviceIdentity(){
-    debugger
+    
     if (!localStorage["deviceIdentity"] || localStorage["deviceIdentity"] === null || localStorage["deviceIdentity"] === "undefined") {
         console.log('no freeUserToken table2');
         return false;
