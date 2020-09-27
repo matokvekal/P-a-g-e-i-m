@@ -3,10 +3,15 @@ import { ConfigContext } from '../../../context/ConfigContext';
 import { pageimEndPoint } from '../../../Config';
 import Checkboxes from './cards-extra';
 import person from './../../../assets/person.png';
+// import trophy from './../../../assets/trophy.png';
 import quantity from './../../../assets/quantity.png';
 import israelFlag from './../../../assets/israelFlag.png';
 import trophy from './../../../assets/trophy.png';
 import club_flag from './../../../assets/club_flag.png';
+import cyclocrossbike from './../../../assets/cyclocrossbike.png';
+import trackbike from './../../../assets/trackbike.png';
+import mtbbike from './../../../assets/mtbbike.png';
+import roadbike from './../../../assets/roadbike.png';
 import medal2 from './../../../assets/medal2.png';
 import medal3 from './../../../assets/medal3.png';
 import Stars from './Stars';
@@ -25,7 +30,7 @@ export const Card3 = (props) => {
   const [tableFields, setTableFields] = useContext(ConfigContext);
   const [AppFields, setAppFields] = useState([]);
   const [errorMsg, setErrorMsg] = useState('Err card3');
-  const [loader,setLoader]=useState(false);
+  const [loader, setLoader] = useState(false);
   const hideCardModal = atom({
     key: "HideCardModal",
     default: "",
@@ -36,7 +41,7 @@ export const Card3 = (props) => {
   });
   const [popupCard, setPopupCard] = useRecoilState(hideCardModal);
   const [responsItems, setResponseItems] = useState(1500);
-  const { items, setItems, currentPage, itemsPerPage, mobilePage ,setCurrentPage,setMobilePage} = usePagination();
+  const { items, setItems, currentPage, itemsPerPage, mobilePage, setCurrentPage, setMobilePage } = usePagination();
   // let APP = window.location.pathname.toString();
   //   APP= APP?APP.substr(1).toLowerCase():'';
   let app = props.app ? props.app : '';
@@ -137,7 +142,7 @@ export const Card3 = (props) => {
       return
     if (!deviceIdentity())
       return
-      setLoader(true);  
+    setLoader(true);
     const URL = `${API_ENDPOINT}/pageim/stateUpdate?appname=${APP}&search=${searchNew}&currentpage=${currentPage}&itemsperpage=${itemsPerPage}&order_by=${order_by}`;
     fetch(URL, {
       method: 'POST',
@@ -150,16 +155,16 @@ export const Card3 = (props) => {
         return response.json()
       })
       .then(res => {
-        if(res && res.res &&res.res[0]&& res.res[0].success===false)
-           console.log('Err in stateUpdate sp');
-    
+        if (res && res.res && res.res[0] && res.res[0].success === false)
+          console.log('Err in stateUpdate sp');
+
         mobilePage
           ?
           setData(res.res ? [...data, ...res.res] : [...data])
           :
           setData(res.res ? res.res : null);
         setItems(res.total[0].totalRows);// react- in mobile page just add data insted of replace
-        setLoader(false); 
+        setLoader(false);
       })
       .catch((error) => {
         console.error('Error:', error);
@@ -173,34 +178,34 @@ export const Card3 = (props) => {
     //debugger
     if (app === '/' || app === '/Templates' || filter.value == 'undefined' || filter.name == 'undefined' || !filter.value || !filter.name)
       return
-      if (!deviceIdentity())  
+    if (!deviceIdentity())
       return
-      //debugger
-      let data = filter;
-      setLoader(true) ;
-      const URL = `${API_ENDPOINT}/pageim/filterUpdate?appname=${APP}&checked=${filter.checked}&name=${filter.name}&value=${filter.value}&itemsperpage=${itemsPerPage}`;
-      fetch(URL, {
-        method: 'POST',
-        headers: { Authorization: "Bearer " + localStorage['deviceIdentity'] },
-      }
+    //debugger
+    let data = filter;
+    setLoader(true);
+    const URL = `${API_ENDPOINT}/pageim/filterUpdate?appname=${APP}&checked=${filter.checked}&name=${filter.name}&value=${filter.value}&itemsperpage=${itemsPerPage}`;
+    fetch(URL, {
+      method: 'POST',
+      headers: { Authorization: "Bearer " + localStorage['deviceIdentity'] },
+    }
 
-      )
-        .then(response => {
-          //debugger
-          return response.json()
-        })
-        .then(res => {
-          //debugger
+    )
+      .then(response => {
+        //debugger
+        return response.json()
+      })
+      .then(res => {
+        //debugger
 
-          setCurrentPage(1);
-          setMobilePage("");
-          setData(res.res ? res.res : null); setItems(res.total[0].totalRows);
-          setLoader(false); 
-        })
-        .catch((error) => {
-          console.error('Error:', error);
-        });
-    
+        setCurrentPage(1);
+        setMobilePage("");
+        setData(res.res ? res.res : null); setItems(res.total[0].totalRows);
+        setLoader(false);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+
 
   }, [filter, likeChange]);
 
@@ -209,17 +214,67 @@ export const Card3 = (props) => {
 
   return (
     <>
-        {loader?<CircularProgress />:null}
+      {loader ? <CircularProgress /> : null}
       {!AppFields || AppFields.length === 0 || !data
         ?
         <span className='error'>Error occured : {errorMsg} <CircularProgress /></span> :
-        
+
 
         <div className="cards__area">
 
           <div className="cards">
+            <div class="main_head_mobile">
+              <h1>ISRAEL CYCLING RACES RESULTS</h1>
+            </div>
             {data.map((el, index) => (
               <>
+                {/*<!-- Mobile standing -->*/}
+                <tr className='standing' key={index * 331}>
+                  <td className='tdStanding pos'><span>{el['pos']}</span>
+                    {/* <img className="img_trophy" src={el['pos'] === '1' ? 'trophy' : el['pos'] === '2' ? 'medal2' : el['pos'] === '3' ? 'medal3' : null} alt="" /> */}
+                    {el['pos'] === '1'
+                            ?
+                            <img className="img_trophy" src={trophy} alt="medal" />
+                            :
+                            el['pos'] === '2'
+                              ?
+                              <img className="img_trophy" src={medal2} alt="medal" />
+                              :
+                              el['pos'] === '3'
+                                ?
+                                <img className="img_trophy" src={medal3} alt="medal" />
+                                : null
+                          }
+                  </td>
+                  <td className='tdStanding branch'>
+                    {/* <img src={israelFlag} className="img_flag" alt="" /> */}
+                    {el['branch'] === 'כביש'
+                            ?
+                            <img className="img_bike" src={roadbike} alt="roadbike" />
+                            :
+                            el['branch'] === 'הרים'
+                              ?
+                              <img className="img_bike"  src={mtbbike} alt="mtbbike" />
+                              :
+                              el['branch'] === 'מסלול'
+                                ?
+                                <img className="img_bike"  src={trackbike} alt="trackbike" />
+                                : 
+                                el['branch'] === 'סיקלוקרוס'
+                                ?
+                                <img className="img_bike"  src={cyclocrossbike} alt="cyclocrossbike" />
+                                : null
+                          }
+                 
+                  </td>
+                  <td className='tdStanding full_name' onClick={() => { setPopupCard(index) }}>{el['full_name']}</td>
+                  <td className='tdStanding club'>{el['club']}</td>
+                  <td className='tdStanding race_name'>{el['race_name']}</td>
+                  <td className='tdStanding year'>{el['year']}</td>
+                  <td className='tdStanding category'>{el['category']}</td>
+                  <td className='tdStanding total_tm'>{el['total_tm']}</td>
+                  <td className='tdStanding diff'>{el['diff']}</td>
+                </tr>
                 <div className={popupCard === index ? 'card__item active' : data.length < 5 ? 'card__item card_item_width' : 'card__item'} id={popupCard === index ? 'popup' : null} data={index}>
 
                   {/*<!-- Card Header-->*/}
@@ -305,9 +360,9 @@ export const Card3 = (props) => {
 
                   <div className="card__footer">
                     <div className="icons">
-                       <a href={`https://wa.me/?text=${window.location.href}`} target="_blank"><i className="fas fa-share-alt-square share"></i></a>
+                      <a href={`https://wa.me/?text=${window.location.href}`} target="_blank"><i className="fas fa-share-alt-square share"></i></a>
                       <input className="check" type="checkbox" name="completed" id="" />
-  
+
                     </div>
                     <div className="card__footer__main">
 
@@ -319,7 +374,7 @@ export const Card3 = (props) => {
                       }
                       <div className="like__sec" onClick={() => addLike(el)}>
                         <i className="fas fa-heart"></i>
-                    <p>{Number(el['likes'])>0?el['likes']:''}</p>
+                        <p>{Number(el['likes']) > 0 ? el['likes'] : ''}</p>
 
                       </div>
                       <Stars rating={(el['total_finish_cat'] - el['pic'] + 1) * 100 / el['total_finish_cat']} />

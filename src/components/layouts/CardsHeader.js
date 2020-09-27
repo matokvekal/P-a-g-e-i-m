@@ -100,7 +100,7 @@ const CardsHeader = () => {
                     <i className="fas fa-bars"></i>
                 </div>*/}
                 <div className="four__square" title='Reset all filter,sort' onClick={resetAllQuerys}>
-                    <i className="fas fa-th-large"></i>
+                    <i className="fa fa-recycle"></i>
                 </div> 
                 <a href="#"><div className="filter__form active" onClick={handleFilter}>
                     <input type="text" id="filter" placeholder='Filter' disabled value={`${filters.filter(x => x.checked === true).length} filters selected`} />

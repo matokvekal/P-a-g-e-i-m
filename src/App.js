@@ -24,7 +24,7 @@ import CardsFooter from './components/layouts/CardsFooter';
 import { atom, useRecoilState } from 'recoil';
 import deviceIdentity from './helpers/Helpers';
 
-import SmsAuth from './components/main/SmsAuth';
+import SmsAuth from './components/main/smsVerification/SmsAuth';
 const colorPalet = [];
 colorPalet.basic = {
   '--color-primary': '#f89514',
