@@ -22,7 +22,7 @@ function AddItem(props) {
       return 'created ' + n + '     ' + t;
    }
    const textState = atom({
-      key: "textState1",
+      key: "_textState1",
       default: "",
    });
    const currentTopic = props.id;

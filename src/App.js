@@ -23,8 +23,8 @@ import CardsChat from './components/layouts/CardsChat';
 import CardsFooter from './components/layouts/CardsFooter';
 import { atom, useRecoilState } from 'recoil';
 import deviceIdentity from './helpers/Helpers';
-
-import SmsAuth from './components/main/smsVerification/SmsAuth';
+import LoginModal from './helpers/LoginModal';
+// import SmsAuth from './components/main/smsVerification/SmsAuth';
 const colorPalet = [];
 colorPalet.basic = {
   '--color-primary': '#f89514',
@@ -78,7 +78,7 @@ function App() {
 
 
   const menuListAtom = atom({
-    key: "menuList",
+    key: "_menuList",
     default: '',
   });
 
@@ -89,42 +89,42 @@ function App() {
   const [menuList, setMenuList] = useRecoilState(menuListAtom);
   const location = window.location.pathname;
   const [freeUserToken] = useState(null)
-
+  const[app,setApp]=useState('');
   let currentDir = window.localStorage.getItem('AppDirection');
   if (currentDir == null || (currentDir !== 'rtl' && currentDir !== 'ltr'))
     currentDir = 'ltr';
 
 
-    
+
 
   useEffect(() => {
     let APP = window.location.pathname.toString();
     APP = APP ? APP.substr(1).toLowerCase() : '';
-    if (!deviceIdentity())  
+    setApp(APP);
+    if (!deviceIdentity())
       return
-    
-     
-      const URL = `${API_ENDPOINT}/pageim/menuApplications?appname=${APP}`;
-      fetch(URL, {
-        method: 'GET',
-        headers: { Authorization: "Bearer " + localStorage['deviceIdentity'] },
-      }
-      )
-        .then(response => {
-          // debugger 
-          return response.json()
-        })
-        .then(data => {
-          // debugger
 
-          return setMenuList(data.appsresult[1])
-        })
-        .catch((error) => {
-          console.error('Error:', error);
-        });
-    
+     const URL = `${API_ENDPOINT}/pageim/device_menu?appname=${APP}`;
+    fetch(URL, {
+      method: 'GET',
+      headers: { Authorization: "Bearer " + localStorage['deviceIdentity'] },
+    }
+    )
+      .then(response => {
+        // debugger 
+        return response.json()
+      })
+      .then(data => {
+        // debugger
 
-  }, []);
+        return setMenuList(data.appsresult[1])
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+
+
+  }, [app]);
 
   let screenView = 'table';
   const [AppDirection, setAppDirection] = useState(currentDir ? currentDir : 'ltr');
@@ -134,40 +134,45 @@ function App() {
       <div className="total__content">
 
         <main>
-          <div className="whole__content" id="blur">
+          <div className="" id="blur">
 
             <GlobalContextProvider>
               <Router>
 
                 <ConfigContextProvider>
-                <SortContextProvider>
-                  <FilterontextProvider>
-                    
+                  <SortContextProvider>
+                    <FilterontextProvider>
+
                       <Switch>
                         <Route exact path="/" component={Templates} />
                         <Route path="/Templates" component={Templates} />
                       </Switch>
 
                       <Route path="/TodoWatsApp" component={TodoWatsApp} />
-                      <SmsAuth/>
-
-                      <CardsHeader />
-                      <CardsFilter />
-
-
+                      {/* <SmsAuth/> */}
+                      <LoginModal/>
+                      {/* {app==='races'?<> <CardsHeader /> <CardsFilter /></>:null} */}
+                     
+                     
+                      {/* <CardsHeader /> <CardsFilter /> */}
+                      <div className="whole__content" id="blur">
                       <Switch>
                         {(menuList && menuList.length > 0) ? menuList.map((item, index) => (
                           item.mainApp === 'pageim'
                             ?
+                            <> 
+                            {app==='races'?<> <CardsHeader /> </>:null}
                             <Route exact path={'/' + item.app}><Pageim app={'/' + item.app} appPermission={item.permission} screenType={screenType} key={index} /> </Route>
+                            </>
                             :
                             <Route exact path={'/' + item.name}><DynamicComponent html={item.html} /> </Route>
                         )) : console.log('menu error')}
                       </Switch>
-                      <CardsFooter />
+                      {app==='races'?<> <CardsFooter /> </>:null}
+
                       <CardsChat />
-                    
-                  </FilterontextProvider>
+                      </div>
+                    </FilterontextProvider>
                   </SortContextProvider>
                 </ConfigContextProvider>
 

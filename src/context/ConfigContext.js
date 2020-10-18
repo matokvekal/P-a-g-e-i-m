@@ -1,20 +1,32 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { pageimEndPoint } from '../Config';
 import deviceIdentity from './../helpers/Helpers';
+import { atom, useRecoilState } from 'recoil';
 export const ConfigContext = createContext();
 
+
 const API_ENDPOINT = pageimEndPoint();
-
-
 
 const ConfigContextProvider = (props) => {
     const [tableFields, setTableFields] = useState([]);
 
       let APP = window.location.pathname.toString();
     APP= APP?APP.substr(1).toLowerCase():'';
-  
+
+    const isLogIn = atom({
+        key: "_logIn",
+        default: 'false',
+      });
+      const [login, setLogin] = useRecoilState(isLogIn);
+    
+      useEffect(() => {
+        if (localStorage["isLogin"] && localStorage["isLogin"] === 'true')
+          setLogin(true);
+        else
+          setLogin(false);
+      }, [])
+
     useEffect(() => {
-        //debugger
         if (!deviceIdentity())  
         return
             const URL= `${API_ENDPOINT}/pageim/fieldsOfTable?appname=${APP}`;

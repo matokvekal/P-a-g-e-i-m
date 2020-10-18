@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { ConfigContext } from '../../../context/ConfigContext';
 import { pageimEndPoint } from '../../../Config';
-import Checkboxes from './cards-extra';
+import colors from './../../../assets/color.json';
 import person from './../../../assets/person.png';
-// import trophy from './../../../assets/trophy.png';
-import quantity from './../../../assets/quantity.png';
 import israelFlag from './../../../assets/israelFlag.png';
 import trophy from './../../../assets/trophy.png';
 import club_flag from './../../../assets/club_flag.png';
@@ -15,109 +13,71 @@ import roadbike from './../../../assets/roadbike.png';
 import medal2 from './../../../assets/medal2.png';
 import medal3 from './../../../assets/medal3.png';
 import Stars from './Stars';
-import { RecoilRoot } from "recoil";
-import { atom, useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil'
+import { atom, useRecoilState } from 'recoil'
 import usePagination from './../../../hooks/Pagination';
 import CircularProgress from '../../reusable/Progress';
-import deviceIdentity from '../../../helpers/Helpers';
-
-
+import deviceIdentity, { getApp } from '../../../helpers/Helpers';
+import ClickItem from '../../../helpers/clickItem';
+// import UpdateLikes from './UpdateLikes';
+//import HandleLikes from '../../../helpers/addLike';
+// import { red } from '@material-ui/core/colors';
+import useLogIn from '../../../helpers/LogIn';
+import http from './http';
 
 export const Card3 = (props) => {
   const [data, setData] = useState([]);
   const API_ENDPOINT = pageimEndPoint();
-  const [trigerFetch, setTrigerFetch] = useState([]);
   const [tableFields, setTableFields] = useContext(ConfigContext);
   const [AppFields, setAppFields] = useState([]);
   const [errorMsg, setErrorMsg] = useState('Err card3');
   const [loader, setLoader] = useState(false);
+  const { addLikeLogin } = useLogIn();
+  // const {AddLike}=HandleLikes();
   const hideCardModal = atom({
-    key: "HideCardModal",
+    key: "_HideCardModal",
     default: "",
   });
   const sortSelected = atom({
-    key: "sortSelected",
+    key: "_sortSelected",
     default: '',
   });
+
+  const isLogIn = atom({
+    key: "_logIn",
+    default: 'false',
+  });
+
+  const newSearch = atom({
+    key: "_searchState",
+    default: "",
+  });
+
+
+  const newFilter = atom({
+    key: "_filterState",
+    default: "",
+  });
+  const LikeChange = atom({
+    key: "_likeChange",
+    default: '',
+  });
+
+  const [login, setLogin] = useRecoilState(isLogIn);
+
+  const [searchNew, setSearchNew] = useRecoilState(newSearch);
+  const [filter, setFilter] = useRecoilState(newFilter);
+  const [order_by] = useRecoilState(sortSelected);
+  const [likeChange, setLikechange] = useRecoilState(LikeChange);
   const [popupCard, setPopupCard] = useRecoilState(hideCardModal);
-  const [responsItems, setResponseItems] = useState(1500);
   const { items, setItems, currentPage, itemsPerPage, mobilePage, setCurrentPage, setMobilePage } = usePagination();
-  // let APP = window.location.pathname.toString();
-  //   APP= APP?APP.substr(1).toLowerCase():'';
   let app = props.app ? props.app : '';
   let APP = app ? app.substr(1) : '';
   APP = APP.toLowerCase();
 
-  const newSearch = atom({
-    key: "searchState",
-    default: "",
-  });
-  const [searchNew, setSearchNew] = useRecoilState(newSearch);
 
-  const newFilter = atom({
-    key: "filterState",
-    default: "",
-  });
-  const [filter, setFilter] = useRecoilState(newFilter);
-
-  const [order_by] = useRecoilState(sortSelected);
-
-  const [likeChange, setLikechange] = useState('');
-
-  const updateLike = (id) => {
-    //debugger
-    if (app === '/' || app === '/Templates' || !id)
-      return
-    if (!deviceIdentity())
-      return
-    if (id) {
-      const URL = `${API_ENDPOINT}/pageim/likesUpdate?appname=${APP}&id=${id}`;
-      fetch(URL, {
-        method: 'POST',
-        headers: { Authorization: "Bearer " + localStorage['deviceIdentity'] },
-      }
-
-      )
-        .then(response => {
-          return response.json();
-        })
-        .catch((error) => {
-          console.error('Error:', error);
-        });
-    }
-  }
-
-  function addLike(el) {
-    if (!localStorage['registeredUser']) {
-      alert('please register, its simple, then give a big like!');
-      return
-    }
-    //debugger
-    let updateSucceed = false;
-    var array = [];
-    if (!localStorage['info']) {
-      array.push(el['id']);
-      el['likes'] = 1;
-      localStorage.setItem('info', JSON.stringify(array));
-      updateLike(el['id']);
-      setLikechange(new Date().getTime());
-    }
-    else {
-      array = JSON.parse(localStorage.getItem('info')) || [];
-      if (!array.includes(el['id'])) {
-        el['likes'] = Number(el['likes']) + 1;
-        array.push(el['id']);
-        localStorage.setItem('info', JSON.stringify(array));
-        updateLike(el['id']);
-        setLikechange(new Date().getTime());
-        //goto server
-      }
-
-    }
-  }
 
   useEffect(() => {
-    //debugger
+
     if (!tableFields || tableFields.length === 0) {
       if (localStorage['fields']) {
         let data = JSON.parse(localStorage['fields']);
@@ -137,7 +97,7 @@ export const Card3 = (props) => {
 
 
   useEffect(() => {
-    // debugger
+    //debugger
     if (app === '/' || app === '/Templates')
       return
     if (!deviceIdentity())
@@ -148,10 +108,9 @@ export const Card3 = (props) => {
       method: 'POST',
       headers: { Authorization: "Bearer " + localStorage['deviceIdentity'] },
     }
-
     )
+      // http.Post(URL)
       .then(response => {
-        //debugger
         return response.json()
       })
       .then(res => {
@@ -176,6 +135,9 @@ export const Card3 = (props) => {
 
   useEffect(() => {
     //debugger
+    const temp = likeChange.hasChange;
+    // const temp = likeChange.likes + likeChange.id;
+    //debugger
     if (app === '/' || app === '/Templates' || filter.value == 'undefined' || filter.name == 'undefined' || !filter.value || !filter.name)
       return
     if (!deviceIdentity())
@@ -184,6 +146,8 @@ export const Card3 = (props) => {
     let data = filter;
     setLoader(true);
     const URL = `${API_ENDPOINT}/pageim/filterUpdate?appname=${APP}&checked=${filter.checked}&name=${filter.name}&value=${filter.value}&itemsperpage=${itemsPerPage}`;
+
+
     fetch(URL, {
       method: 'POST',
       headers: { Authorization: "Bearer " + localStorage['deviceIdentity'] },
@@ -209,7 +173,64 @@ export const Card3 = (props) => {
 
   }, [filter, likeChange]);
 
+  function handleClick(el) {
+    //debugger
+    ClickItem('like', 'name', el['full_name'], el['id']);
+  }
 
+
+  function HandleLikes(el) {
+    //debugger
+    ClickItem('like', 'name', el['full_name'], el['id']);
+    if (!login) {
+      addLikeLogin(' Please register, then you give abig Heart');
+      return
+    }
+    //---------------------------------------------------------------------
+    var array = [];
+    if (!localStorage['info']) {
+      el['likes'] = 1;
+    }
+    else {
+      //debugger
+      array = JSON.parse(localStorage.getItem('info')) || [];
+      if (array.length > 500)
+        array = [];
+      if (!array.includes(el['id'])) {
+        el['likes'] = Number(el['likes']) + 1;
+      }
+      array.push(el['id']);
+      localStorage.setItem('info', JSON.stringify(array));
+
+
+
+      let APP = window.location.pathname.toString();
+      APP = APP ? APP.substr(1).toLowerCase() : '';
+
+      if (!deviceIdentity())
+        return
+      if (el['id']) {
+        const URL = `${API_ENDPOINT}/pageim/likesUpdate?appname=${APP}&id=${el['id']}`;
+        fetch(URL, {
+          method: 'POST',
+          headers: { Authorization: "Bearer " + localStorage['deviceIdentity'] },
+        })
+          .then(response => {
+            return response.json();
+          })
+          .then(res => {
+            if (res && res.success)
+              setLikechange(Date.now());
+
+          })
+          .catch((error) => {
+            console.error('Error:', error);
+          });
+      }
+
+    }
+
+  }
 
 
   return (
@@ -223,51 +244,50 @@ export const Card3 = (props) => {
         <div className="cards__area">
 
           <div className="cards">
-            <div class="main_head_mobile">
+            <div className="main_head_mobile">
               <h1>ISRAEL CYCLING RACES RESULTS</h1>
             </div>
             {data.map((el, index) => (
               <>
                 {/*<!-- Mobile standing -->*/}
-                <tr className='standing' key={index * 331}>
-                  <td className='tdStanding pos'><span>{el['pos']}</span>
-                    {/* <img className="img_trophy" src={el['pos'] === '1' ? 'trophy' : el['pos'] === '2' ? 'medal2' : el['pos'] === '3' ? 'medal3' : null} alt="" /> */}
-                    {el['pos'] === '1'
-                            ?
-                            <img className="img_trophy" src={trophy} alt="medal" />
-                            :
-                            el['pos'] === '2'
-                              ?
-                              <img className="img_trophy" src={medal2} alt="medal" />
-                              :
-                              el['pos'] === '3'
-                                ?
-                                <img className="img_trophy" src={medal3} alt="medal" />
-                                : null
-                          }
+                <tr className='standing' key={index * 331} onClick={() => { setPopupCard(index) }}>
+                  <td className='tdStanding pos' ><span>{el['pic']}</span>
+                    {el['pic'] === '1'
+                      ?
+                      <img className="img_trophy" src={trophy} alt="medal" />
+                      :
+                      el['pic'] === '2'
+                        ?
+                        <img className="img_trophy" src={medal2} alt="medal" />
+                        :
+                        el['pic'] === '3'
+                          ?
+                          <img className="img_trophy" src={medal3} alt="medal" />
+                          : null
+                    }
                   </td>
                   <td className='tdStanding branch'>
                     {/* <img src={israelFlag} className="img_flag" alt="" /> */}
                     {el['branch'] === 'כביש'
+                      ?
+                      <img className="img_bike" src={roadbike} alt="roadbike" />
+                      :
+                      el['branch'] === 'הרים'
+                        ?
+                        <img className="img_bike" src={mtbbike} alt="mtbbike" />
+                        :
+                        el['branch'] === 'מסלול'
+                          ?
+                          <img className="img_bike" src={trackbike} alt="trackbike" />
+                          :
+                          el['branch'] === 'סיקלוקרוס'
                             ?
-                            <img className="img_bike" src={roadbike} alt="roadbike" />
-                            :
-                            el['branch'] === 'הרים'
-                              ?
-                              <img className="img_bike"  src={mtbbike} alt="mtbbike" />
-                              :
-                              el['branch'] === 'מסלול'
-                                ?
-                                <img className="img_bike"  src={trackbike} alt="trackbike" />
-                                : 
-                                el['branch'] === 'סיקלוקרוס'
-                                ?
-                                <img className="img_bike"  src={cyclocrossbike} alt="cyclocrossbike" />
-                                : null
-                          }
-                 
+                            <img className="img_bike" src={cyclocrossbike} alt="cyclocrossbike" />
+                            : null
+                    }
+
                   </td>
-                  <td className='tdStanding full_name' onClick={() => { setPopupCard(index) }}>{el['full_name']}</td>
+                  <td className='tdStanding full_name' >{el['full_name']}</td>
                   <td className='tdStanding club'>{el['club']}</td>
                   <td className='tdStanding race_name'>{el['race_name']}</td>
                   <td className='tdStanding year'>{el['year']}</td>
@@ -286,18 +306,18 @@ export const Card3 = (props) => {
                     <div className="name__trophy">
                       <div className="name__place">
                         <p>({el['total_finish_cat']})</p>
-                        <p className="user__place" >{el['pos']}</p>
+                        <p className="user__place" >{el['pic']}</p>
                         <p className="user__name">{el['full_name']}</p>
                         <div className="trophy__quantity">
-                          {el['pos'] === '1'
+                          {el['pic'] === '1'
                             ?
                             <img className="trophy" src={trophy} alt="" />
                             :
-                            el['pos'] === '2'
+                            el['pic'] === '2'
                               ?
                               <img className="quantity" src={medal2} alt="" />
                               :
-                              el['pos'] === '3'
+                              el['pic'] === '3'
                                 ?
                                 <img className="quantity" src={medal3} alt="" />
                                 : null
@@ -312,8 +332,8 @@ export const Card3 = (props) => {
                       </div>
 
                     </div>
-                    <div className="flag__status">
-                      <i className="fa fa-circle" aria-hidden="true"></i>
+                    <div className="flag__status" >
+                      <i className="fa fa-circle" aria-hidden="true" title={el['clicks'] + ' clicks'} style={{ color: !el['clicks'] ? 'white' : `rgb(${Number(colors[el['clicks']].rgb.r)},${Number(colors[el['clicks']].rgb.g)},${Number(colors[el['clicks']].rgb.b)})` }}></i>
                       <img className="flag__img" src={israelFlag} alt="" />
                     </div>
                   </div>
@@ -348,21 +368,12 @@ export const Card3 = (props) => {
                     </div>
                   </div>
 
-
-
-
-
-
-
-
-
-
-
                   <div className="card__footer">
                     <div className="icons">
                       <a href={`https://wa.me/?text=${window.location.href}`} target="_blank"><i className="fas fa-share-alt-square share"></i></a>
                       <input className="check" type="checkbox" name="completed" id="" />
-
+                      {/* <p>{(Number(el['total_finish_cat'])- Number(el['pic'])+ 1) * 100 / Number(el['total_finish_cat'])}</p>
+                      <p>{el['pic']}</p> */}
                     </div>
                     <div className="card__footer__main">
 
@@ -370,14 +381,20 @@ export const Card3 = (props) => {
                         ?
                         <a className="close__button" href="#" onClick={() => { setPopupCard() }}><i className="fas fa-times close-btn"></i> Close</a>
                         :
-                        <a className="more__button" href="#" onClick={() => { setPopupCard(index) }}>More</a>
+                        <a className="more__button" href="#" onClick={() => { setPopupCard(index); handleClick(el) }}>More</a>
                       }
-                      <div className="like__sec" onClick={() => addLike(el)}>
-                        <i className="fas fa-heart"></i>
+
+                      <div className="like__sec" onClick={() => HandleLikes(el)}>
+                        <i className="fas fa-heart" style={{ color: `rgb(200,${Number(el['likes']) % 256},${Math.floor(Number(el['likes']) / 25)})` }}></i>
                         <p>{Number(el['likes']) > 0 ? el['likes'] : ''}</p>
 
-                      </div>
-                      <Stars rating={(el['total_finish_cat'] - el['pic'] + 1) * 100 / el['total_finish_cat']} />
+                      </div>{
+                        el['pic'] && el['pic'] != '' ?
+                          <Stars rating={(Number(el['total_finish_cat']) - Number(el['pic']) + 1) * 100 / Number(el['total_finish_cat'])} />
+                          :
+                          <Stars rating={0} />
+
+                      }
 
 
                     </div>

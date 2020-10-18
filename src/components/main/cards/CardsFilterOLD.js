@@ -7,7 +7,7 @@ import { atom, useRecoilState } from 'recoil';
 
 export default function CardsFilter() {
    const showHideFilter1 = atom({
-      key: "ShowHideFilter",
+      key: "_ShowHideFilter",
       default: "",
    });
    const [showFilter, setShowFilter] = useRecoilState(showHideFilter1);

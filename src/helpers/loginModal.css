@@ -1,9 +1,9 @@
-/* body {
+body {
    font-size: 0.9em;
    color: #212121;
    font-family: Arial;
 }
-.container{
+.container1{
   width: 350px;
    margin: 50px auto;
    box-sizing: border-box;
@@ -84,4 +84,4 @@
 }
 .form-input .name{
 z-index: 10000;
-} */
+}

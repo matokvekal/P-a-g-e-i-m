@@ -1,10 +1,9 @@
-import React, { useEffect, useContext,useRef } from 'react';
+import React, { useEffect, useContext, useRef } from 'react';
 import CardsSearch from './CardsSearch';
 import usePagination from './../../hooks/Pagination';
 import CardsFilter from './CardsFilter';
 import CardsSideNav from './CardsSideNav';
-
-import { atom, useRecoilState, RecoilRoot } from 'recoil';
+import { atom, useRecoilState } from 'recoil';
 import { FilterContext } from '../../context/FilterContext';
 import { SortContext } from '../../context/SortContext';
 
@@ -12,30 +11,34 @@ import { SortContext } from '../../context/SortContext';
 const CardsHeader = () => {
 
     const [filters, setFilters] = useContext(FilterContext);
-    const [sortList]=useContext(SortContext);
+    const [sortList] = useContext(SortContext);
     //debugger
     const showHideFilter2 = atom({
-        key: "ShowHideFilter",
+        key: "_ShowHideFilter",
         default: 'true',
     });
     const menuOpenClose = atom({
-        key: "menuOpenClose",
+        key: "_menuOpenClose",
         default: 'true',
     });
     const sortSelected = atom({
-        key: "sortSelected",
+        key: "_sortSelected",
         default: '',
     });
     const newFilter = atom({
-        key: "filterState",
-
+        key: "_filterState",
         default: "",
     });
     const search = atom({
-        key: "searchState",
+        key: "_searchState",
         default: "",
-     });
-     const [searchNew, setSearchNew] = useRecoilState(search);
+    });
+    const Query = atom({
+        key: "_critQuery",
+        default: "",
+    });
+    const [anyQuery, setAnyQuery] = useRecoilState(Query);
+    const [searchNew, setSearchNew] = useRecoilState(search);
     const [showFilter, setShowFilter] = useRecoilState(showHideFilter2);
     const [menuToggle, setMenuToggle] = useRecoilState(menuOpenClose);
     const [order_by, setOrder_by] = useRecoilState(sortSelected);
@@ -53,8 +56,8 @@ const CardsHeader = () => {
     function sortSelect(event) {
         setOrder_by(event.target.value)
     }
-    function resetAllQuerys(){
-       // debugger
+    function resetAllQuerys() {
+        // debugger
         //selectRef.current.style.backgroundColor = "blue";
         selectRef.current.value = "";
         setSearchNew('');
@@ -63,7 +66,7 @@ const CardsHeader = () => {
             checked: false,
             name: 'ALL',
             value: 'ALL',
-        })
+        });
         setFilters((x) => {
             const newFilters = filters.map((item) => {
                 return {
@@ -71,11 +74,12 @@ const CardsHeader = () => {
                     data: item.data,
                     field: item.field,
                     filterId: item.filterId,
-                    checked:false
+                    checked: false
                 }
             });
             return newFilters;
         });
+        setAnyQuery(null);
     }
 
 
@@ -90,18 +94,10 @@ const CardsHeader = () => {
                     <i className="fas fa-arrow-alt-circle-left" onClick={prev}></i>
                     <i className="fas fa-arrow-alt-circle-right" onClick={next}></i>
                 </div>
-                {/* <div className="price__box">
-                    <select className="selection__form" name="price" id="price">
-                        <option className="opt" value="low to hight">dark</option>
-                        <option className="opt" value="high to low">Light</option>
-                    </select>
-                </div> */}
-                {/* <div className="bars">
-                    <i className="fas fa-bars"></i>
-                </div>*/}
+
                 <div className="four__square" title='Reset all filter,sort' onClick={resetAllQuerys}>
-                    <i className="fa fa-recycle"></i>
-                </div> 
+                    <i className={`fa fa-recycle  ${anyQuery === 'true' ? "red" : ""}`}></i>
+                </div>
                 <a href="#"><div className="filter__form active" onClick={handleFilter}>
                     <input type="text" id="filter" placeholder='Filter' disabled value={`${filters.filter(x => x.checked === true).length} filters selected`} />
                 </div>   </a>
@@ -112,42 +108,20 @@ const CardsHeader = () => {
                         {
                             sortList && sortList.length > 0 ? sortList.map((item, index) => (
                                 <>
-                                    <option className="opt" value={item[0] + ' asc'}>{item[1]} &uarr; </option>
-                                    <option className="opt" value={item[0] + ' desc'}>{item[1]} &darr; </option>
+                                    <option className="opt sortItem" value={item[0] + ' asc'} key={index*11}>{item[1]}&#9651; </option>
+                                    <option className="opt sortItem" value={item[0] + ' desc'} key={index*991}>{item[1]} &#9661;</option>
                                 </>
                             )) : null
                         }
-                        {/* 
-                        <option className="opt" value="a1">Place &uarr; </option>
-                        <option className="opt" value="high to low">Place &darr;</option> */}
+ 
                     </select>
                 </div>
-
-
-
                 <CardsSearch />
-
-
-
-                {/* <div className="ranges">
-                    <div className="range">
-                        <p className="sort">Search</p>
-                        <input type="range" min="0" max="100" value="50" className="slider1" />
-                    </div>
-                    <div className="range">
-                        <p className="filter">Filter</p>
-                        <input type="range" min="0" max="100" value="50" className="slider2" />
-                    </div>
-                </div> */}
                 <div className="toggle__btn" id="to__btn" onClick={handleMenu}>
                     <i className="fas fa-bars"></i>
                 </div>
             </div>
             <CardsFilter />
-
-
-
-
         </>
     )
 

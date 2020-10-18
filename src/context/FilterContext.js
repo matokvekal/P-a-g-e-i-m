@@ -17,7 +17,7 @@ const FilterContextProvider = (props) => {
     APP= APP?APP.substr(1).toLowerCase():'';
     useEffect(() => {
         if (localStorage['deviceIdentity']) {
-            const URL = `${API_ENDPOINT}/pageim/filterapp?appname=${APP}`;
+            const URL = `${API_ENDPOINT}/pageim/getFilter?appname=${APP}`;
             fetch(URL, {
                 method: 'GET',
                 headers: { Authorization: "Bearer " + localStorage['deviceIdentity'] }

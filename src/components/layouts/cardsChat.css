@@ -1,0 +1,22 @@
+.user_data_message{
+ 
+   /* display: flex;
+   flex-wrap: wrap; */
+   /* justify-content:center; */
+   /* align-items: flex-start ; */
+   /* align-items: flex-start ; 
+   justify-content:center;  */
+
+}
+
+.user_data{
+   width:20rem;
+   border: none;
+   border-bottom: 1px solid #ccc;
+   border-radius: 4px;
+   margin: 0;
+   padding: .5rem;
+   background: var(--header-footer-text-color);
+   outline: none;
+
+}

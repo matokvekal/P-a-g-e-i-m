@@ -234,12 +234,12 @@ if (localStorage['data']) {
 };
 
 export const dataState = atom({
-  key: "data",
+  key: "_data",
   default: result,
 });
 export const statusComplite = atom({
   key: "statusComplite",
-  default: 'open',
+  default: '_open',
 });
 function TodoWatsApp() {
 function setLocalStorage(dataToStore){

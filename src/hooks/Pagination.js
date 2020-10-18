@@ -29,17 +29,18 @@ function usePagination() {
     setMobilePage(false);
   }
   function next() {
-    setCurrentPage((currentPage) => Math.min(currentPage + 1, maxPage));
+
+    setCurrentPage((currentPage) => Math.min(Number(currentPage) + 1, maxPage));
     setMobilePage(false);
   }
   function nextMobile() {
     //debugger
-    setCurrentPage((currentPage) => Math.min(currentPage + 1, maxPage));
+    setCurrentPage((currentPage) => Math.min(Number(currentPage) + 1, maxPage));
     setMobilePage(true);
   }
   
   function prev() {
-    setCurrentPage((currentPage) => Math.max(currentPage - 1, 1));
+    setCurrentPage((currentPage) => Math.max(Number(currentPage) - 1, 1));
     setMobilePage(false);
   }
 

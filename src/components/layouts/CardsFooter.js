@@ -8,6 +8,14 @@ const CardsFooter = () => {
 
     const { setItemsPerPage, nextMobile,items,itemsPerPage ,currentPage,mobilePage} = usePagination();
     const [hildeScroll, setHideScroll] = useState('scrollHide');
+
+
+    const ScrollPosition = atom({
+        key: "_setthecrollPosition",
+        default: 'true',
+    });
+    const [scrollPosition, setScrollPosition] = useRecoilState(ScrollPosition);
+
     // const handleScroll = () => {
     //     const position = window.pageYOffset;
     //     setSrollPosition(position);
@@ -18,18 +26,19 @@ const CardsFooter = () => {
     }, []);
 
     const showHideFilter2 = atom({
-        key: "ShowHideFilter",
+        key: "_ShowHideFilter",
         default: 'true',
     });
     const menuOpenClose = atom({
-        key: "menuOpenClose",
+        key: "_menuOpenClose",
         default: 'true',
     });
     const [showFilter, setShowFilter] = useRecoilState(showHideFilter2);
 
 
     const manageScroll = () => {
-        setHideScroll(document.documentElement.scrollHeight - document.documentElement.clientHeight - window.scrollY > 100 ? 'scrollHide' : null)
+        setHideScroll(document.documentElement.scrollHeight - document.documentElement.clientHeight - window.scrollY > 100 ? 'scrollHide' : null);
+        setScrollPosition(window.scrollY);
         // setShowFilter('false' );gilad
     }
 
@@ -63,7 +72,7 @@ const CardsFooter = () => {
 
                         <div className="total__mobile_left">
 
-                         {itemsPerPage*currentPage>items?'':` ${items-itemsPerPage-currentPage}`}   
+                         {itemsPerPage*currentPage>items?'':` ${items-itemsPerPage*currentPage}`}   
 
                         </div>
                     </div>

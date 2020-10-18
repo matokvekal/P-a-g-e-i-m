@@ -1,0 +1,13 @@
+
+
+
+.subFilter{
+   display:flex;
+   justify-content: space-between;
+}
+.displayNone{
+   display: none;
+}
+.displayNone.displayCategory{
+   display: block;
+}

@@ -1,0 +1,76 @@
+
+:root{
+   --bg: #005f6b;
+   --light: #00dffc;
+   --dark: #008c9e;
+   
+}
+
+
+body{
+	background: --bg;
+	display: flex;
+	justify-content: center;
+}
+.circle{
+	position: relative;
+	display: flex;
+	margin-top: 80px;
+}
+	span{
+		font-family: monospace;
+		font-size: 72px;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		z-index: 2;
+		color: --light
+   }
+	.semi-c{
+		box-sizing: border-box;
+		height: 200px;
+		width: 100px;
+   }
+	.left{
+		border-top-left-radius: 100px;
+		border-bottom-left-radius: 100px}
+   
+	.right{	
+		border-top-right-radius: 100px;
+		border-bottom-right-radius: 100px}
+		
+	.left-circle, .right-circle{	
+		border: 8px solid --light}
+		
+	.mask-left, .mask-right, .block{	
+		border: 8px solid --dark;
+		position: absolute}
+	
+	.left-circle, .block, .mask-right{	
+		border-right: 0}
+	
+	.right-circle, .mask-left {	
+		border-left: 0}
+		
+	.block, .mask-left, .left-circle{	
+		z-index: 1}
+	
+	.block, .mask-left{	
+		left: 100px		}
+
+	.mask-left{	
+		transform-origin: left center;
+		transform: rotate(0deg)}
+	
+	.mask-right{	
+		transform-origin: right center;
+		transform: rotate(0deg)}
+	
+	.block{	
+		display: none}
+	
+	.handle{	
+		display: none}
+	
+	

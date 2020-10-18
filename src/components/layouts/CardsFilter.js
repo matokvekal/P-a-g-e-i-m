@@ -4,54 +4,63 @@ import { FilterContext } from '../../context/FilterContext';
 import { RecoilRoot } from "recoil";
 import { atom, useRecoilState } from 'recoil';
 // import useOnClickOutside from './../../hooks/ClickOutSide';
+import './cardsFilter.css';
 
 
 const CardsFilter = (props) => {
     const filterRef = useRef(null);
     const showHideFilter = atom({
-        key: "ShowHideFilter",
+        key: "_ShowHideFilter",
         default: "",
     });
     const newFilter = atom({
-        key: "filterState",
+        key: "_filterState",
 
         default: "",
     });
     const hideCardModal = atom({
-        key: "HideCardModal",
+        key: "_HideCardModal",
         default: "",
     });
+    const Query = atom({
+        key: "_critQuery",
+        default: "",
+    });
+    const [anyQuery, setAnyQuery] = useRecoilState(Query);
     const [popupCard, setPopupCard] = useRecoilState(hideCardModal);
     const [filter, setFilter] = useRecoilState(newFilter);
-    const [showFilter, setShowFilter] = useRecoilState(showHideFilter);
+    const [showFilter, setShowFilter] = useRecoilState(showHideFilter);//do not hide modal on click if contain className :filterModal
     const [filters, setFilters] = useContext(FilterContext);
     const [filterCheckbox, setFilterCheckbox] = useState(filters.filter(x => x.checked === true).length === 0 ? false : true)
+    const [filterIndex, setFilterInex] = useState(0);
     //  const[showHideCheckbox,setShowHideheckbox]=useState(filters.filter(x => x.checked === true).length === 0 ? false : true)
 
-
+    function handleShowFilter(index1) {
+        setFilterInex(index1);
+    }
 
     useEffect(() => {
         const listener = event => {
             if (!event.target || !event.target.classList.contains('filterModal')) {
                 setShowFilter(false)
             }
-            event.path.map(x=>x.classList?x.classList.value:1).includes('card__item active')
-            if (!event.path || !event.path.map(x=>x.classList?x.classList.value:1).includes('card__item active')) {
+            event.path.map(x => x.classList ? x.classList.value : 1).includes('card__item active')
+            if (!event.path || !event.path.map(x => x.classList ? x.classList.value : 1).includes('card__item active')) {
                 setPopupCard('');
             }
-           
+
         };
 
         document.addEventListener('mousedown', listener);
         document.addEventListener('touchstart', listener);
 
         return () => {
-          document.removeEventListener('mousedown', listener);
-          document.removeEventListener('touchstart', listener);
+            document.removeEventListener('mousedown', listener);
+            document.removeEventListener('touchstart', listener);
         };
-    },[filters]);
+    }, [filters]);
 
-    function removeAllFilters(e) {//condidere to remove this// copy atom as remove all//go to server to same SP but flag remove all,the return  no selected filter/in useEffect it will change all 
+    function removeAllFilters(e) {//concidere to remove this// copy atom as remove all//go to server to same SP but flag remove all,the return  no selected filter/in useEffect it will change all 
         //debugger
         //setShowHideheckbox(false);
         setFilter({
@@ -67,11 +76,12 @@ const CardsFilter = (props) => {
                     data: item.data,
                     field: item.field,
                     filterId: item.filterId,
-                    checked:false
+                    checked: false
                 }
             });
             return newFilters;
         });
+        setAnyQuery(null);
         // setFilterCheckbox(false)
 
     }
@@ -100,6 +110,7 @@ const CardsFilter = (props) => {
         }
 
         )
+        setAnyQuery('true');//TO DO  fix  check if delete
     }
 
     let categorys = [...new Set(filters.map(cat => cat.field).filter(x => x))];
@@ -116,9 +127,11 @@ const CardsFilter = (props) => {
                             {categorys.map((category, index1) => (
                                 <>
                                     <div className={index1 % 2 === 0 ? 'sub__catagory__1 filterModal' : 'sub__catagory__2 filterModal'} key={7623 * index1}>
-
-                                        <label htmlFor={index1 % 2 === 0 ? 'A' : 'B'} className='filterModal'>{category}</label>
-                                        <ul className="sub__catagory filterModal">
+                                        <div className='filterModal subFilter'onClick={() => handleShowFilter(index1)}>
+                                            <label htmlFor={index1 % 2 === 0 ? 'A' : 'B'} className='filterModal subFilterHeader'>{category}</label>
+                                            <label className='toggleFilter  filterModal subFilterHeader' >{filterIndex===index1?'':<i className="fas fa-plus filterModal"></i>}</label>
+                                        </div>
+                                        <ul className={`sub__catagory filterModal displayNone ${filterIndex == index1 ? 'displayCategory' : null}`} >
                                             {filters.filter(item => item.field === category).map((item, index) => (
 
 
