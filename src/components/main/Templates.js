@@ -33,76 +33,46 @@ export const Templates = () => {
                 <div className="entry">
                     <img className='image' src={require('./templatesResource/images/01.jpg')} />
                     <div className="content">
-                        <h3 className='h3'>Israel bire races standing</h3>
+                        <h3 className='h3'>Israel bike races standing</h3>
                         <p>Cards of: <span>Riders personal results</span></p>
                         <p>By: <span>Purple Green device</span></p>
                         <a href="/races" className="button">Get It</a>
                     </div>
                 </div>
                 <div className="entry">
-                <img className='image' src={require('./templatesResource/images/02.jpg')} />
-                    <div className="content">
-                        <h3 className='h3'>The Complete Guide for Traveling</h3>
-                        <p>Published on: <span>July 19th,  2019</span></p>
-                        <p>By: <span>The Travel Blog</span></p>
-                        <a href="#" className="button">Get It</a>
-                    </div>
+      
                 </div>
                 <div className="entry">
-                <img className='image' src={require('./templatesResource/images/03.jpg')} />
-                    <div className="content">
-                        <h3 className='h3'>Ultimate Guide to Take the best Pictures</h3>
-                        <p>Published on: <span>July 19th,  2019</span></p>
-                        <p>By: <span>The Travel Blog</span></p>
-                        <a href="#" className="button">Get It</a>
-                    </div>
+            
                 </div>
                 <div className="entry">
-                <img className='image' src={require('./templatesResource/images/04.jpg')} />
-                    <div className="content">
-                        <h3 className='h3'>Checklist for your next Travel</h3>
-                        <p>Published on: <span>July 19th,  2019</span></p>
-                        <p>By: <span>The Travel Blog</span></p>
-                        <a href="#" className="button">Get It</a>
-                    </div>
+             
                 </div>
                 <div className="entry">
-                <img className='image' src={require('./templatesResource/images/05.jpg')} />
-                    <div className="content">
-                        <h3 className='h3'>Best Places to visit next Autumn</h3>
-                        <p>Published on: <span>July 19th,  2019</span></p>
-                        <p>By: <span>The Travel Blog</span></p>
-                        <a href="#" className="button">Get It</a>
-                    </div>
+           
                 </div>
                 <div className="entry">
-                <img className='image' src={require('./templatesResource/images/06.jpg')} />
-                    <div className="content">
-                        <h3 className='h3'>Best Places to Visit with Mountains</h3>
-                        <p>Published on: <span>July 19th,  2019</span></p>
-                        <p>By: <span>The Travel Blog</span></p>
-                        <a href="#" className="button">Get It</a>
-                    </div>
+           
                 </div>
             </main>
             <div className="categories">
                 <ul>
                     <li>
                         <a href="#">
-                            <i className="fas fa-map-pin"></i>
-                            Activities
+                        <i className="fas fa-cloud"></i>
+                            green device cloud
                         </a>
                     </li>
                     <li>
                         <a href="#">
-                            <i className="fas fa-music"></i>
-                            Festivals
+                         <i className="fas fa-users"></i>
+                            For community
                         </a>
                     </li>
                     <li>
                         <a href="#">
-                            <i className="fas fa-utensils"></i>
-                            Restaurants
+                        <i className="fas fa-basketball-ball"></i>
+                            Sport
                         </a>
                     </li>
                     <li>
@@ -124,11 +94,11 @@ export const Templates = () => {
             <div className="box">
                 <h2 className='h2'>Latest Entries</h2>
                 <ul>
+                    {/* <li><a href="#">Ut loborties turpis lacinia enim Ut loborties turpis lacinia enim</a></li>
                     <li><a href="#">Ut loborties turpis lacinia enim Ut loborties turpis lacinia enim</a></li>
                     <li><a href="#">Ut loborties turpis lacinia enim Ut loborties turpis lacinia enim</a></li>
                     <li><a href="#">Ut loborties turpis lacinia enim Ut loborties turpis lacinia enim</a></li>
-                    <li><a href="#">Ut loborties turpis lacinia enim Ut loborties turpis lacinia enim</a></li>
-                    <li><a href="#">Ut loborties turpis lacinia enim Ut loborties turpis lacinia enim</a></li>
+                    <li><a href="#">Ut loborties turpis lacinia enim Ut loborties turpis lacinia enim</a></li> */}
                 </ul>
             </div>
             <div className="box">

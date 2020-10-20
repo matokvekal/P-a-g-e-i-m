@@ -12,15 +12,15 @@ import mtbbike from './../../../assets/mtbbike.png';
 import roadbike from './../../../assets/roadbike.png';
 import medal2 from './../../../assets/medal2.png';
 import medal3 from './../../../assets/medal3.png';
+import top10 from './../../../assets/top10_3.png';
+import top20 from './../../../assets/TOP20_1.png';
 import Stars from './Stars';
 import { atom, useRecoilState } from 'recoil'
 import usePagination from './../../../hooks/Pagination';
 import CircularProgress from '../../reusable/Progress';
 import deviceIdentity, { getApp } from '../../../helpers/Helpers';
 import ClickItem from '../../../helpers/clickItem';
-// import UpdateLikes from './UpdateLikes';
-//import HandleLikes from '../../../helpers/addLike';
-// import { red } from '@material-ui/core/colors';
+import card3 from './card3.css';
 import useLogIn from '../../../helpers/LogIn';
 import http from './http';
 
@@ -32,7 +32,6 @@ export const Card3 = (props) => {
   const [errorMsg, setErrorMsg] = useState('Err card3');
   const [loader, setLoader] = useState(false);
   const { addLikeLogin } = useLogIn();
-  // const {AddLike}=HandleLikes();
   const hideCardModal = atom({
     key: "_HideCardModal",
     default: "",
@@ -73,7 +72,6 @@ export const Card3 = (props) => {
   let app = props.app ? props.app : '';
   let APP = app ? app.substr(1) : '';
   APP = APP.toLowerCase();
-
 
 
   useEffect(() => {
@@ -136,7 +134,6 @@ export const Card3 = (props) => {
   useEffect(() => {
     //debugger
     const temp = likeChange.hasChange;
-    // const temp = likeChange.likes + likeChange.id;
     //debugger
     if (app === '/' || app === '/Templates' || filter.value == 'undefined' || filter.name == 'undefined' || !filter.value || !filter.name)
       return
@@ -180,55 +177,57 @@ export const Card3 = (props) => {
 
 
   function HandleLikes(el) {
-    //debugger
+    debugger
     ClickItem('like', 'name', el['full_name'], el['id']);
     if (!login) {
       addLikeLogin(' Please register, then you give abig Heart');
       return
     }
     //---------------------------------------------------------------------
-    var array = [];
-    if (!localStorage['info']) {
-      el['likes'] = 1;
+
+    const array = JSON.parse(localStorage.getItem('info')) || [];
+
+    if (array.includes(el['id'])) {
+      //toast you allredy like it
+      return;
     }
-    else {
-      //debugger
-      array = JSON.parse(localStorage.getItem('info')) || [];
-      if (array.length > 500)
-        array = [];
-      if (!array.includes(el['id'])) {
+    else
+      if (el['likes'] && el['likes'] != '')
         el['likes'] = Number(el['likes']) + 1;
-      }
-      array.push(el['id']);
-      localStorage.setItem('info', JSON.stringify(array));
+      else
+        el['likes'] = 1;
+
+
+    array.push(el['id']);
+    localStorage.setItem('info', JSON.stringify(array));
 
 
 
-      let APP = window.location.pathname.toString();
-      APP = APP ? APP.substr(1).toLowerCase() : '';
+    let APP = window.location.pathname.toString();
+    APP = APP ? APP.substr(1).toLowerCase() : '';
 
-      if (!deviceIdentity())
-        return
-      if (el['id']) {
-        const URL = `${API_ENDPOINT}/pageim/likesUpdate?appname=${APP}&id=${el['id']}`;
-        fetch(URL, {
-          method: 'POST',
-          headers: { Authorization: "Bearer " + localStorage['deviceIdentity'] },
+    if (!deviceIdentity())
+      return
+    if (el['id']) {
+      const URL = `${API_ENDPOINT}/pageim/likesUpdate?appname=${APP}&id=${el['id']}`;
+      fetch(URL, {
+        method: 'POST',
+        headers: { Authorization: "Bearer " + localStorage['deviceIdentity'] },
+      })
+        .then(response => {
+          return response.json();
         })
-          .then(response => {
-            return response.json();
-          })
-          .then(res => {
-            if (res && res.success)
-              setLikechange(Date.now());
+        .then(res => {
+          if (res && res.success)
+            setLikechange(Date.now());
 
-          })
-          .catch((error) => {
-            console.error('Error:', error);
-          });
-      }
-
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
     }
+
+
 
   }
 
@@ -372,8 +371,7 @@ export const Card3 = (props) => {
                     <div className="icons">
                       <a href={`https://wa.me/?text=${window.location.href}`} target="_blank"><i className="fas fa-share-alt-square share"></i></a>
                       <input className="check" type="checkbox" name="completed" id="" />
-                      {/* <p>{(Number(el['total_finish_cat'])- Number(el['pic'])+ 1) * 100 / Number(el['total_finish_cat'])}</p>
-                      <p>{el['pic']}</p> */}
+
                     </div>
                     <div className="card__footer__main">
 
@@ -388,15 +386,17 @@ export const Card3 = (props) => {
                         <i className="fas fa-heart" style={{ color: `rgb(200,${Number(el['likes']) % 256},${Math.floor(Number(el['likes']) / 25)})` }}></i>
                         <p>{Number(el['likes']) > 0 ? el['likes'] : ''}</p>
 
-                      </div>{
+                      </div>
+<div>
+                      {
                         el['pic'] && el['pic'] != '' ?
                           <Stars rating={(Number(el['total_finish_cat']) - Number(el['pic']) + 1) * 100 / Number(el['total_finish_cat'])} />
                           :
                           <Stars rating={0} />
 
-                      }
-
-
+                      }</div>
+                      {el['pic'] && Number(el['pic']) > 0 && Number(el['pic']) <= 10 && <div><img className="top10" src={top10} alt="top10" /></div>}
+                      {el['pic'] && Number(el['pic']) > 0 && Number(el['pic']) > 10 && Number(el['pic']) <= 20 &&<div><img className="top10" src={top20} alt="top20" /></div>}
                     </div>
                   </div>
 

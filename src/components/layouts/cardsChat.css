@@ -1,13 +1,4 @@
-.user_data_message{
- 
-   /* display: flex;
-   flex-wrap: wrap; */
-   /* justify-content:center; */
-   /* align-items: flex-start ; */
-   /* align-items: flex-start ; 
-   justify-content:center;  */
 
-}
 
 .user_data{
    width:20rem;
@@ -19,4 +10,13 @@
    background: var(--header-footer-text-color);
    outline: none;
 
+}
+.h_o_n_y{
+   opacity: 0;
+   position: absolute;
+   top: 0;
+   left: 0;
+   height: 0;
+   width: 0;
+   z-index: -1;
 }

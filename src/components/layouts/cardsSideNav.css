@@ -17,17 +17,13 @@
    color: var(--bg-primary);
    padding: 1.5rem 0;
    text-transform: uppercase;
-   /* border-bottom: 1px solid #adaeaf; */
 }
 
 .navheader{
 display:flex;
- /* flex-wrap: wrap; */
-/* justify-content:left;  */
+
 border-bottom: 1px solid #adaeaf;
-/* flex-direction: column;          */
- /* align-self: center; */
- 
+
 }
 .loginout{
    margin-top: 2rem;

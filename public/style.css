@@ -216,16 +216,7 @@ display: none;
     background: var(--header-footer-text-color);
     height: 2.5rem;
 }
-/* input[type=text]{
-    background: rgb(255, 255, 255);
-    height: 2.5rem;
-    margin: 0;
-    padding: .5rem;
-    width: 100%;
-    border: none;
-    outline: none;
-    font-size: 2rem;
-} */
+
 .search__box i{
     position: absolute;
     right: 0;
@@ -358,24 +349,7 @@ Button.footer__botton{
     cursor: pointer;
     transition: box-shadow .6s;
 } 
-/* .cards{
-    margin: 6rem auto;
-    width: 100%;
-    height: auto;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(225px, 1fr));
-    grid-gap: 1.1rem;
-    box-sizing: border-box;
-}
-.card__item{
-    min-height: 30rem;
-    min-width: 26rem; 
-    background: #fff;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-    cursor: pointer;
-    transition: box-shadow .6s;
-   
-} */
+
 .check{
     height: 2rem;
     width: 2rem;
@@ -407,8 +381,9 @@ Button.footer__botton{
     font-size: 1.5rem;	
     font-weight: 700;	
     margin-right: .5rem;	
-    max-width: 6rem;
+    max-width: 14rem;
     text-align: right;
+    /* min-width: 20rem; */
 }
 .name__place{
     display: flex;
@@ -791,6 +766,14 @@ margin-left: 30px;
     .tdStanding{
         font-size: 1rem;
      }
+     .user__name{	
+        /* font-size: 1.5rem;	
+        font-weight: 700;	
+        margin-right: .5rem;	
+        max-width: 14rem;
+        text-align: right; */
+        min-width: 20rem;
+    }
     .header .search__box__res,
     .header .filter__form,
     .header .search__box{
@@ -845,13 +828,7 @@ tr:hover{
         margin-right: .5rem;
     }
  
-    /* .input[type=text]{
-        padding: 0 1rem;
-        border-radius: 1rem;
-        background-color: rgba(255, 255, 255, 0.92);
-        color: rgb(24, 13, 54);
-        font-weight: 500;
-    } */
+
     input#filter{
         width:5rem;
     }
@@ -948,6 +925,7 @@ tr:hover{
     }
     #popup .card__footer .icons{
         font-size: 2.5rem;
+        margin-right: 3rem;
     }
     #popup .card__footer .card__footer__main .rating__star{
         font-size: 1.7rem;
@@ -984,6 +962,9 @@ tr:hover{
     .card__item.active .card__header,.card__item.active .card__footer{
         display: flex;
     }
+   .card__item.active .card__footer{
+        justify-content: center;
+    }
     .card__header{
         border-bottom: none;
         margin-bottom: 0;
@@ -991,6 +972,7 @@ tr:hover{
     .card__footer{
         border-top: none;
         margin-top: 0;
+        
     }
     /* .chat__btn i{
         right: 1rem;
@@ -1003,12 +985,6 @@ tr:hover{
         right: 1rem;
         bottom: 1rem;
     }
-    /* p.user__place{
-        font-size: 2.5rem;
-        margin-right: 1rem;
-        font-weight: bolder;
-       
-    } */
 
     .chat__box .form{
         right: 1rem;
@@ -1034,14 +1010,10 @@ display: block;
         text-align: center;
         font-size: 1.2rem;
         font-weight: bold;
-        /* height: 6rem;
-        max-height: 6rem; */
-        /* width : 130px; */
-       
+
     }
     td{
         height: 5rem;
-        /* max-height: 6rem; */
         overflow: hidden;
     }
     tr.standing{
@@ -1049,16 +1021,12 @@ display: block;
        
     }
     .tdStanding{
-        /* min-width:3rem; */
-        /* width: 8%; */
+
         overflow:hidden;
         text-overflow: ellipsis;
         white-space: space normal;
         word-break: break-all;
-        /* overflow:hidden;
-        display:inline-block;
-        text-overflow: ellipsis;
-        white-space: nowrap; */
+
     }
     .tdStanding.pos{
         width:7%;
@@ -1117,31 +1085,6 @@ display: block;
 
         
     }
-    /* .tdStanding.full_name{
-        min-width:7rem;
-        width: 7rem;
-    }
-    .tdStanding.club{
-        min-width:7rem;
-        width: 7.5rem;
-    }
-    .tdStanding.branch{
-        min-width:3rem;
-        width: 4rem;
-    }
-    .tdStanding.pos{
-        min-width:3rem;
-        width: 4rem;
-    }
-    .tdStanding.year{
-        min-width:3.5rem;
-        width: 3.5rem;
-    }
-    .tdStanding.total_tm{
-        min-width:4.7rem;
-        width: 4.7rem;
-    } */
-
 
     tr td{
         /* width: 15%; */
@@ -1215,7 +1158,15 @@ display: block;
 
 
 }
-
+/* For tablet devices -------------------------------------------------------------------------------------------------------------------------------*/
+@media screen and (min-width:810px) and (max-width:920px){
+.user__place{
+    font-size: 1.2rem;
+    margin-right: 1rem;
+    font-weight: bolder;
+   
+}
+}
 /* For tablet devices -------------------------------------------------------------------------------------------------------------------------------*/
 @media screen and (min-width:670px) and (max-width:1024px){
     .header{
@@ -1245,13 +1196,7 @@ display: block;
         display: block;
         width: 35%;
     }
-    /* .input[type=text]{
-        padding: 0 1rem;
-        border-radius: 1rem;
-        background-color: rgba(255, 255, 255, 0.92);
-        color: rgb(24, 13, 54);
-        font-weight: 500;
-    } */
+
     .header .ranges{
         display: flex;
         justify-content: space-between;
@@ -1276,27 +1221,12 @@ display: block;
         display: block;
         font-size: 3rem;
     }
-    /* .sidebar{
-        top: 5rem;
-        left: -30rem;
-        transition: left 0.6s ease;
-    }
-    .sidebar .sidebar__text{
-        font-size: 1.8rem;
-        color: #ffffff;
-    }
-    .sidebar .nav__link{
-        font-size: 1.6rem;
-    } */
+
     .whole__content{
         margin: 0;
         
     }
-    /* .sidebar.active{
-        top: 5rem;
-        left: 0;
-        transition: left 0.6s ease;
-    } */
+
     .footer{
         display: none;
     }
@@ -1376,10 +1306,7 @@ display: block;
         right: 1rem;
         bottom: 1rem;
     }
-    /* .chat__btn i{
-        right: 1rem;
-        bottom: 1rem;
-    } */
+
     .chat__btn i{
         display:none;
     }

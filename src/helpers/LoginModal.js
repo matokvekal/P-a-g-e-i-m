@@ -36,7 +36,6 @@ const LoginModal = () => {
             <form id="frm-mobile-verification">
                <div className="form-row close" onClick={closeModal}><i className="fa fa-close"></i></div>
                <div className="form-heading">Mobile registration form</div>
-               {/* <h2 className="form-heading">{modalLogin.message}</h2> */}
 
                {modalLogin.formType === 'login' && (
                   <>
@@ -52,7 +51,7 @@ const LoginModal = () => {
                            placeholder="Mobile Number" value={mobileNumber} pattern="^\d{3}-\d{7}$" required />
 
                      </div>
-                     <input className="checkbox" type="checkbox" onClick={handleAgree} checked={agree} /><span className="checkboxtext" required>קראתי ואני מסכים עם תנאי השימוש{agree}</span>
+                     <input className="checkbox agree" type="checkbox" onClick={handleAgree} checked={agree} /><span className="checkboxtext" required>קראתי ואני מסכים עם תנאי השימוש{agree}</span>
                      <input type="button" className="btnSubmit" value="Send OTP" onClick={submitLogin} disabled={!agree}/>
                   </>
                )}

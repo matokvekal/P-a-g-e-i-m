@@ -53,11 +53,7 @@ const CardsSearch = () => {
                <i className="fas fa-search"></i>
             </form>
          </div>
-         {/* <div className="search__box__res">
-            <form action="#">
-               <input type="text" className="input" value />
-            </form>
-         </div> */}
+
       </>
    )
 

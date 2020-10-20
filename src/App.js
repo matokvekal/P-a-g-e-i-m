@@ -10,7 +10,7 @@ import UploadFile from './components/UploadFile';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Pageim from './components/Pageim';
 import Templates from './components/main/Templates';
-import TodoWatsApp from './components/main/external/TodoWatsApp';
+// import TodoWatsApp from './components/main/external/TodoWatsApp';
 import DynamicComponent from './components/main/DynamicComponent';
 import { pageimEndPoint } from './Config';
 import { url } from './helpers/Helpers';
@@ -148,7 +148,7 @@ function App() {
                         <Route path="/Templates" component={Templates} />
                       </Switch>
 
-                      <Route path="/TodoWatsApp" component={TodoWatsApp} />
+                      {/* <Route path="/TodoWatsApp" component={TodoWatsApp} /> */}
                       {/* <SmsAuth/> */}
                       <LoginModal/>
                       {/* {app==='races'?<> <CardsHeader /> <CardsFilter /></>:null} */}

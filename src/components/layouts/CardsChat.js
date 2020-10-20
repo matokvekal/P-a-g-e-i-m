@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { atom, useRecoilState, RecoilRoot } from 'recoil';
 import cardsChat from './cardsChat.css';
-// import { pageimEndPoint } from '../../../Config';
 import { pageimEndPoint } from './../../Config';
-import { addNewRow } from './../../services/addRowService';
+import { addNewRow } from '../../services/sendMessageService';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const API_ENDPOINT = pageimEndPoint();
 
@@ -12,25 +13,30 @@ const CardsChat = () => {
   let APP = window.location.pathname.toString();
   APP = APP ? APP.substr(1).toLowerCase() : '';
   const [openChat, setOpenChat] = useState('false');
+
+  const notify = () => {
+    toast.info("Thanks, sending your message.",{autoClose: 2000});
+  }
   function handleChat() {
+    setFormData({ name: '', phone: '', email: '', message: '', name_ho: '', email_ho: '' });
+    if (openChat === 'true')
+      notify();
     setOpenChat(x => x === 'true' ? 'false' : 'true');
-    setFormData({ name: '', phone: '', email: '', message: '' });
   }
   const ScrollPosition = atom({
     key: "_setthecrollPosition",
     default: 'true',
   });
   const [scrollPosition, setScrollPosition] = useRecoilState(ScrollPosition);
-  const [formData, setFormData] = useState({ name: '', phone: '', email: '', message: '' });
+  const [formData, setFormData] = useState({ name: '', phone: '', email: '', message: '', name_ho: '', email_ho: '' });
 
   const handleInputChange = e => {
-    debugger
+
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value })
   }
 
   const submitRow = async e => {
-    debugger
     e.preventDefault();
 
     if (!formData.message) return
@@ -45,6 +51,8 @@ const CardsChat = () => {
 
   return (
     <>
+      <ToastContainer />
+
       <div className={`mobile-up ${scrollPosition == 'true' || scrollPosition === 0 ? 'chatIconHide' : null}`} id="chat__btn1" >
         <a href="#"><i className="fas fa-chevron-up"></i></a>
       </div>
@@ -56,15 +64,21 @@ const CardsChat = () => {
           <textarea className="textarea" value={formData.message} name='message' onChange={handleInputChange} placeholder="Please let us know what we can do for you in the future."></textarea>
           <div className='user_data_message'>
             <div className='row'>
-              <input className='user_data user_data_name'  name='name'type='text' value={formData.name} onChange={handleInputChange} placeholder='Name'>
+              <input className='user_data user_data_name' name='name' type='text' value={formData.name} onChange={handleInputChange} placeholder='Name'>
               </input></div>
 
             <div className='row'>
-              <input className='user_data user_data_phone'  name='phone'type='phone' value={formData.phone} onChange={handleInputChange} placeholder='Phone'>
+              <input className='user_data user_data_phone' name='phone' type='phone' value={formData.phone} onChange={handleInputChange} placeholder='Phone'>
               </input></div>
             <div className='row'>
               <input className='user_data user_data_email' name='email' type='email' value={formData.email} onChange={handleInputChange} placeholder='E-mail'>
               </input></div>
+          </div>
+          <div>
+            <label className="h_o_n_y" for="nameho">name</label>
+            <input className='h_o_n_y' autocomplete="off" type="text" id="name_ho" value={formData.name_ho} onChange={handleInputChange} name="name_ho" placeholder="Your name here"></input>
+            <label className="h_o_n_y" for="nameho">e-mail</label>
+            <input className='h_o_n_y' autocomplete="off" type="text" id="nemail_ho" value={formData.email_ho} onChange={handleInputChange} name="email_ho" placeholder="Your e_mail here"></input>
           </div>
           <div className="frm__btn">
             <button className="close" type="submit" onClick={handleChat}><i className="fas fa-times"></i>Close</button>

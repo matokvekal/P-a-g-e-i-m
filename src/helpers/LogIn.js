@@ -99,6 +99,7 @@ function useLogIn() {
                localStorage['login_trys'] = 0;
                localStorage['login_last_try'] = '';
                setLogin(true);
+               setTimeout(function () { closeModal(); }, 1000);
 
             }
             else {

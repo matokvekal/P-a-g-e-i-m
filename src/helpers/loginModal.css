@@ -56,7 +56,9 @@ body {
    display:none;
    box-sizing: border-box;
 }
-
+.checkbox.agree{
+margin-right: 0.5rem;
+}
 .success {
    color: #483333;
    padding: 10px 20px;

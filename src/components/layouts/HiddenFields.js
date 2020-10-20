@@ -5,7 +5,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { GlobalContext } from '../../context/GlobalContext';
 import Divider from '@material-ui/core/Divider';
 import { ConfigContext } from '../../context/ConfigContext';
-// import ControlPointIcon from '@material-ui/icons/ControlPoint';
 import SettingsBackupRestoreIcon from '@material-ui/icons/SettingsBackupRestore';
 
 const ITEM_HEIGHT = 48;
@@ -20,7 +19,6 @@ export default function HiddenFields() {
   APP = APP.toLowerCase();
   const [appFields, setAppFields] = useState([]);
 
-  // setAppFields(tableFields.filter(x => x.application === APP));
   setAppFields(tableFields?tableFields.filter(x => x.application === APP):null);
   let hiddenFields = appFields.filter(x => x.clientTableHideColumn === true).map(x => x.name);
   const [anchorEl, setAnchorEl] = React.useState(null);

@@ -24,44 +24,6 @@ const CardsSideNav = () => {
   });
   const [login, setLogin] = useRecoilState(isLogIn);
   const {handleLogin}=useLogIn();
-  // const [handleLogin,sethandleLogin]=useState(isLogIn);
-  // const loginModal = atom({
-  //   key: "LoginModal",
-  //   default: {
-  //     formType: '',
-  //     active: false,
-  //     message: '<p></p>',
-  //   },
-  // });
-  // const [modalLogin, setModalLogin] = useRecoilState(loginModal);
-  // useEffect(() => {
-  //   if (localStorage["isLogin"] && localStorage["isLogin"] === 'true')
-  //     setLogin('true');
-  //   else
-  //     setLogin('false');
-  // }, [])
-
-  // function handleLogin() {
-  //   debugger
-  //   if (login === true) {
-  //     setLogin(false);
-  //     localStorage["isLogin"] = 'false';
-  //     LogOff();
-  //   }
-  //   else
-  //   {
-  //     // setLogin(true);
-  //     // localStorage["isLogin"] = 'true';
-  //       if (localStorage['login_trys'] && Number(localStorage['login_trys']) >= 3
-  //       && localStorage['login_last_try'] && localStorage['login_last_try'] < (Date.now() - 20 * 60 * 1000)) {
-  //         setModalLogin({ active: true, message: <p>To meny trys, wait 20 minutes</p>, formType: 'message' });
-  //     }
-  //           else
-  //       setModalLogin({ active: true, message: <p>test</p>, formType: 'message' });
-  //   }
-    
-
-  // }
 
   const [menuList, setMenuList] = useRecoilState(menuListAtom);
 
@@ -91,7 +53,6 @@ const CardsSideNav = () => {
           </div>
           <ul className="nav__list">
 
-            {/* // menuList&& menuList.length > 0 ? menuList.sort((a, b) => (a.order > b.order) ? 1 : -1).map(item => ( */}
 
             {menuList && menuList.length > 0 ? menuList.filter(item => item.level == 0).map(item => (
               <>
