@@ -12,7 +12,6 @@ function useCustomfetch(url) {
    const [loading, setLoading] = useState(null);
 
    async function customeFetch(url) {
-      debugger
       try {
          const URL = `${API_ENDPOINT}${url}`;
 
@@ -23,7 +22,6 @@ function useCustomfetch(url) {
             headers: { Authorization: "Bearer " + localStorage['deviceIdentity'] },
          })
          let res = await response.json();
-         debugger
          setData(res);
          setLoading(false);
       }
@@ -34,7 +32,6 @@ function useCustomfetch(url) {
    }
 
    useEffect(() => {
-      debugger
       if (url) {
          setLoading(true);
          customeFetch(url);

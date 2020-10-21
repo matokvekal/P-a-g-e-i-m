@@ -3,7 +3,6 @@ import { pageimEndPoint } from '../Config';
 import deviceIdentity from '../helpers/Helpers';
 // const API_ENDPOINT = pageimEndPoint();
 export const addNewRow = (row, url) => {
-  debugger
   if (localStorage['messages_trys'])
     if (Number(localStorage['messages_trys']) > 5 && localStorage['messages_last_trys'] && localStorage['messages_last_trys'] > (Date.now() - 120 * 60 * 1000)) {
       alert('eturn')
@@ -25,7 +24,6 @@ export const addNewRow = (row, url) => {
   let APP = window.location.pathname.toString();
   APP = APP ? APP.substr(1).toLowerCase() : '';
 
-  debugger
   fetch(url, {
     method: 'POST',
     headers: {

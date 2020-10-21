@@ -10,9 +10,7 @@ function DynamicComponent(props) {
     }, [html])
     return (
         <>
-            <br />
-            <br />
-            <p>-------------------------------------</p>
+
             <h1>DYNAMIC PAGE </h1>
             <div id='maindiv'></div>
         </>

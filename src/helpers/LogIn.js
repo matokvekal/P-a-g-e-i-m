@@ -42,7 +42,6 @@ function useLogIn() {
    const submitLogin = () => {
 
       if (!mobileNumber || mobileNumber.length != 10 || mobileNumber.substring(0, 2) != "05" || !personalName || personalName.length > 30 || mobileNumber.length <= 3 || !deviceIdentity()) {
-         debugger
          setModalLogin({ active: true, message: <p style={{ color: 'red' }}>Please insert all require data!</p>, formType: 'message' });
          setTimeout(function () { closeModal(); }, 3000);
 
@@ -93,7 +92,6 @@ function useLogIn() {
             return response.json();
          })
          .then(res => {
-            debugger
             if (res && res.success && res.success == 'true') {
                localStorage["isLogin"] = 'true';
                localStorage['login_trys'] = 0;
@@ -141,7 +139,6 @@ function useLogIn() {
 
    }
    function handleLogin(info) {
-      debugger
       if (login === true) {
          logOff();
       }

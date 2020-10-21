@@ -106,7 +106,7 @@ const CardsHeader = () => {
                         {
                             sortList && sortList.length > 0 ? sortList.map((item, index) => (
                                 <>
-                                    <option className="opt sortItem" value={item[0] + ' asc'} key={index*11}>{item[1]}&#9651; </option>
+                                    <option className="opt sortItem" value={item[0] + ' asc'} key={(index+11)*11}>{item[1]}&#9651; </option>
                                     <option className="opt sortItem" value={item[0] + ' desc'} key={index*991}>{item[1]} &#9661;</option>
                                 </>
                             )) : null

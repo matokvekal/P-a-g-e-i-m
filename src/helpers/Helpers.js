@@ -17,7 +17,6 @@ export default function deviceIdentity(){
 }
 
 export const  getApp=()=>{
-    debugger
     let APP = window.location.pathname.toString();
     APP = APP ? APP.substr(1).toLowerCase() : '';
     return APP;

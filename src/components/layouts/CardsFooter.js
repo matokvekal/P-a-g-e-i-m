@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import CardsPaging from './CardsPaging';
 import usePagination from './../../hooks/Pagination';
-import { atom, useRecoilState, RecoilRoot } from 'recoil';
-// import 'antd/dist/antd.css';
-// import { Button } from 'antd';
+import { atom, useRecoilState } from 'recoil';
 import { Button } from '@material-ui/core';
 const CardsFooter = () => {
 
@@ -66,12 +64,6 @@ const CardsFooter = () => {
                         <Button className={itemsPerPage*currentPage>items?'footer__botton__hide':`footer__botton`}   type="primary" onClick={nextMobile} >
                              {itemsPerPage*currentPage>items?'0':<>more   {itemsPerPage*currentPage>items?'':` ${items-itemsPerPage*currentPage}`}   </>}
                        </Button>
-{/* 
-                        <div className="total__mobile_left">
-
-                         {itemsPerPage*currentPage>items?'':` ${items-itemsPerPage*currentPage}`}   
-
-                        </div> */}
                     </div>
 
                 </div>

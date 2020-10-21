@@ -5,7 +5,7 @@ import colors from './../../../assets/color.json';
 import person from './../../../assets/person.png';
 import israelFlag from './../../../assets/israelFlag.png';
 import trophy from './../../../assets/trophy.png';
-import club_flag from './../../../assets/club_flag.png';
+// import club_flag from './../../../assets/club_flag.png';
 import cyclocrossbike from './../../../assets/cyclocrossbike.png';
 import trackbike from './../../../assets/trackbike.png';
 import mtbbike from './../../../assets/mtbbike.png';
@@ -139,8 +139,7 @@ export const Card3 = (props) => {
     let data = filter;
     setLoader(true);
     const URL = `${API_ENDPOINT}/pageim/filterUpdate?appname=${APP}&checked=${filter.checked}&name=${filter.name}&value=${filter.value}&itemsperpage=${itemsPerPage}`;
-
-
+    console.log(URL);
     fetch(URL, {
       method: 'POST',
       headers: { Authorization: "Bearer " + localStorage['deviceIdentity'] },
@@ -169,7 +168,6 @@ export const Card3 = (props) => {
 
 
   function HandleLikes(el) {
-    debugger
     ClickItem('like', 'name', el['full_name'], el['id']);
     if (!login) {
       addLikeLogin(' Please register, then you give abig Heart');
@@ -378,16 +376,16 @@ export const Card3 = (props) => {
                         <p>{Number(el['likes']) > 0 ? el['likes'] : ''}</p>
 
                       </div>
-<div>
-                      {
-                        el['pic'] && el['pic'] != '' ?
-                          <Stars rating={(Number(el['total_finish_cat']) - Number(el['pic']) + 1) * 100 / Number(el['total_finish_cat'])} />
-                          :
-                          <Stars rating={0} />
+                      <div>
+                        {
+                          el['pic'] && el['pic'] != '' ?
+                            <Stars rating={(Number(el['total_finish_cat']) - Number(el['pic']) + 1) * 100 / Number(el['total_finish_cat'])} />
+                            :
+                            <Stars rating={0} />
 
-                      }</div>
+                        }</div>
                       {el['pic'] && Number(el['pic']) > 0 && Number(el['pic']) <= 10 && <div><img className="top10" src={top10} alt="top10" /></div>}
-                      {el['pic'] && Number(el['pic']) > 0 && Number(el['pic']) > 10 && Number(el['pic']) <= 20 &&<div><img className="top10" src={top20} alt="top20" /></div>}
+                      {el['pic'] && Number(el['pic']) > 0 && Number(el['pic']) > 10 && Number(el['pic']) <= 20 && <div><img className="top10" src={top20} alt="top20" /></div>}
                     </div>
                   </div>
 

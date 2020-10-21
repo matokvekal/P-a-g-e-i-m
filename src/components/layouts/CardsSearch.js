@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './cardSearch.css'
-import { RecoilRoot } from "recoil";
-import { atom, useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
+// import { RecoilRoot } from "recoil";
+import { atom, useRecoilState } from 'recoil';
 
 const CardsSearch = () => {
    const search = atom({
