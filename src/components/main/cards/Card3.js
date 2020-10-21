@@ -95,7 +95,6 @@ export const Card3 = (props) => {
 
 
   useEffect(() => {
-    //debugger
     if (app === '/' || app === '/Templates')
       return
     if (!deviceIdentity())
@@ -132,14 +131,11 @@ export const Card3 = (props) => {
 
 
   useEffect(() => {
-    //debugger
     const temp = likeChange.hasChange;
-    //debugger
     if (app === '/' || app === '/Templates' || filter.value == 'undefined' || filter.name == 'undefined' || !filter.value || !filter.name)
       return
     if (!deviceIdentity())
       return
-    //debugger
     let data = filter;
     setLoader(true);
     const URL = `${API_ENDPOINT}/pageim/filterUpdate?appname=${APP}&checked=${filter.checked}&name=${filter.name}&value=${filter.value}&itemsperpage=${itemsPerPage}`;
@@ -152,12 +148,9 @@ export const Card3 = (props) => {
 
     )
       .then(response => {
-        //debugger
         return response.json()
       })
       .then(res => {
-        //debugger
-
         setCurrentPage(1);
         setMobilePage("");
         setData(res.res ? res.res : null); setItems(res.total[0].totalRows);
@@ -171,7 +164,6 @@ export const Card3 = (props) => {
   }, [filter, likeChange]);
 
   function handleClick(el) {
-    //debugger
     ClickItem('like', 'name', el['full_name'], el['id']);
   }
 
@@ -183,7 +175,6 @@ export const Card3 = (props) => {
       addLikeLogin(' Please register, then you give abig Heart');
       return
     }
-    //---------------------------------------------------------------------
 
     const array = JSON.parse(localStorage.getItem('info')) || [];
 

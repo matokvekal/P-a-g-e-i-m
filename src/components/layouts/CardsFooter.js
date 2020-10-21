@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import CardsPaging from './CardsPaging';
 import usePagination from './../../hooks/Pagination';
 import { atom, useRecoilState, RecoilRoot } from 'recoil';
-import 'antd/dist/antd.css';
-import { Button } from 'antd';
+// import 'antd/dist/antd.css';
+// import { Button } from 'antd';
+import { Button } from '@material-ui/core';
 const CardsFooter = () => {
 
     const { setItemsPerPage, nextMobile,items,itemsPerPage ,currentPage,mobilePage} = usePagination();
@@ -16,10 +17,7 @@ const CardsFooter = () => {
     });
     const [scrollPosition, setScrollPosition] = useRecoilState(ScrollPosition);
 
-    // const handleScroll = () => {
-    //     const position = window.pageYOffset;
-    //     setSrollPosition(position);
-    // };
+
 
     useEffect(() => {
         window.onscroll = function () { manageScroll() };
@@ -39,7 +37,6 @@ const CardsFooter = () => {
     const manageScroll = () => {
         setHideScroll(document.documentElement.scrollHeight - document.documentElement.clientHeight - window.scrollY > 100 ? 'scrollHide' : null);
         setScrollPosition(window.scrollY);
-        // setShowFilter('false' );gilad
     }
 
     const itemsInPage = [20, 50, 100];
@@ -67,14 +64,14 @@ const CardsFooter = () => {
                 <div className="page__box" className={hildeScroll}>
                     <div className='page__box'>
                         <Button className={itemsPerPage*currentPage>items?'footer__botton__hide':`footer__botton`}   type="primary" onClick={nextMobile} >
-                             {itemsPerPage*currentPage>items?'0':<>more</>}
+                             {itemsPerPage*currentPage>items?'0':<>more   {itemsPerPage*currentPage>items?'':` ${items-itemsPerPage*currentPage}`}   </>}
                        </Button>
-
+{/* 
                         <div className="total__mobile_left">
 
                          {itemsPerPage*currentPage>items?'':` ${items-itemsPerPage*currentPage}`}   
 
-                        </div>
+                        </div> */}
                     </div>
 
                 </div>

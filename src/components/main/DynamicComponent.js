@@ -1,7 +1,6 @@
 import React, { useState,useEffect } from 'react';
 
 function DynamicComponent(props) {
-    //debugger
     const [html] = useState(props.html);
    
     useEffect(() => {
@@ -9,7 +8,6 @@ function DynamicComponent(props) {
         if(html)
            main.innerHTML=html;
     }, [html])
-    // const [appPermission] = useState(props.appPermission)
     return (
         <>
             <br />

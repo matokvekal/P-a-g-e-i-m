@@ -24,14 +24,11 @@ const CardsSearch = () => {
    const handleSearch = (e) => {
       if(e.target.value && e.target.value.length >12)
       return;
-      //debugger
       if (!wait) {
-         //debugger
          setWait(true);
          doSearch(e.target.value);
       }
       else {
-         //debugger
          clearTimeout(doSearch);
          doSearch(e.target.value)
       }

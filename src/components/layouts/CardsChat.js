@@ -75,10 +75,10 @@ const CardsChat = () => {
               </input></div>
           </div>
           <div>
-            <label className="h_o_n_y" for="nameho">name</label>
-            <input className='h_o_n_y' autocomplete="off" type="text" id="name_ho" value={formData.name_ho} onChange={handleInputChange} name="name_ho" placeholder="Your name here"></input>
-            <label className="h_o_n_y" for="nameho">e-mail</label>
-            <input className='h_o_n_y' autocomplete="off" type="text" id="nemail_ho" value={formData.email_ho} onChange={handleInputChange} name="email_ho" placeholder="Your e_mail here"></input>
+            <label className="h_o_n_y" htmlFor="nameho">name</label>
+            <input className='h_o_n_y' autoComplete="off" type="text" id="name_ho" value={formData.name_ho} onChange={handleInputChange} name="name_ho" placeholder="Your name here"></input>
+            <label className="h_o_n_y" htmlFor="nameho">e-mail</label>
+            <input className='h_o_n_y' autoComplete="off" type="text" id="nemail_ho" value={formData.email_ho} onChange={handleInputChange} name="email_ho" placeholder="Your e_mail here"></input>
           </div>
           <div className="frm__btn">
             <button className="close" type="submit" onClick={handleChat}><i className="fas fa-times"></i>Close</button>

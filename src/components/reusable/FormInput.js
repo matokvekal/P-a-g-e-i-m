@@ -33,19 +33,14 @@ const FormInput = props => {
                     InputLabelProps={{
                         shrink: true,
                     }}
-                    // style={{ width: 305 }}
                 />
                 : type === 'color' ?
                     <ColorPicker
                         id="standard-basic {name}"
                         name='color'
                         defaultValue='pick color'
-                        // value={this.state.color} - for controlled component
-                        //onChange={color => console.log(color)}
-                        // placeholder="Placeholder"
-                        // helperText="Full width!"
+
                         variant="outlined"
-                        // style={{ width: 305 }}
                     />
                     :
                     <TextField

@@ -767,20 +767,20 @@ margin-left: 30px;
         font-size: 1rem;
      }
      .user__name{	
-        /* font-size: 1.5rem;	
-        font-weight: 700;	
-        margin-right: .5rem;	
-        max-width: 14rem;
-        text-align: right; */
+
         min-width: 20rem;
     }
     .header .search__box__res,
-    .header .filter__form,
-    .header .search__box{
+    .header .filter__form{
         display: block;
         width: 15rem;
         border-radius: .5rem;
+    }
 
+    .header .search__box{
+        display: block;
+        width: 11rem;
+        border-radius: .5rem;
     }
     .header .selection__form{
         border-radius: .5rem;
@@ -856,6 +856,7 @@ tr:hover{
     .header .toggle__btn{
         display: block;
         margin-left: 1rem;
+        margin-right: 1rem;
     }
 
     .whole__content{
@@ -880,13 +881,13 @@ tr:hover{
         padding: 0 2rem;
         color: var(--header-footer-text-color);
     }
-.page__box {
+/* .page__box {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     margin-left: 5rem;
 
-}
+} */
 .total__mobile{
     font-size: var(--header-footer-font-size);
     display: flex;

@@ -12,7 +12,6 @@ const CardsHeader = () => {
 
     const [filters, setFilters] = useContext(FilterContext);
     const [sortList] = useContext(SortContext);
-    //debugger
     const showHideFilter2 = atom({
         key: "_ShowHideFilter",
         default: 'true',
@@ -57,8 +56,7 @@ const CardsHeader = () => {
         setOrder_by(event.target.value)
     }
     function resetAllQuerys() {
-        // debugger
-        //selectRef.current.style.backgroundColor = "blue";
+
         selectRef.current.value = "";
         setSearchNew('');
         setOrder_by('');

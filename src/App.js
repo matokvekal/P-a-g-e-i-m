@@ -66,7 +66,6 @@ colorPalet.tryit = {
 
 
 function App() {
-  //aaca1b #f89514;
   let set = 'tryit';
   function setColor(set) {
     const color = colorPalet[set];
@@ -111,11 +110,9 @@ function App() {
     }
     )
       .then(response => {
-        // debugger 
         return response.json()
       })
       .then(data => {
-        // debugger
 
         return setMenuList(data.appsresult[1])
       })

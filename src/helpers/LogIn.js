@@ -106,8 +106,6 @@ function useLogIn() {
                setModalLogin({ active: false, message: <p></p> });
                setLogin(false);
                setModalLogin({ active: true, message: <p>Login Fail</p>, formType: 'message' });
-               // setModalLogin({ active: true, message: <p><i className="fas fa-heart" style={{ color: 'red' }}>Login fail</i>qqq</p> });
-               // setTimeout(function () { closeModal(); }, 3000);
                setTimeout(function () { closeModal(); }, 3000);
             }
          })

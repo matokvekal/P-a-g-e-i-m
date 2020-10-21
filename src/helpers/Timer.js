@@ -46,7 +46,6 @@ const Timer = (props) => {
 
 
    function setRemainingPathColor(timeLeft) {
-      //debugger
       const { alert, warning, info } = COLOR_CODES;
       if (timeLeft <= alert.threshold) {
          document
@@ -66,7 +65,6 @@ const Timer = (props) => {
    }
 
    function calculateTimeFraction() {
-      //debugger
       const rawTimeFraction = timeLeft / TIME_LIMIT;
       return rawTimeFraction - (1 / TIME_LIMIT) * (1 - rawTimeFraction);
    }

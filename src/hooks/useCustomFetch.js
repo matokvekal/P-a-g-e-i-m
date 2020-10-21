@@ -15,9 +15,7 @@ function useCustomfetch(url) {
       debugger
       try {
          const URL = `${API_ENDPOINT}${url}`;
-         //get
-         //let response = await fetch(URL);
-         //post
+
          if (!deviceIdentity())
             return
          let response = await fetch(URL, {

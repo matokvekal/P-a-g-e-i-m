@@ -33,7 +33,6 @@ const CardsFilter = (props) => {
     const [filters, setFilters] = useContext(FilterContext);
     const [filterCheckbox, setFilterCheckbox] = useState(filters.filter(x => x.checked === true).length === 0 ? false : true)
     const [filterIndex, setFilterInex] = useState(0);
-    //  const[showHideCheckbox,setShowHideheckbox]=useState(filters.filter(x => x.checked === true).length === 0 ? false : true)
 
     function handleShowFilter(index1) {
         setFilterInex(index1);
@@ -61,8 +60,7 @@ const CardsFilter = (props) => {
     }, [filters]);
 
     function removeAllFilters(e) {//concidere to remove this// copy atom as remove all//go to server to same SP but flag remove all,the return  no selected filter/in useEffect it will change all 
-        //debugger
-        //setShowHideheckbox(false);
+
         setFilter({
             checked: e.target.checked,
             name: 'ALL',
@@ -82,11 +80,9 @@ const CardsFilter = (props) => {
             return newFilters;
         });
         setAnyQuery(null);
-        // setFilterCheckbox(false)
 
     }
     function handleSelectFilter(e) {
-        //after filter change it will handle in card3.js filterUpdate
 
 
         setFilter({

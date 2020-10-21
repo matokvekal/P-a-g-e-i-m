@@ -15,7 +15,6 @@ const LoginModal = () => {
    const [agree, setAgree] = useState(false);
    const [timerDown, setTimerDown] = useState(0);
    const { closeModal, submitLogin, submitPassword, inputMobileNumber, inputPersonalName, inputPassword, mobileNumber, personalName, password } = useLogin();
-   // const handleAgree = () => setAgree(!agree)
    function handleAgree() {
       setAgree(!agree)
    }

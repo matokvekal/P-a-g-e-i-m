@@ -35,11 +35,8 @@ const ConfigContextProvider = (props) => {
                 headers: { Authorization: "Bearer " + localStorage['deviceIdentity'] }
             })
                 .then(response =>{
-                    //debugger
                     return response.json()})
-                // .then(data => setTableFields(data))
                 .then(data => {
-                    //debugger
                     setTableFields(data.data)})
                 .catch((error) => {
                     console.error('Error:', error);
@@ -50,7 +47,6 @@ const ConfigContextProvider = (props) => {
     
     useEffect(() => {
         if (tableFields && tableFields.length > 0) {
-            // console.log('got tableFields',tableFields)
             for (let row of tableFields) {
                 row.clienSort = false;
                 row.clientSortOrder = null;
