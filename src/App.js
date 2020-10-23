@@ -6,18 +6,18 @@ import SortContextProvider from './context/SortContext';
 import GlobalContextProvider from './context/GlobalContext';
 // import PrimarySearchAppBar from './components/layouts/PrimarySearchAppBar';
 // import './App.css';
-import UploadFile from './components/UploadFile';
+// import UploadFile from './components/UploadFile';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Pageim from './components/Pageim';
 import Templates from './components/main/Templates';
 // import TodoWatsApp from './components/main/external/TodoWatsApp';
 import DynamicComponent from './components/main/DynamicComponent';
 import { pageimEndPoint } from './Config';
-import { url } from './helpers/Helpers';
-import { RecoilRoot } from "recoil";
+// // import { url } from './helpers/Helpers';
+// import { RecoilRoot } from "recoil";
 import CardsHeader from './components/layouts/CardsHeader';
-import CardsSideNav from './components/layouts/CardsSideNav';
-import CardsFilter from './components/layouts/CardsFilter';
+// import CardsSideNav from './components/layouts/CardsSideNav';
+// import CardsFilter from './components/layouts/CardsFilter';
 
 import CardsChat from './components/layouts/CardsChat';
 import CardsFooter from './components/layouts/CardsFooter';
@@ -66,14 +66,14 @@ colorPalet.tryit = {
 
 
 function App() {
-  let set = 'tryit';
-  function setColor(set) {
-    const color = colorPalet[set];
+  // let set = 'tryit';
+  // function setColor(set) {
+  //   const color = colorPalet[set];
 
-    for (let key in color) {
-      document.documentElement.style.setProperty(key, color[key]);
-    }
-  }
+  //   for (let key in color) {
+  //     document.documentElement.style.setProperty(key, color[key]);
+  //   }
+  // }
 
 
   const menuListAtom = atom({
@@ -83,11 +83,11 @@ function App() {
 
 
 
-  const [renderCounter, setRenderCounter] = useState([])
+  // const [renderCounter, setRenderCounter] = useState([])
   const API_ENDPOINT = pageimEndPoint();
   const [menuList, setMenuList] = useRecoilState(menuListAtom);
-  const location = window.location.pathname;
-  const [freeUserToken] = useState(null)
+  // const location = window.location.pathname;
+  // const [freeUserToken] = useState(null)
   const[app,setApp]=useState('');
   let currentDir = window.localStorage.getItem('AppDirection');
   if (currentDir == null || (currentDir !== 'rtl' && currentDir !== 'ltr'))
@@ -113,10 +113,11 @@ function App() {
         return response.json()
       })
       .then(data => {
-
+        debugger
         return setMenuList(data.appsresult[1])
       })
       .catch((error) => {
+        debugger
         console.error('Error:', error);
       });
 
@@ -124,7 +125,7 @@ function App() {
   }, [app]);
 
   let screenView = 'table';
-  const [AppDirection, setAppDirection] = useState(currentDir ? currentDir : 'ltr');
+  // const [AppDirection, setAppDirection] = useState(currentDir ? currentDir : 'ltr');
   const [screenType, setScreenType] = useState(screenView ? screenView : 'table');
   return (
     <>

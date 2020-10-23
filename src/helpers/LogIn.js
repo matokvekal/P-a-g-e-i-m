@@ -1,7 +1,7 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { atom, useRecoilState } from 'recoil';
 // import UseLogOff from './LogOff';
-import LoginModal from './LoginModal';
+// import LoginModal from './LoginModal';
 import { pageimEndPoint } from './../Config';
 import deviceIdentity from './Helpers';
 const API_ENDPOINT = pageimEndPoint();
@@ -41,7 +41,7 @@ function useLogIn() {
 
    const submitLogin = () => {
 
-      if (!mobileNumber || mobileNumber.length != 10 || mobileNumber.substring(0, 2) != "05" || !personalName || personalName.length > 30 || mobileNumber.length <= 3 || !deviceIdentity()) {
+      if (!mobileNumber || mobileNumber.length !== 10 || mobileNumber.substring(0, 2) !== "05" || !personalName || personalName.length > 30 || mobileNumber.length <= 3 || !deviceIdentity()) {
          setModalLogin({ active: true, message: <p style={{ color: 'red' }}>Please insert all require data!</p>, formType: 'message' });
          setTimeout(function () { closeModal(); }, 3000);
 
@@ -80,7 +80,7 @@ function useLogIn() {
          setModalLogin({ active: false, message: <p></p> });
          return
       }
-      if (!mobileNumber || mobileNumber.length != 10 || mobileNumber.substring(0, 2) != "05" || !password || password.length != 6)
+      if (!mobileNumber || mobileNumber.length !== 10 || mobileNumber.substring(0, 2) !== "05" || !password || password.length !== 6)
          return;
 
       const URL = `${API_ENDPOINT}/pageim/logon?appname=${APP}&cell=${mobileNumber}&password=${password}`;
@@ -92,7 +92,7 @@ function useLogIn() {
             return response.json();
          })
          .then(res => {
-            if (res && res.success && res.success == 'true') {
+            if (res && res.success && res.success === 'true') {
                localStorage["isLogin"] = 'true';
                localStorage['login_trys'] = 0;
                localStorage['login_last_try'] = '';

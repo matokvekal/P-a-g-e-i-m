@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { pageimEndPoint } from '../Config';
-import deviceIdentity from './../helpers/Helpers';
+// import deviceIdentity from './../helpers/Helpers';
 export const FilterContext = createContext();
 const API_ENDPOINT = pageimEndPoint();
 
@@ -22,7 +22,7 @@ const FilterContextProvider = (props) => {
                     return response.json()
                 })
                 .then(data => {
-
+                    debugger
                     if (data && data.filters && data.selectedfilters) {
                         setFilters((x) => {
                             const newFilters = data.filters.map((item, index) => {

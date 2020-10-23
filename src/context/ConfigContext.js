@@ -37,8 +37,11 @@ const ConfigContextProvider = (props) => {
                 .then(response =>{
                     return response.json()})
                 .then(data => {
+                    debugger
                     setTableFields(data.data)})
                 .catch((error) => {
+                    debugger
+
                     console.error('Error:', error);
                 });
         
@@ -46,7 +49,7 @@ const ConfigContextProvider = (props) => {
     }, []);
     
     useEffect(() => {
-        if (tableFields && tableFields.length > 0) {
+        if (tableFields && tableFields.length > 0 ) {
             for (let row of tableFields) {
                 row.clienSort = false;
                 row.clientSortOrder = null;
@@ -63,7 +66,8 @@ const ConfigContextProvider = (props) => {
                 row.clientFilterHeaderCheckbox = false;
                 }
                 setTableFields(x=>tableFields);
-            localStorage['fields']=JSON.stringify(tableFields);
+            if(APP)
+              localStorage['fields_'+APP]=JSON.stringify(tableFields);
         }
         else
         console.log('no tableFields')

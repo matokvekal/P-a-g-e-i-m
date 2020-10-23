@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useRef } from 'react';
+import React, { useContext, useRef } from 'react';
 import CardsSearch from './CardsSearch';
 import usePagination from './../../hooks/Pagination';
 import CardsFilter from './CardsFilter';
@@ -81,7 +81,7 @@ const CardsHeader = () => {
     }
 
 
-    const { next, prev, jump, currentPage, setCurrentPage, maxPage, itemsPerPage, setItemsPerPage } = usePagination();
+    const { next, prev, currentPage, setCurrentPage, maxPage, itemsPerPage } = usePagination();
 
     return (
         <>

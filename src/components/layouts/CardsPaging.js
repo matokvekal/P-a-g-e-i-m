@@ -1,8 +1,8 @@
-import React ,{useEffect}from 'react';
+import React from 'react';
 import usePagination from './../../hooks/Pagination';
 const CardsPaging=()=>{
 
- const { next, prev, jump, currentPage,setCurrentPage, maxPage ,itemsPerPage,setItemsPerPage ,items} = usePagination();
+ const { next, prev, jump, currentPage, maxPage  ,items} = usePagination();
 
 
    return(

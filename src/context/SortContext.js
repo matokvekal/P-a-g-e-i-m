@@ -1,4 +1,6 @@
+import { GolfCourseOutlined } from '@material-ui/icons';
 import React, { createContext, useState, useEffect } from 'react';
+import { Redirect,Route } from 'react-router-dom';
 import { pageimEndPoint } from '../Config';
 import deviceIdentity from './../helpers/Helpers';
 export const SortContext = createContext();
@@ -10,9 +12,19 @@ const API_ENDPOINT = pageimEndPoint();
 
 const SortContextProvider = (props) => {
     const [sortList, setSortList] = useState();
-
+    const[clearLocalStorage,setClearLocalStorage]=useState(false);
     let APP = window.location.pathname.toString();
     APP= APP?APP.substr(1).toLowerCase():'';
+
+
+    React.useEffect(() => {
+        if(clearLocalStorage){
+            localStorage.removeItem('deviceIdentity');
+            if (APP &&localStorage['fields_'+APP])
+            localStorage.removeItem('fields_'+APP);
+
+        }
+      }, [clearLocalStorage]);
 
 
     useEffect(() => {
@@ -24,9 +36,14 @@ const SortContextProvider = (props) => {
                 headers: { Authorization: "Bearer " + localStorage['deviceIdentity'] }
             })
                 .then(response => {
+                    debugger
+                    if(response.status===401)
+                      setClearLocalStorage(true)
+
                     return response.json()
                 })
                 .then(data => {
+                    debugger
                     if (data && data.sortList) {
                         setSortList( [...data.sortList.map(x => ([x.name,x.label]))])
 
@@ -37,7 +54,7 @@ const SortContextProvider = (props) => {
                     console.error('Error:', error);
                 });
         
-    }, []);
+        }, [])
   
 
 

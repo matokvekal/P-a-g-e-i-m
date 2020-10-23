@@ -139,7 +139,7 @@ const CardsFilter = (props) => {
                                             {filters.filter(item => item.field === category).map((item, index) => (
 
 
-                                                <li className="cat__item filterModal" key={index * 1999}>
+                                                <li className="cat__item filterModal" key={index * 1999} >
                                                     <input className='filterModal' type="checkbox" id={item.filterId} value={item.data} name={category} onClick={handleSelectFilter} checked={item.checked} />
                                                     <label className='filterModal' htmlFor={index1 % 2 === 0 ? 'sub__1' : 'sub__2'}>{item.data}({item.count})</label>
                                                 </li>

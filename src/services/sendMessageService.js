@@ -1,4 +1,4 @@
-import axios from 'axios';
+// import axios from 'axios';
 import { pageimEndPoint } from '../Config';
 import deviceIdentity from '../helpers/Helpers';
 // const API_ENDPOINT = pageimEndPoint();

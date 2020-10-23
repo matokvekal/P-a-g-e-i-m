@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import timer from './timer.css';
 
 const Timer = (props) => {
-   const TIME_LIMIT = props.timeLimit;
+   const TIME_LIMIT = 5;
    const [timeLeft, setTimeLeft] = useState(TIME_LIMIT);
    const isActive=props.isActive;
    const setTimerDown=props.setTimerDown;
@@ -29,7 +29,7 @@ const Timer = (props) => {
    let remainingPathColor = COLOR_CODES.info.color;
 
    useEffect(() => {
-      if (!timeLeft) return;
+      if (!timeLeft) return ;
    
       const interval = setInterval(() => {
          setTimeLeft(seconds => seconds - 1);

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './cardSearch.css'
 // import { RecoilRoot } from "recoil";
 import { atom, useRecoilState } from 'recoil';

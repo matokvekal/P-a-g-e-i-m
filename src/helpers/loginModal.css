@@ -4,8 +4,8 @@ body {
    font-family: Arial;
 }
 .container1{
-  width: 350px;
-   margin: 50px auto;
+  width: 300px;
+   margin: 15px auto;
    box-sizing: border-box;
 }
 
@@ -87,3 +87,8 @@ margin-right: 0.5rem;
 .form-input .name{
 z-index: 10000;
 }
+
+#popup.login.card__item{
+   width: 35rem;
+   padding: 2rem;
+} 

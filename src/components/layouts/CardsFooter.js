@@ -5,7 +5,7 @@ import { atom, useRecoilState } from 'recoil';
 import { Button } from '@material-ui/core';
 const CardsFooter = () => {
 
-    const { setItemsPerPage, nextMobile,items,itemsPerPage ,currentPage,mobilePage} = usePagination();
+    const { setItemsPerPage, nextMobile,items,itemsPerPage ,currentPage} = usePagination();
     const [hildeScroll, setHideScroll] = useState('scrollHide');
 
 
@@ -25,10 +25,10 @@ const CardsFooter = () => {
         key: "_ShowHideFilter",
         default: 'true',
     });
-    const menuOpenClose = atom({
-        key: "_menuOpenClose",
-        default: 'true',
-    });
+    // const menuOpenClose = atom({
+    //     key: "_menuOpenClose",
+    //     default: 'true',
+    // });
     const [showFilter, setShowFilter] = useRecoilState(showHideFilter2);
 
 

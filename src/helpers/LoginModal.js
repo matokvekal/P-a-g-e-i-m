@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { useState } from 'react';
 // import smsAuth from './smsAuth.css';
 import { atom, useRecoilState } from 'recoil';
 import loginModal from './loginModal.css';
@@ -13,7 +13,7 @@ import Timer from './Timer';
 
 const LoginModal = () => {
    const [agree, setAgree] = useState(false);
-   const [timerDown, setTimerDown] = useState(0);
+   const [ timerDown,setTimerDown] = useState(1);
    const { closeModal, submitLogin, submitPassword, inputMobileNumber, inputPersonalName, inputPassword, mobileNumber, personalName, password } = useLogin();
    function handleAgree() {
       setAgree(!agree)
@@ -29,7 +29,7 @@ const LoginModal = () => {
    const [modalLogin] = useRecoilState(loginModal);
 
    return (
-      <div className={`card__item ${modalLogin.active ? 'active' : null}`} id="popup">
+      <div className={`login card__item ${modalLogin.active &&timerDown!=0? 'active' : null}`} id="popup">
          <div className="container1">
             <div className="error"></div>
             <form id="frm-mobile-verification">

@@ -4,16 +4,17 @@ import { pageimEndPoint } from '../../../Config';
 import colors from './../../../assets/color.json';
 import person from './../../../assets/person.png';
 import israelFlag from './../../../assets/israelFlag.png';
-import trophy from './../../../assets/trophy.png';
+// import cup from './../../../assets/cup.png';
 // import club_flag from './../../../assets/club_flag.png';
-import cyclocrossbike from './../../../assets/cyclocrossbike.png';
-import trackbike from './../../../assets/trackbike.png';
-import mtbbike from './../../../assets/mtbbike.png';
-import roadbike from './../../../assets/roadbike.png';
-import medal2 from './../../../assets/medal2.png';
-import medal3 from './../../../assets/medal3.png';
-import top10 from './../../../assets/top10_3.png';
-import top20 from './../../../assets/TOP20_1.png';
+// import cyclocrossbike from './../../../assets/cyclocrossbike.png';
+// import trackbike from './../../../assets/trackbike.png';
+// import mtbbike from './../../../assets/mtbbike.png';
+// import roadbike from './../../../assets/roadbike.png';
+// import medal2 from './../../../assets/medal2.png';
+// import medal3 from './../../../assets/medal3.png';
+// import top10 from './../../../assets/top10_3.png';
+// import top20 from './../../../assets/TOP20_1.png';
+
 import Stars from './Stars';
 import { atom, useRecoilState } from 'recoil'
 import usePagination from './../../../hooks/Pagination';
@@ -31,7 +32,7 @@ export const Card3 = (props) => {
   const [AppFields, setAppFields] = useState([]);
   const [errorMsg, setErrorMsg] = useState('Err card3');
   const [loader, setLoader] = useState(false);
-  const { addLikeLogin } = useLogIn();
+  const { addLikeLogin, closeModal } = useLogIn();
   const hideCardModal = atom({
     key: "_HideCardModal",
     default: "",
@@ -77,8 +78,8 @@ export const Card3 = (props) => {
   useEffect(() => {
 
     if (!tableFields || tableFields.length === 0) {
-      if (localStorage['fields']) {
-        let data = JSON.parse(localStorage['fields']);
+      if (APP && localStorage['fields_' + APP]) {
+        let data = JSON.parse(localStorage['fields_' + APP]);
         setTableFields(data);
         if (APP) {
           setAppFields(data.filter(x => x.application === APP));
@@ -108,9 +109,11 @@ export const Card3 = (props) => {
     )
       // http.Post(URL)
       .then(response => {
+        debugger
         return response.json()
       })
       .then(res => {
+        debugger
         if (res && res.res && res.res[0] && res.res[0].success === false)
           console.log('Err in stateUpdate sp');
 
@@ -147,9 +150,11 @@ export const Card3 = (props) => {
 
     )
       .then(response => {
+        debugger
         return response.json()
       })
       .then(res => {
+        debugger
         setCurrentPage(1);
         setMobilePage("");
         setData(res.res ? res.res : null); setItems(res.total[0].totalRows);
@@ -168,9 +173,13 @@ export const Card3 = (props) => {
 
 
   function HandleLikes(el) {
+    closeModal();
+    // setPopupCard('');
+    debugger
+    setPopupCard('');
     ClickItem('like', 'name', el['full_name'], el['id']);
     if (!login) {
-      addLikeLogin(' Please register, then you give abig Heart');
+      addLikeLogin(' Please login its simple, then you give abig LOVE');
       return
     }
 
@@ -239,26 +248,19 @@ export const Card3 = (props) => {
               <>
                 {/*<!-- Mobile standing -->*/}
                 <tr className='standing' key={index * 331} onClick={() => { setPopupCard(index) }}>
-                  <td className='tdStanding pos' ><span>{el['pic']}</span>
-                    {el['pic'] === '1'
-                      ?
-                      <img className="img_trophy" src={trophy} alt="medal" />
-                      :
-                      el['pic'] === '2'
-                        ?
-                        <img className="img_trophy" src={medal2} alt="medal" />
-                        :
-                        el['pic'] === '3'
-                          ?
-                          <img className="img_trophy" src={medal3} alt="medal" />
-                          : null
-                    }
+                  <td className='tdStanding pos' >
+                    {el['pic']}
+                    {el['medal_image'] ? <img src={require(`./../../../assets/${el['medal_image']}.png`)} /> : null}
                   </td>
                   <td className='tdStanding branch'>
+                    {el['image'] ? <img src={require(`./../../../assets/${el['image']}.png`)} /> : null}
+                    {/* {el['top_image']?<img className="top_image" src={el['top_image']} alt={el['top_image']} />:null} */}
+                    {/* {el['top_image']?<img className="top_image" src={require(`./../../../assets/${el['top_image']}.jpg`)}/>:el['medal_image']} */}
+
                     {/* <img src={israelFlag} className="img_flag" alt="" /> */}
-                    {el['branch'] === 'כביש'
+                    {/* {el['branch'] === 'כביש'
                       ?
-                      <img className="img_bike" src={roadbike} alt="roadbike" />
+                      <img className="img_bike" src={roadbike} alt="roadbik />
                       :
                       el['branch'] === 'הרים'
                         ?
@@ -272,23 +274,60 @@ export const Card3 = (props) => {
                             ?
                             <img className="img_bike" src={cyclocrossbike} alt="cyclocrossbike" />
                             : null
-                    }
-
+                    } */}
                   </td>
-                  <td className='tdStanding full_name' >{el['full_name']}</td>
-                  <td className='tdStanding club'>{el['club']}</td>
-                  <td className='tdStanding race_name'>{el['race_name']}</td>
-                  <td className='tdStanding year'>{el['year']}</td>
-                  <td className='tdStanding category'>{el['category']}</td>
-                  <td className='tdStanding total_tm'>{el['total_tm']}</td>
-                  <td className='tdStanding diff'>{el['diff']}</td>
+                  {AppFields.filter(x => (x.standing_show === 1)).sort((a, b) => (a.standing_order > b.standing_order) ? 1 : -1).map((header, index1) => (
+                    <td className={`tdStanding ${el[header.name]}`} style={{ 'width': header.style_standing }}>{el[header.name] ? el[header.name] : null}</td>
+
+                  ))}
+
+                  {/* {el['branch'] === 'מסלול'
+                    ?
+                    <>
+                      <td className='tdStanding full_name' >{el['full_name']}</td>
+                      <td className='tdStanding club'>{el['club']}</td>
+                      <td className='tdStanding race_name'>{el['race_name']}</td>
+                      <td className='tdStanding year'>{el['year']}</td>
+                      <td className='tdStanding category'>{el['category']}</td>
+                      <td className='tdStanding total_tm'>{el['total_tm']}</td>
+                      <td className='tdStanding diff'>{el['lung']}</td>
+                    </>
+                    :
+                    <>
+                      <td className='tdStanding full_name' >{el['full_name']}</td>
+                      <td className='tdStanding club'>{el['club']}</td>
+                      <td className='tdStanding race_name'>{el['race_name']}</td>
+                      <td className='tdStanding year'>{el['year']}</td>
+                      <td className='tdStanding category'>{el['category']}</td>
+                      <td className='tdStanding total_tm'>{el['total_tm']}</td>
+                      <td className='tdStanding diff'>{el['diff']}</td>
+                    </>
+                  } */}
                 </tr>
                 <div className={popupCard === index ? 'card__item active' : data.length < 5 ? 'card__item card_item_width' : 'card__item'} id={popupCard === index ? 'popup' : null} data={index}>
 
                   {/*<!-- Card Header-->*/}
                   <div className="card__header" >
                     <div className="profile__img">
-                      <img src={person} alt="" />
+                      {el['image'] ? <img src={require(`./../../../assets/${el['image']}.png`)} /> : null}
+                      {/* <img src={person} alt="" /> */}
+                      {/* {el['branch'] === 'כביש'
+                        ?
+                        <img className="img_bike" src={roadbike} alt="roadbike" />
+                        :
+                        el['branch'] === 'הרים'
+                          ?
+                          <img className="img_bike" src={mtbbike} alt="mtbbike" />
+                          :
+                          el['branch'] === 'מסלול'
+                            ?
+                            <img className="img_bike" src={trackbike} alt="trackbike" />
+                            :
+                            el['branch'] === 'סיקלוקרוס'
+                              ?
+                              <img className="img_bike" src={cyclocrossbike} alt="cyclocrossbike" />
+                              : null
+                      } */}
                     </div>
 
                     <div className="name__trophy">
@@ -297,7 +336,9 @@ export const Card3 = (props) => {
                         <p className="user__place" >{el['pic']}</p>
                         <p className="user__name">{el['full_name']}</p>
                         <div className="trophy__quantity">
-                          {el['pic'] === '1'
+                          {/* {el['medal_image'] ? <img className="medal_image" src={el['medal_image']} alt={el['medal_image']} /> : null} */}
+                          {el['medal_image'] ? <img src={require(`./../../../assets/${el['medal_image']}.png`)} /> : null}
+                          {/* {el['pic'] === '1'
                             ?
                             <img className="trophy" src={trophy} alt="" />
                             :
@@ -309,7 +350,7 @@ export const Card3 = (props) => {
                                 ?
                                 <img className="quantity" src={medal3} alt="" />
                                 : null
-                          }
+                          } */}
                           <p className="race__branch">{el['branch'] + ' ,'}</p>
                           <p className="race__category">{el['category'] + ' '}</p>
                         </div>
@@ -327,33 +368,66 @@ export const Card3 = (props) => {
                   </div>
                   {/*<!-- Card Content -->*/}
                   <div className="card__content">
-
-                    <div className="left">
-                      {AppFields.filter(x => (x.card_show_list === 1)).slice(0, popupCard !== index ? 7 : 100).sort((a, b) => (a.card_order > b.card_order) ? 1 : -1).map((header, index1) => (
-                        <>
-                          {
-                            header.card_show_list === 1 && el[header.name]
-                              ?
-                              <p>{header.label}:</p>
-                              :
-                              <p></p>
-                          }
-                        </>
-                      ))}
-                    </div>
-                    <div className="right">
-                      {AppFields.filter(x => (x.card_show_list === 1)).slice(0, popupCard !== index ? 7 : 100).sort((a, b) => (a.card_order > b.card_order) ? 1 : -1).map((header, index2) => (
-                        <>
-                          {
-                            header.card_show_list === 1 && el[header.name]
-                              ?
-                              <p>{el[header.name]}</p>
-                              :
-                              <p></p>
-                          }
-                        </>
-                      ))}
-                    </div>
+                    {popupCard !== index ?
+                      <>
+                        <div className="left">
+                          {/* {AppFields.filter(x => (x.card_show === 1)).slice(0, popupCard !== index ? 7 : 100).sort((a, b) => (a.card_order > b.card_order) ? 1 : -1).map((header, index1) => ( */}
+                          {AppFields.filter(x => (x.card_show === 1)).sort((a, b) => (a.card_order > b.card_order) ? 1 : -1).map((header, index1) => (
+                            <>
+                              {
+                                header.card_show === 1 && el[header.name]
+                                  ?
+                                  <p>{header.label}:</p>
+                                  :
+                                  <p></p>
+                              }
+                            </>
+                          ))}
+                        </div>
+                        <div className="right">
+                          {AppFields.filter(x => (x.card_show === 1)).sort((a, b) => (a.card_order > b.card_order) ? 1 : -1).map((header, index2) => (
+                            <>
+                              {
+                                header.card_show === 1 && el[header.name]
+                                  ?
+                                  <p>{el[header.name]}</p>
+                                  :
+                                  <p></p>
+                              }
+                            </>
+                          ))}
+                        </div>
+                      </>
+                      : 
+                      <>
+                     {/*<!--POPUP  Card Content -->*/}
+                      <div className="left">
+                        {AppFields.filter(x => (x.popup_show === 1)).sort((a, b) => (a.popup_order > b.popup_order) ? 1 : -1).map((header, index1) => (
+                          <>
+                            {
+                              header.popup_show === 1 && el[header.name]
+                                ?
+                                <p>{header.label}:</p>
+                                :
+                                <p></p>
+                            }
+                          </>
+                        ))}
+                      </div>
+                      <div className="right">
+                        {AppFields.filter(x => (x.popup_show === 1)).sort((a, b) => (a.popup_order > b.popup_order) ? 1 : -1).map((header, index2) => (
+                          <>
+                            {
+                              header.popup_show === 1 && el[header.name]
+                                ?
+                                <p>{el[header.name]}</p>
+                                :
+                                <p></p>
+                            }
+                          </>
+                        ))}
+                      </div>
+                    </>}
                   </div>
 
                   <div className="card__footer">
@@ -376,16 +450,19 @@ export const Card3 = (props) => {
                         <p>{Number(el['likes']) > 0 ? el['likes'] : ''}</p>
 
                       </div>
-                      <div>
+                      <div> 
+                        
                         {
                           el['pic'] && el['pic'] != '' ?
                             <Stars rating={(Number(el['total_finish_cat']) - Number(el['pic']) + 1) * 100 / Number(el['total_finish_cat'])} />
                             :
                             <Stars rating={0} />
 
-                        }</div>
-                      {el['pic'] && Number(el['pic']) > 0 && Number(el['pic']) <= 10 && <div><img className="top10" src={top10} alt="top10" /></div>}
-                      {el['pic'] && Number(el['pic']) > 0 && Number(el['pic']) > 10 && Number(el['pic']) <= 20 && <div><img className="top10" src={top20} alt="top20" /></div>}
+                        }</div> 
+                      
+                         {el['top_image'] ? <img className='topStyle' src={require(`./../../../assets/${el['top_image']}.png`)} /> : null}
+                      {/* {el['pic'] && Number(el['pic']) > 0 && Number(el['pic']) <= 10 && <div><img className="top10" src={top10} alt="top10" /></div>}
+                      {el['pic'] && Number(el['pic']) > 0 && Number(el['pic']) > 10 && Number(el['pic']) <= 20 && <div><img className="top10" src={top20} alt="top20" /></div>} */}
                     </div>
                   </div>
 
