@@ -81,14 +81,14 @@ function App() {
     default: '',
   });
 
-
+  //debugger
 
   // const [renderCounter, setRenderCounter] = useState([])
   const API_ENDPOINT = pageimEndPoint();
   const [menuList, setMenuList] = useRecoilState(menuListAtom);
   // const location = window.location.pathname;
   // const [freeUserToken] = useState(null)
-  const[app,setApp]=useState('');
+  const [app, setApp] = useState('');
   let currentDir = window.localStorage.getItem('AppDirection');
   if (currentDir == null || (currentDir !== 'rtl' && currentDir !== 'ltr'))
     currentDir = 'ltr';
@@ -97,13 +97,14 @@ function App() {
 
 
   useEffect(() => {
+    //debugger
     let APP = window.location.pathname.toString();
     APP = APP ? APP.substr(1).toLowerCase() : '';
     setApp(APP);
-    if (!deviceIdentity())
+    if (!APP ||!deviceIdentity())  
       return
 
-     const URL = `${API_ENDPOINT}/pageim/device_menu?appname=${APP}`;
+    const URL = `${API_ENDPOINT}/pageim/device_menu?appname=${APP}`;
     fetch(URL, {
       method: 'GET',
       headers: { Authorization: "Bearer " + localStorage['deviceIdentity'] },
@@ -113,16 +114,15 @@ function App() {
         return response.json()
       })
       .then(data => {
-        debugger
+       // debugger
         return setMenuList(data.appsresult[1])
       })
       .catch((error) => {
-        debugger
         console.error('Error:', error);
       });
 
-
-  }, [app]);
+    // }, [app]);  old
+  }, []);
 
   let screenView = 'table';
   // const [AppDirection, setAppDirection] = useState(currentDir ? currentDir : 'ltr');
@@ -146,29 +146,33 @@ function App() {
                         <Route path="/Templates" component={Templates} />
                       </Switch>
 
-                      {/* <Route path="/TodoWatsApp" component={TodoWatsApp} /> */}
-                      {/* <SmsAuth/> */}
-                      <LoginModal/>
-                      {/* {app==='races'?<> <CardsHeader /> <CardsFilter /></>:null} */}
-                     
-                     
-                      {/* <CardsHeader /> <CardsFilter /> */}
-                      <div className="whole__content" id="blur">
-                      <Switch>
-                        {(menuList && menuList.length > 0) ? menuList.map((item, index) => (
-                          item.mainApp === 'pageim'
-                            ?
-                            <> 
-                            {app==='races'?<> <CardsHeader /> </>:null}
-                            <Route exact path={'/' + item.app}><Pageim app={'/' + item.app} appPermission={item.permission} screenType={screenType} key={index} /> </Route>
-                            </>
-                            :
-                            <Route exact path={'/' + item.name}><DynamicComponent html={item.html} /> </Route>
-                        )) : console.log('menu error')}
-                      </Switch>
-                      {app==='races'?<> <CardsFooter /> </>:null}
 
-                      <CardsChat />
+                      <LoginModal />
+
+
+                      <div className="whole__content" id="blur">
+                        <Switch>
+                          {(menuList && menuList.length > 0) ? menuList.map((item, index) => (
+                            item.mainApp === 'pageim'
+                              ?
+                              <>
+
+                                <CardsHeader />
+
+                                  <Route path={'/' + app}><Pageim app={'/' + app} appPermission={item.permission} screenType={screenType} key={index} /> </Route>
+
+                                <CardsFooter />
+                              </>
+
+                              :
+                              <Route exact path={'/' + item.linkTo}><DynamicComponent html={item.html} /> </Route>
+
+                          )) : console.log('menu error')}
+                        </Switch>
+
+
+
+                        <CardsChat />
                       </div>
                     </FilterontextProvider>
                   </SortContextProvider>

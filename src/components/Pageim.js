@@ -3,6 +3,7 @@ import React,{useState} from 'react';
 import Card3 from './main/cards/Card3';
 
 export const Pageim = (props) => {
+    
     const [app] = useState(props.app)
     const [appPermission] = useState(props.appPermission)
     return (

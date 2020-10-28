@@ -27,7 +27,7 @@ const ConfigContextProvider = (props) => {
       }, [])
 
     useEffect(() => {
-        if (!deviceIdentity())  
+        if (!APP ||!deviceIdentity())  
         return
             const URL= `${API_ENDPOINT}/pageim/fieldsOfTable?appname=${APP}`;
             fetch(URL, {
@@ -37,10 +37,10 @@ const ConfigContextProvider = (props) => {
                 .then(response =>{
                     return response.json()})
                 .then(data => {
-                    debugger
+                    //debugger
                     setTableFields(data.data)})
                 .catch((error) => {
-                    debugger
+                    //debugger
 
                     console.error('Error:', error);
                 });
@@ -49,6 +49,7 @@ const ConfigContextProvider = (props) => {
     }, []);
     
     useEffect(() => {
+        //debugger
         if (tableFields && tableFields.length > 0 ) {
             for (let row of tableFields) {
                 row.clienSort = false;

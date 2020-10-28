@@ -42,6 +42,8 @@ const CardsChat = () => {
     if (!formData.message) return
     if (formData.message && formData.message.length > 500 || formData.name && formData.name.length > 50 || formData.phone && formData.phone.length > 15 || formData.email && formData.email.length > 50)
       return
+      if (!APP )  
+        return
     const URL = `${API_ENDPOINT}/pageim/user_messages?appname=${APP}`;
     await addNewRow(formData, URL);
     handleChat();

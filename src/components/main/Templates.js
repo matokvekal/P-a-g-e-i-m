@@ -16,13 +16,13 @@ export const Templates = () => {
                 </div>
                 <nav className="main-navigation">
                     <a href="#">About Us</a>
-                    <a href="#">Contact Us</a>
+                    <a href = "mailto: pageimgreendevice@gmail.com">Send Email</a>
                 </nav>
             </div>
         </div>
         <div className="header-text">
             <div className="container">
-                <h1 className='h1'>Information for Community Empowerment</h1>
+                <h1 className='h1'>Community Empowerment Through Sport</h1>
             </div>
         </div>
     </div>
@@ -31,7 +31,7 @@ export const Templates = () => {
             <main className="main-content">
                 <h2 className='h2'>Latest Entries</h2>
                 <div className="entry">
-                    <img className='image' src={require('./templatesResource/images/01.jpg')} />
+                    <img className='image' src={require('./templatesResource/images/bike1.jpg')} />
                     <div className="content">
                         <h3 className='h3'>Israel bike races standing</h3>
                         <p>Cards of: <span>Riders personal results</span></p>
@@ -40,7 +40,13 @@ export const Templates = () => {
                     </div>
                 </div>
                 <div className="entry">
-      
+                    <img className='image' src={require('./templatesResource/images/swim1.jpg')} />
+                    <div className="content">
+                        <h3 className='h3'>Israel swimming Competitions </h3>
+                        <p>Cards of: <span>Swimmers  personal results</span></p>
+                        <p>By: <span>Purple Green device</span></p>
+                        <a href="/swim" className="button">Get It</a>
+                    </div>
                 </div>
                 <div className="entry">
             
@@ -112,7 +118,8 @@ export const Templates = () => {
                 </nav>
             </div>
         </div>
-        <p className="copyright">purple green device &copy; </p>
+        <h3 className="copyright">&copy;  <h3 style={{color:'purple'}}>The green device</h3> </h3>
+       
     </footer>
     
             </div>

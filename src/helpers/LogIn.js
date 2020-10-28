@@ -53,6 +53,8 @@ function useLogIn() {
             localStorage['login_trys'] = 1;
 
          localStorage['login_last_try'] = Date.now();
+         if (!APP)
+            return;
          const URL = `${API_ENDPOINT}/pageim/register?appname=${APP}&mobileNumber=${mobileNumber}&personalName=${personalName}`;
          fetch(URL, {
             method: 'GET',
@@ -82,7 +84,8 @@ function useLogIn() {
       }
       if (!mobileNumber || mobileNumber.length !== 10 || mobileNumber.substring(0, 2) !== "05" || !password || password.length !== 6)
          return;
-
+      if (!APP)
+         return;
       const URL = `${API_ENDPOINT}/pageim/logon?appname=${APP}&cell=${mobileNumber}&password=${password}`;
       fetch(URL, {
          method: 'GET',
@@ -112,6 +115,8 @@ function useLogIn() {
          });
    }
    function logOff() {
+      if (!APP)
+      return;
       const URL = `${API_ENDPOINT}/pageim/logOff?appname=${APP}`;
       fetch(URL, {
          method: 'GET',

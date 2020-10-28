@@ -4,16 +4,7 @@ import { pageimEndPoint } from '../../../Config';
 import colors from './../../../assets/color.json';
 import person from './../../../assets/person.png';
 import israelFlag from './../../../assets/israelFlag.png';
-// import cup from './../../../assets/cup.png';
-// import club_flag from './../../../assets/club_flag.png';
-// import cyclocrossbike from './../../../assets/cyclocrossbike.png';
-// import trackbike from './../../../assets/trackbike.png';
-// import mtbbike from './../../../assets/mtbbike.png';
-// import roadbike from './../../../assets/roadbike.png';
-// import medal2 from './../../../assets/medal2.png';
-// import medal3 from './../../../assets/medal3.png';
-// import top10 from './../../../assets/top10_3.png';
-// import top20 from './../../../assets/TOP20_1.png';
+
 
 import Stars from './Stars';
 import { atom, useRecoilState } from 'recoil'
@@ -26,6 +17,7 @@ import useLogIn from '../../../helpers/LogIn';
 import http from './http';
 
 export const Card3 = (props) => {
+
   const [data, setData] = useState([]);
   const API_ENDPOINT = pageimEndPoint();
   const [tableFields, setTableFields] = useContext(ConfigContext);
@@ -62,6 +54,12 @@ export const Card3 = (props) => {
     default: '',
   });
 
+  const menuListAtom = atom({
+    key: "_menuList",
+    default: '',
+  });
+
+  const [menuList, setMenuList] = useRecoilState(menuListAtom);
   const [login, setLogin] = useRecoilState(isLogIn);
 
   const [searchNew, setSearchNew] = useRecoilState(newSearch);
@@ -76,7 +74,7 @@ export const Card3 = (props) => {
 
 
   useEffect(() => {
-
+    //debugger
     if (!tableFields || tableFields.length === 0) {
       if (APP && localStorage['fields_' + APP]) {
         let data = JSON.parse(localStorage['fields_' + APP]);
@@ -89,14 +87,17 @@ export const Card3 = (props) => {
     else if (APP)
       setAppFields(tableFields.filter(x => x.application === APP));
 
-    if (!tableFields || tableFields.length === 0)
+    if (!tableFields || tableFields.length === 0) {
+      debugger
       localStorage.removeItem("fields");
+    }
   }, [tableFields])
 
 
 
   useEffect(() => {
-    if (app === '/' || app === '/Templates')
+    // debugger
+    if (!app || app === '/' || app === '/Templates' ||searchNew.length===1)
       return
     if (!deviceIdentity())
       return
@@ -109,13 +110,15 @@ export const Card3 = (props) => {
     )
       // http.Post(URL)
       .then(response => {
-        debugger
+        //debugger
         return response.json()
       })
       .then(res => {
-        debugger
-        if (res && res.res && res.res[0] && res.res[0].success === false)
+        // debugger
+        if (res && res.res && res.res[0] && res.res[0].success === 'false') {
           console.log('Err in stateUpdate sp');
+          return;
+        }
 
         mobilePage
           ?
@@ -135,7 +138,7 @@ export const Card3 = (props) => {
 
   useEffect(() => {
     const temp = likeChange.hasChange;
-    if (app === '/' || app === '/Templates' || filter.value == 'undefined' || filter.name == 'undefined' || !filter.value || !filter.name)
+    if (!app || app === '/' || app === '/Templates' || filter.value == 'undefined' || filter.name == 'undefined' || !filter.value || !filter.name)
       return
     if (!deviceIdentity())
       return
@@ -150,11 +153,11 @@ export const Card3 = (props) => {
 
     )
       .then(response => {
-        debugger
+        //debugger
         return response.json()
       })
       .then(res => {
-        debugger
+        //debugger
         setCurrentPage(1);
         setMobilePage("");
         setData(res.res ? res.res : null); setItems(res.total[0].totalRows);
@@ -175,7 +178,7 @@ export const Card3 = (props) => {
   function HandleLikes(el) {
     closeModal();
     // setPopupCard('');
-    debugger
+    //debugger
     setPopupCard('');
     ClickItem('like', 'name', el['full_name'], el['id']);
     if (!login) {
@@ -183,7 +186,7 @@ export const Card3 = (props) => {
       return
     }
 
-    const array = JSON.parse(localStorage.getItem('info')) || [];
+    const array = JSON.parse(localStorage.getItem(APP + '_info')) || [];
 
     if (array.includes(el['id'])) {
       //toast you allredy like it
@@ -197,14 +200,14 @@ export const Card3 = (props) => {
 
 
     array.push(el['id']);
-    localStorage.setItem('info', JSON.stringify(array));
+    localStorage.setItem(APP + '_info', JSON.stringify(array));
 
 
 
-    let APP = window.location.pathname.toString();
-    APP = APP ? APP.substr(1).toLowerCase() : '';
+    // let APP = window.location.pathname.toString();
+    // APP = APP ? APP.substr(1).toLowerCase() : '';
 
-    if (!deviceIdentity())
+    if (!APP || !deviceIdentity())
       return
     if (el['id']) {
       const URL = `${API_ENDPOINT}/pageim/likesUpdate?appname=${APP}&id=${el['id']}`;
@@ -232,6 +235,7 @@ export const Card3 = (props) => {
 
   return (
     <>
+
       {loader ? <CircularProgress /> : null}
       {!AppFields || AppFields.length === 0 || !data
         ?
@@ -242,67 +246,28 @@ export const Card3 = (props) => {
 
           <div className="cards">
             <div className="main_head_mobile">
-              <h1>ISRAEL CYCLING RACES RESULTS</h1>
+              {/* <h1>ISRAEL CYCLING RACES RESULTS</h1> */}
+              <h1>{menuList.filter(x => x.app === APP)[0].standing_header}</h1>
             </div>
             {data.map((el, index) => (
               <>
                 {/*<!-- Mobile standing -->*/}
                 <tr className='standing' key={index * 331} onClick={() => { setPopupCard(index) }}>
                   <td className='tdStanding pos' >
-                    {el['pic']}
+                    {/* {el['pic']} */}
+                    {AppFields.filter(x => x.standing_show === 1)[0] && AppFields.filter(x => x.standing_order === 999)[0] ? el[AppFields.filter(x => x.standing_order === 999)[0].name] : null}
                     {el['medal_image'] ? <img src={require(`./../../../assets/${el['medal_image']}.png`)} /> : null}
                   </td>
                   <td className='tdStanding branch'>
                     {el['image'] ? <img src={require(`./../../../assets/${el['image']}.png`)} /> : null}
-                    {/* {el['top_image']?<img className="top_image" src={el['top_image']} alt={el['top_image']} />:null} */}
-                    {/* {el['top_image']?<img className="top_image" src={require(`./../../../assets/${el['top_image']}.jpg`)}/>:el['medal_image']} */}
 
-                    {/* <img src={israelFlag} className="img_flag" alt="" /> */}
-                    {/* {el['branch'] === 'כביש'
-                      ?
-                      <img className="img_bike" src={roadbike} alt="roadbik />
-                      :
-                      el['branch'] === 'הרים'
-                        ?
-                        <img className="img_bike" src={mtbbike} alt="mtbbike" />
-                        :
-                        el['branch'] === 'מסלול'
-                          ?
-                          <img className="img_bike" src={trackbike} alt="trackbike" />
-                          :
-                          el['branch'] === 'סיקלוקרוס'
-                            ?
-                            <img className="img_bike" src={cyclocrossbike} alt="cyclocrossbike" />
-                            : null
-                    } */}
                   </td>
-                  {AppFields.filter(x => (x.standing_show === 1)).sort((a, b) => (a.standing_order > b.standing_order) ? 1 : -1).map((header, index1) => (
+                  {AppFields.filter(x => (x.standing_show === 1 && x.standing_order !== 999)).sort((a, b) => (a.standing_order > b.standing_order) ? 1 : -1).map((header, index1) => (
                     <td className={`tdStanding ${el[header.name]}`} style={{ 'width': header.style_standing }}>{el[header.name] ? el[header.name] : null}</td>
 
                   ))}
 
-                  {/* {el['branch'] === 'מסלול'
-                    ?
-                    <>
-                      <td className='tdStanding full_name' >{el['full_name']}</td>
-                      <td className='tdStanding club'>{el['club']}</td>
-                      <td className='tdStanding race_name'>{el['race_name']}</td>
-                      <td className='tdStanding year'>{el['year']}</td>
-                      <td className='tdStanding category'>{el['category']}</td>
-                      <td className='tdStanding total_tm'>{el['total_tm']}</td>
-                      <td className='tdStanding diff'>{el['lung']}</td>
-                    </>
-                    :
-                    <>
-                      <td className='tdStanding full_name' >{el['full_name']}</td>
-                      <td className='tdStanding club'>{el['club']}</td>
-                      <td className='tdStanding race_name'>{el['race_name']}</td>
-                      <td className='tdStanding year'>{el['year']}</td>
-                      <td className='tdStanding category'>{el['category']}</td>
-                      <td className='tdStanding total_tm'>{el['total_tm']}</td>
-                      <td className='tdStanding diff'>{el['diff']}</td>
-                    </>
-                  } */}
+
                 </tr>
                 <div className={popupCard === index ? 'card__item active' : data.length < 5 ? 'card__item card_item_width' : 'card__item'} id={popupCard === index ? 'popup' : null} data={index}>
 
@@ -310,54 +275,21 @@ export const Card3 = (props) => {
                   <div className="card__header" >
                     <div className="profile__img">
                       {el['image'] ? <img src={require(`./../../../assets/${el['image']}.png`)} /> : null}
-                      {/* <img src={person} alt="" /> */}
-                      {/* {el['branch'] === 'כביש'
-                        ?
-                        <img className="img_bike" src={roadbike} alt="roadbike" />
-                        :
-                        el['branch'] === 'הרים'
-                          ?
-                          <img className="img_bike" src={mtbbike} alt="mtbbike" />
-                          :
-                          el['branch'] === 'מסלול'
-                            ?
-                            <img className="img_bike" src={trackbike} alt="trackbike" />
-                            :
-                            el['branch'] === 'סיקלוקרוס'
-                              ?
-                              <img className="img_bike" src={cyclocrossbike} alt="cyclocrossbike" />
-                              : null
-                      } */}
+
                     </div>
 
                     <div className="name__trophy">
                       <div className="name__place">
-                        <p>({el['total_finish_cat']})</p>
-                        <p className="user__place" >{el['pic']}</p>
-                        <p className="user__name">{el['full_name']}</p>
+                        <p>({AppFields.filter(x => x.cardHeaderPlace === 2)[0] ? el[AppFields.filter(x => x.cardHeaderPlace === 2)[0].name] : null})</p>
+                        <p className="user__place" >{AppFields.filter(x => x.cardHeaderPlace === 3)[0] ? el[AppFields.filter(x => x.cardHeaderPlace === 3)[0].name] : null}</p>
+                        <p className="user__name">{AppFields.filter(x => x.cardHeaderPlace === 1)[0] ? el[AppFields.filter(x => x.cardHeaderPlace === 1)[0].name] : null}</p>
                         <div className="trophy__quantity">
-                          {/* {el['medal_image'] ? <img className="medal_image" src={el['medal_image']} alt={el['medal_image']} /> : null} */}
                           {el['medal_image'] ? <img src={require(`./../../../assets/${el['medal_image']}.png`)} /> : null}
-                          {/* {el['pic'] === '1'
-                            ?
-                            <img className="trophy" src={trophy} alt="" />
-                            :
-                            el['pic'] === '2'
-                              ?
-                              <img className="quantity" src={medal2} alt="" />
-                              :
-                              el['pic'] === '3'
-                                ?
-                                <img className="quantity" src={medal3} alt="" />
-                                : null
-                          } */}
-                          <p className="race__branch">{el['branch'] + ' ,'}</p>
-                          <p className="race__category">{el['category'] + ' '}</p>
                         </div>
                       </div>
                       <div className="race__name__year">
-                        <p className="race__name">{el['race_name']}</p>
-                        <p className="race__year">{el['year']}</p>
+                        <p className="race__name">{AppFields.filter(x => x.cardHeaderPlace === 4)[0] ? el[AppFields.filter(x => x.cardHeaderPlace === 4)[0].name] : null}</p>
+                        <p className="race__year">{AppFields.filter(x => x.cardHeaderPlace === 5)[0] ? el[AppFields.filter(x => x.cardHeaderPlace === 5)[0].name] : null}</p>
                       </div>
 
                     </div>
@@ -371,7 +303,6 @@ export const Card3 = (props) => {
                     {popupCard !== index ?
                       <>
                         <div className="left">
-                          {/* {AppFields.filter(x => (x.card_show === 1)).slice(0, popupCard !== index ? 7 : 100).sort((a, b) => (a.card_order > b.card_order) ? 1 : -1).map((header, index1) => ( */}
                           {AppFields.filter(x => (x.card_show === 1)).sort((a, b) => (a.card_order > b.card_order) ? 1 : -1).map((header, index1) => (
                             <>
                               {
@@ -398,36 +329,36 @@ export const Card3 = (props) => {
                           ))}
                         </div>
                       </>
-                      : 
+                      :
                       <>
-                     {/*<!--POPUP  Card Content -->*/}
-                      <div className="left">
-                        {AppFields.filter(x => (x.popup_show === 1)).sort((a, b) => (a.popup_order > b.popup_order) ? 1 : -1).map((header, index1) => (
-                          <>
-                            {
-                              header.popup_show === 1 && el[header.name]
-                                ?
-                                <p>{header.label}:</p>
-                                :
-                                <p></p>
-                            }
-                          </>
-                        ))}
-                      </div>
-                      <div className="right">
-                        {AppFields.filter(x => (x.popup_show === 1)).sort((a, b) => (a.popup_order > b.popup_order) ? 1 : -1).map((header, index2) => (
-                          <>
-                            {
-                              header.popup_show === 1 && el[header.name]
-                                ?
-                                <p>{el[header.name]}</p>
-                                :
-                                <p></p>
-                            }
-                          </>
-                        ))}
-                      </div>
-                    </>}
+                        {/*<!--POPUP  Card Content -->*/}
+                        <div className="left">
+                          {AppFields.filter(x => (x.popup_show === 1)).sort((a, b) => (a.popup_order > b.popup_order) ? 1 : -1).map((header, index1) => (
+                            <>
+                              {
+                                header.popup_show === 1 && el[header.name]
+                                  ?
+                                  <p>{header.label}:</p>
+                                  :
+                                  <p></p>
+                              }
+                            </>
+                          ))}
+                        </div>
+                        <div className="right">
+                          {AppFields.filter(x => (x.popup_show === 1)).sort((a, b) => (a.popup_order > b.popup_order) ? 1 : -1).map((header, index2) => (
+                            <>
+                              {
+                                header.popup_show === 1 && el[header.name]
+                                  ?
+                                  <p>{el[header.name]}</p>
+                                  :
+                                  <p></p>
+                              }
+                            </>
+                          ))}
+                        </div>
+                      </>}
                   </div>
 
                   <div className="card__footer">
@@ -450,19 +381,17 @@ export const Card3 = (props) => {
                         <p>{Number(el['likes']) > 0 ? el['likes'] : ''}</p>
 
                       </div>
-                      <div> 
-                        
+                      <div>
+
                         {
-                          el['pic'] && el['pic'] != '' ?
-                            <Stars rating={(Number(el['total_finish_cat']) - Number(el['pic']) + 1) * 100 / Number(el['total_finish_cat'])} />
+                          AppFields.filter(x => x.Stars === 'up') && AppFields.filter(x => x.stars === 'down') && AppFields.filter(x => x.stars === 'down')[0].name !== 0 ?
+                            <Stars rating={(Number(el[AppFields.filter(x => x.stars === 'down')[0].name]) - Number(el[AppFields.filter(x => x.stars === 'up')[0].name]) + 1) * 100 / Number(el[AppFields.filter(x => x.stars === 'down')[0].name])} />
                             :
                             <Stars rating={0} />
 
-                        }</div> 
-                      
-                         {el['top_image'] ? <img className='topStyle' src={require(`./../../../assets/${el['top_image']}.png`)} /> : null}
-                      {/* {el['pic'] && Number(el['pic']) > 0 && Number(el['pic']) <= 10 && <div><img className="top10" src={top10} alt="top10" /></div>}
-                      {el['pic'] && Number(el['pic']) > 0 && Number(el['pic']) > 10 && Number(el['pic']) <= 20 && <div><img className="top10" src={top20} alt="top20" /></div>} */}
+                        }</div>
+
+                      {el['top_image'] ? <img className='topStyle' src={require(`./../../../assets/${el['top_image']}.png`)} /> : null}
                     </div>
                   </div>
 

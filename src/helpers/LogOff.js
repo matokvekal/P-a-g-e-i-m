@@ -24,8 +24,9 @@ function UseLogOff() {
    APP = APP ? APP.substr(1).toLowerCase() : '';
    const [modalLogin, setModalLogin] = useRecoilState(loginModal);
    const [login, setLogin] = useRecoilState(isLogIn);
-   
 
+   if (!APP)
+      return;
    const URL = `${API_ENDPOINT}/pageim/logOff?appname=${APP}`;
    fetch(URL, {
       method: 'GET',

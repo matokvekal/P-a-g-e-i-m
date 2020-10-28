@@ -10,8 +10,11 @@ const FilterContextProvider = (props) => {
     const [filters, setFilters] = useState([]);
 
     let APP = window.location.pathname.toString();
-    APP= APP?APP.substr(1).toLowerCase():'';
+    APP = APP ? APP.substr(1).toLowerCase() : '';
+
     useEffect(() => {
+        if (!APP)
+            return;
         if (localStorage['deviceIdentity']) {
             const URL = `${API_ENDPOINT}/pageim/getFilter?appname=${APP}`;
             fetch(URL, {
@@ -22,8 +25,8 @@ const FilterContextProvider = (props) => {
                     return response.json()
                 })
                 .then(data => {
-                    debugger
-                    if (data && data.filters && data.selectedfilters) {
+                    // debugger
+                    if (data && data.filters && data.selectedfilters && data.filters[0].success !== 'false') {
                         setFilters((x) => {
                             const newFilters = data.filters.map((item, index) => {
                                 if (data.selectedfilters.find((x) => x.field === item.field && x.data === item.data)) {
@@ -42,6 +45,9 @@ const FilterContextProvider = (props) => {
                             return newFilters;
                         })
                     }
+                    else {
+                        console.error('Error: filter');
+                    }
                 }
                 )
                 .catch((error) => {
@@ -50,10 +56,10 @@ const FilterContextProvider = (props) => {
         }
     }, []);
 
-  
+
     return (
         <FilterContext.Provider value={[filters, setFilters]} >
-                {props.children}
+            {props.children}
         </FilterContext.Provider >
     )
 }

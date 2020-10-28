@@ -2,7 +2,7 @@ import React from 'react';
 
 
 export const Temp = () => {
-debugger
+//debugger
     return (
         <>
    <h1>401</h1>

@@ -19,16 +19,17 @@ const SortContextProvider = (props) => {
 
     React.useEffect(() => {
         if(clearLocalStorage){
+            debugger
             localStorage.removeItem('deviceIdentity');
             if (APP &&localStorage['fields_'+APP])
-            localStorage.removeItem('fields_'+APP);
+              localStorage.removeItem('fields_'+APP);
 
         }
       }, [clearLocalStorage]);
 
 
     useEffect(() => {
-        if (!deviceIdentity())  
+        if (!APP ||!deviceIdentity())  
         return
             const URL = `${API_ENDPOINT}/pageim/getSort?appname=${APP}`;
             fetch(URL, {
@@ -36,14 +37,17 @@ const SortContextProvider = (props) => {
                 headers: { Authorization: "Bearer " + localStorage['deviceIdentity'] }
             })
                 .then(response => {
-                    debugger
+                    //debugger
                     if(response.status===401)
-                      setClearLocalStorage(true)
+                    {debugger
+                        setClearLocalStorage(true)
+                    } 
+                    
 
                     return response.json()
                 })
                 .then(data => {
-                    debugger
+                    //debugger
                     if (data && data.sortList) {
                         setSortList( [...data.sortList.map(x => ([x.name,x.label]))])
 

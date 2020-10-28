@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import timer from './timer.css';
 
 const Timer = (props) => {
-   const TIME_LIMIT = 5;
+   const TIME_LIMIT = 60;
    const [timeLeft, setTimeLeft] = useState(TIME_LIMIT);
    const isActive=props.isActive;
    const setTimerDown=props.setTimerDown;

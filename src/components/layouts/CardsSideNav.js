@@ -17,7 +17,7 @@ const CardsSideNav = () => {
     default: 'false',
   });
   const [login, setLogin] = useRecoilState(isLogIn);
-  const {handleLogin}=useLogIn();
+  const { handleLogin } = useLogIn();
 
   const [menuList, setMenuList] = useRecoilState(menuListAtom);
 
@@ -37,7 +37,7 @@ const CardsSideNav = () => {
         <nav className={`sidebar  ${menuToggle}`}>
 
           <div className='navheader'>
-            <div className='loginout' onClick={()=>handleLogin('Thanks for login, please insert your name and mobile number')}>
+            <div className='loginout' onClick={() => handleLogin('Thanks for login, please insert your name and mobile number')}>
               <i className={`fa fa-sign-in ${login ? 'hide' : ''}`} aria-hidden="true"></i>
               <i className={`fa fa-sign-out ${login ? '' : 'hide'}`} aria-hidden="true"></i>
             </div>
@@ -78,8 +78,13 @@ const CardsSideNav = () => {
                 }
 
               </>
-            )) : <CircularProgress />
+            )
+
+            ) : <CircularProgress />
             }
+            <li className="nav__item"  >
+              <a href="/" className="nav__link">Maim Page</a>
+            </li>
           </ul>
         </nav>
       </header>
