@@ -110,11 +110,11 @@ export const Card3 = (props) => {
     )
       // http.Post(URL)
       .then(response => {
-        //debugger
+        debugger
         return response.json()
       })
       .then(res => {
-        // debugger
+         debugger
         if (res && res.res && res.res[0] && res.res[0].success === 'false') {
           console.log('Err in stateUpdate sp');
           return;
@@ -145,7 +145,7 @@ export const Card3 = (props) => {
     let data = filter;
     setLoader(true);
     const URL = `${API_ENDPOINT}/pageim/filterUpdate?appname=${APP}&checked=${filter.checked}&name=${filter.name}&value=${filter.value}&itemsperpage=${itemsPerPage}`;
-    console.log(URL);
+    //console.log(URL);
     fetch(URL, {
       method: 'POST',
       headers: { Authorization: "Bearer " + localStorage['deviceIdentity'] },
@@ -258,7 +258,7 @@ export const Card3 = (props) => {
                     {AppFields.filter(x => x.standing_show === 1)[0] && AppFields.filter(x => x.standing_order === 999)[0] ? el[AppFields.filter(x => x.standing_order === 999)[0].name] : null}
                     {el['medal_image'] ? <img src={require(`./../../../assets/${el['medal_image']}.png`)} /> : null}
                   </td>
-                  <td className='tdStanding branch'>
+                  <td className='tdStanding branch hide'>
                     {el['image'] ? <img src={require(`./../../../assets/${el['image']}.png`)} /> : null}
 
                   </td>
@@ -294,7 +294,9 @@ export const Card3 = (props) => {
 
                     </div>
                     <div className="flag__status" >
-                      <i className="fa fa-circle" aria-hidden="true" title={el['clicks'] + ' clicks'} style={{ color: !el['clicks'] ? 'white' : `rgb(${Number(colors[el['clicks']].rgb.r)},${Number(colors[el['clicks']].rgb.g)},${Number(colors[el['clicks']].rgb.b)})` }}></i>
+                    {/* <i className={`fa fa-circle_${Number(el['clicks']) % 4}`}  aria-hidden="true" title={el['clicks'] + ' clicks'} style={{ color: !el['clicks'] ? 'white' : `rgb(${Number(colors[el['clicks']].rgb.r)},${Number(colors[el['clicks']].rgb.g)},${Number(colors[el['clicks']].rgb.b)})` }}></i> */}
+
+                      <i className={`fa fa-circle fa-circle_${Number(el['clicks']) % 4}`} aria-hidden="true" title={el['clicks'] + ' clicks'} style={{ color: !el['clicks'] ? 'white' : `rgb(${Number(colors[el['clicks']].rgb.r)},${Number(colors[el['clicks']].rgb.g)},${Number(colors[el['clicks']].rgb.b)})` }}></i>
                       <img className="flag__img" src={israelFlag} alt="" />
                     </div>
                   </div>
@@ -375,16 +377,17 @@ export const Card3 = (props) => {
                         :
                         <a className="more__button" href="#" onClick={() => { setPopupCard(index); handleClick(el) }}>More</a>
                       }
-
+{el['likes'] && 
                       <div className="like__sec" onClick={() => HandleLikes(el)}>
                         <i className="fas fa-heart" style={{ color: `rgb(200,${Number(el['likes']) % 256},${Math.floor(Number(el['likes']) / 25)})` }}></i>
                         <p>{Number(el['likes']) > 0 ? el['likes'] : ''}</p>
 
                       </div>
+}
                       <div>
 
                         {
-                          AppFields.filter(x => x.Stars === 'up') && AppFields.filter(x => x.stars === 'down') && AppFields.filter(x => x.stars === 'down')[0].name !== 0 ?
+                         AppFields.filter(x => x.stars === 'up') && AppFields.filter(x => x.stars === 'down') && AppFields.filter(x => x.stars === 'down')[0] && AppFields.filter(x => x.stars === 'down')[0].name !== 0 ?
                             <Stars rating={(Number(el[AppFields.filter(x => x.stars === 'down')[0].name]) - Number(el[AppFields.filter(x => x.stars === 'up')[0].name]) + 1) * 100 / Number(el[AppFields.filter(x => x.stars === 'down')[0].name])} />
                             :
                             <Stars rating={0} />

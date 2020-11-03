@@ -156,7 +156,7 @@ box-sizing: inherit;
    }
 }
 .categories ul li:nth-child(1){
-   background-color: #008fd1;
+   background-color: #24f511;
 }
 .categories ul li:nth-child(2){
    background-color: #db008d;
@@ -259,4 +259,23 @@ box-sizing: inherit;
 .copyright{
    display: flex;
    justify-content: center;
+}
+.container .box > p{
+   direction: rtl;
+   font-size: 1.2rem;
+font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.pageim{
+   font-size: 2rem;
+   text-align: center;
+   font-family:'Libre Baskerville', serif;
+}
+
+.takanon {
+   color:white;
+   font-size: 1rem;
+   margin-left: 10rem;
+   margin-right: 10rem;
+   font-family:Impact, Haettenschweiler, 'Arial Narrow ', sans-serif;
 }

@@ -372,10 +372,10 @@ Button.footer__botton{
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 .profile__img{
-    padding: .1rem;
-    margin-top: .5rem;
-    border: 1px solid rgb(77, 42, 175);
-    border-radius: 5rem;
+
+    /* -webkit-filter: drop-shadow(5px 5px 5px rgb(228, 226, 226)); */
+  filter: drop-shadow(5px 5px 5px #222);
+
 }
 .user__name{	
     font-size: 2.3rem;	
@@ -448,11 +448,11 @@ margin-left: 30px;
 .right p ,.left p{
     margin-bottom: 0.1em;
 }
-.club__flag__name{
+.team__flag__name{
     display: flex;
     justify-content: center;
 }
-.club__flag__name img{
+.team__flag__name img{
     margin-right: .5rem;
 }
 .card__footer{
@@ -1034,7 +1034,7 @@ display: block;
 
     }
     .tdStanding.pos{
-        width:7%;
+        width:6%;
         min-width: 5rem;
         font-size: 2rem;
         border-left: none;
@@ -1042,7 +1042,7 @@ display: block;
     .tdStanding.year{
         /* min-width:3.5rem; */
         /* width:7%; */
-        min-width: 7%;
+        min-width: 8%;
     }
     .tdStanding.branch{
         /* min-width:3rem; */
@@ -1082,7 +1082,7 @@ display: block;
         font-size: 0.8rem;
         
     }
-    .tdStanding.club{
+    .tdStanding.team{
         width:11%;
         min-width: 11%;
         text-overflow:ellipsis;
@@ -1118,7 +1118,6 @@ display: block;
         border-radius: 0 30px 30px 0;
         color: white;
        
-        /* margin-right: 1rem; */
     }
     tr td:nth-last-child(2){
   
@@ -1127,8 +1126,6 @@ display: block;
 
     .medal_image{
 
-        /* margin-right: 1rem;
-        width: 1rem;*/
         width: 2rem;
         height: 2rem; 
     }
