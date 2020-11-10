@@ -4,7 +4,7 @@ import deviceIdentity from './../helpers/Helpers';
 import { atom, useRecoilState } from 'recoil';
 export const ConfigContext = createContext();
 
-
+debugger
 const API_ENDPOINT = pageimEndPoint();
 
 const ConfigContextProvider = (props) => {

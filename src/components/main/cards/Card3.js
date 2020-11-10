@@ -97,7 +97,7 @@ export const Card3 = (props) => {
 
   useEffect(() => {
     // debugger
-    if (!app || app === '/' || app === '/Templates' ||searchNew.length===1)
+    if (!app || app === '/' || app === '/Templates' || searchNew.length === 1)
       return
     if (!deviceIdentity())
       return
@@ -114,7 +114,7 @@ export const Card3 = (props) => {
         return response.json()
       })
       .then(res => {
-         debugger
+        debugger
         if (res && res.res && res.res[0] && res.res[0].success === 'false') {
           console.log('Err in stateUpdate sp');
           return;
@@ -228,8 +228,6 @@ export const Card3 = (props) => {
         });
     }
 
-
-
   }
 
 
@@ -263,7 +261,7 @@ export const Card3 = (props) => {
 
                   </td>
                   {AppFields.filter(x => (x.standing_show === 1 && x.standing_order !== 999)).sort((a, b) => (a.standing_order > b.standing_order) ? 1 : -1).map((header, index1) => (
-                    <td className={`tdStanding ${el[header.name]}`} style={{ 'width': header.style_standing }}>{el[header.name] ? el[header.name] : null}</td>
+                    <td className={`tdStanding ${header.name}`} style={{ 'width': header.style_standing }}>{el[header.name] ? el[header.name] : null}</td>
 
                   ))}
 
@@ -280,7 +278,8 @@ export const Card3 = (props) => {
 
                     <div className="name__trophy">
                       <div className="name__place">
-                        <p>({AppFields.filter(x => x.cardHeaderPlace === 2)[0] ? el[AppFields.filter(x => x.cardHeaderPlace === 2)[0].name] : null})</p>
+                        <p>{AppFields.filter(x => x.cardHeaderPlace === 2)[0] &&el[AppFields.filter(x => x.cardHeaderPlace === 2)[0].name] &&`[${el[AppFields.filter(x => x.cardHeaderPlace === 2)[0].name]}]` }
+                        </p>
                         <p className="user__place" >{AppFields.filter(x => x.cardHeaderPlace === 3)[0] ? el[AppFields.filter(x => x.cardHeaderPlace === 3)[0].name] : null}</p>
                         <p className="user__name">{AppFields.filter(x => x.cardHeaderPlace === 1)[0] ? el[AppFields.filter(x => x.cardHeaderPlace === 1)[0].name] : null}</p>
                         <div className="trophy__quantity">
@@ -294,7 +293,7 @@ export const Card3 = (props) => {
 
                     </div>
                     <div className="flag__status" >
-                    {/* <i className={`fa fa-circle_${Number(el['clicks']) % 4}`}  aria-hidden="true" title={el['clicks'] + ' clicks'} style={{ color: !el['clicks'] ? 'white' : `rgb(${Number(colors[el['clicks']].rgb.r)},${Number(colors[el['clicks']].rgb.g)},${Number(colors[el['clicks']].rgb.b)})` }}></i> */}
+                      {/* <i className={`fa fa-circle_${Number(el['clicks']) % 4}`}  aria-hidden="true" title={el['clicks'] + ' clicks'} style={{ color: !el['clicks'] ? 'white' : `rgb(${Number(colors[el['clicks']].rgb.r)},${Number(colors[el['clicks']].rgb.g)},${Number(colors[el['clicks']].rgb.b)})` }}></i> */}
 
                       <i className={`fa fa-circle fa-circle_${Number(el['clicks']) % 4}`} aria-hidden="true" title={el['clicks'] + ' clicks'} style={{ color: !el['clicks'] ? 'white' : `rgb(${Number(colors[el['clicks']].rgb.r)},${Number(colors[el['clicks']].rgb.g)},${Number(colors[el['clicks']].rgb.b)})` }}></i>
                       <img className="flag__img" src={israelFlag} alt="" />
@@ -340,9 +339,9 @@ export const Card3 = (props) => {
                               {
                                 header.popup_show === 1 && el[header.name]
                                   ?
-                                  <p>{header.label}:</p>
+                                  <p id={index1 * 117}>{header.label}:</p>
                                   :
-                                  <p></p>
+                                  <p key={index1 * 117} ></p>
                               }
                             </>
                           ))}
@@ -353,9 +352,13 @@ export const Card3 = (props) => {
                               {
                                 header.popup_show === 1 && el[header.name]
                                   ?
-                                  <p>{el[header.name]}</p>
+                                  header.name === 'rider_link' ?
+                                    <a href={el[header.name]} className="fas share" key={index2 * 11187} target="blank">Link</a>
+                                    :
+                                    <p key={index2 * 114} >{el[header.name]}</p>
+
                                   :
-                                  <p></p>
+                                  <p key={index2 * 114} ></p>
                               }
                             </>
                           ))}
@@ -377,17 +380,17 @@ export const Card3 = (props) => {
                         :
                         <a className="more__button" href="#" onClick={() => { setPopupCard(index); handleClick(el) }}>More</a>
                       }
-{el['likes'] && 
+
                       <div className="like__sec" onClick={() => HandleLikes(el)}>
                         <i className="fas fa-heart" style={{ color: `rgb(200,${Number(el['likes']) % 256},${Math.floor(Number(el['likes']) / 25)})` }}></i>
-                        <p>{Number(el['likes']) > 0 ? el['likes'] : ''}</p>
+                        {el['likes'] && <p>{Number(el['likes']) > 0 ? el['likes'] : ''}</p>}
 
                       </div>
-}
+
                       <div>
 
                         {
-                         AppFields.filter(x => x.stars === 'up') && AppFields.filter(x => x.stars === 'down') && AppFields.filter(x => x.stars === 'down')[0] && AppFields.filter(x => x.stars === 'down')[0].name !== 0 ?
+                          AppFields.filter(x => x.stars === 'up') && AppFields.filter(x => x.stars === 'down') && AppFields.filter(x => x.stars === 'down')[0] && AppFields.filter(x => x.stars === 'down')[0].name !== 0 ?
                             <Stars rating={(Number(el[AppFields.filter(x => x.stars === 'down')[0].name]) - Number(el[AppFields.filter(x => x.stars === 'up')[0].name]) + 1) * 100 / Number(el[AppFields.filter(x => x.stars === 'down')[0].name])} />
                             :
                             <Stars rating={0} />

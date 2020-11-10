@@ -6,6 +6,9 @@ import useLogin from './LogIn';
 // import useCustomefetch from './../../../hooks/useCustomFetch';
 // import { pageimEndPoint } from '../../../Config';
 // import deviceIdentity from '../../../helpers/Helpers';
+//import takanon from '../../../assets/documents/takanonnovember.pdf';
+import takanon from '../assets/documents/takanonnovember.pdf';
+
 
 import Timer from './Timer';
 
@@ -50,8 +53,10 @@ const LoginModal = () => {
                            placeholder="Mobile Number" value={mobileNumber} pattern="^\d{3}-\d{7}$" required />
 
                      </div>
-                     <input className="checkbox agree" type="checkbox" onClick={handleAgree} checked={agree} /><span className="checkboxtext" required>קראתי ואני מסכים עם תנאי השימוש{agree}</span>
+                     <input className="checkbox agree" type="checkbox" onClick={handleAgree} checked={agree} /><a href = {takanon} target='blank'> קראתי ואני מסכים עם תנאי השימוש</a>
+                     
                      <input type="button" className="btnSubmit" value="Send OTP" onClick={submitLogin} disabled={!agree}/>
+                     {/* <span className="checkboxtext" required>OLDקראתי ואני מסכים עם תנאי השימוש{agree}</span> */}
                   </>
                )}
 

@@ -1028,9 +1028,11 @@ display: block;
     .tdStanding{
 
         overflow:hidden;
-        text-overflow: ellipsis;
-        white-space: space normal;
-        word-break: break-all;
+        text-overflow: clip;
+        white-space: pre-line;
+        /* pre | nowrap | pre-wrap | pre-line | break-spaces */
+
+        /* white-space: normal; */
 
     }
     .tdStanding.pos{
@@ -1043,11 +1045,14 @@ display: block;
         /* min-width:3.5rem; */
         /* width:7%; */
         min-width: 8%;
+        
     }
     .tdStanding.branch{
         /* min-width:3rem; */
         width:8%;
         min-width: 8%;
+        word-break: break-word !important;
+        white-space: normal  !important;
     }
     .tdStanding.total_tm{
         /* min-width:4rem; */
@@ -1067,27 +1072,34 @@ display: block;
         font-size: 1rem;
      
         text-overflow:ellipsis;
+        word-break: break-word !important;
+        white-space: normal  !important;
     }
 
     .tdStanding.race_name{
         width:11%;
         min-width: 11%;
         text-overflow:ellipsis;
-
+        word-break: break-word !important;
+        white-space: normal  !important;
     }
     .tdStanding.category{
         width:11%;
         min-width: 11%;
         text-overflow:ellipsis;
         font-size: 0.8rem;
+        word-break: break-word !important;
+        white-space: normal  !important;
         
     }
     .tdStanding.team{
-        width:11%;
-        min-width: 11%;
+        width:10%;
+        min-width: 10%;
+        max-width: 10%;
         text-overflow:ellipsis;
         font-size: 0.8rem;
-
+  word-break: break-word !important;
+  white-space: normal  !important;
 
         
     }

@@ -1,8 +1,14 @@
 
-
 export const pageimEndPoint = () => {
-    return 'http://localhost:8080';
-    //return 'http://109.207.76.127:8080';
+    debugger
+    // if(window.origin==null)
+    //     fetch(window.location.origin + '/serverurl.json')
+    //     .then(res=>{
+    //         window.urlName = res.url;
+    //     });
+    // else
+      return 'http://'+window.location.hostname+':8080';
+
 }
 export const configHeader = () => {
     const config = {

@@ -14,7 +14,7 @@ export const Templates = () => {
                                     <img className='image' src="img/logo.png" className="logo-img" />
                                 </div> */}
                                 <nav className="main-navigation">
-                                    <a href="#">About Us</a>
+                                    {/* <a href="#">About Us</a> */}
                                     <a href="mailto: pageimgreendevice@gmail.com">Send Email</a>
                                 </nav>
                             </div>
