@@ -7,7 +7,8 @@ box-sizing: inherit;
 .body {
    box-sizing: border-box;
    background-color: #f2f2f2;
-   font-family: 'Libre Baskerville', serif;
+   /* font-family: 'Libre Baskerville', serif; */
+   font-family: 'Work Sans', sans-serif;
 }
 .container {
    max-width: 1100px;
@@ -263,13 +264,15 @@ box-sizing: inherit;
 .container .box > p{
    direction: rtl;
    font-size: 1.2rem;
-font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+/* font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; */
+font-family: 'Work Sans', sans-serif;
 }
 
 .pageim{
    font-size: 2rem;
    text-align: center;
-   font-family:'Libre Baskerville', serif;
+   /* font-family:'Libre Baskerville', serif; */
+   font-family: 'Work Sans', sans-serif;
 }
 
 .takanon {
@@ -277,5 +280,6 @@ font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
    font-size: 1rem;
    margin-left: 10rem;
    margin-right: 10rem;
-   font-family:Impact, Haettenschweiler, 'Arial Narrow ', sans-serif;
+   /* font-family:Impact, Haettenschweiler, 'Arial Narrow ', sans-serif; */
+   font-family: 'Work Sans', sans-serif;
 }

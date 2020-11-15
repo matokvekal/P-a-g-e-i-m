@@ -88,8 +88,33 @@ const CardsFilter = (props) => {
         return newFilters.some(row => row.checked === true) ? 'true' : null;
     }
 
+    
+//     function handleSelectFilterNew(checked,name,value,id) {
+// debugger      
+//   let anyFilter = false;
+//         setFilter({
+//             checked: checked,
+//             name: name,
+//             value: value,
+//         })
+//         setFilters((x) => {
+//             const newFilters = filters.map((item) => {
+//                 if (item.filterId.toString() === id) {
+//                     return {
+//                         ...item,
+//                         checked: checked,
+//                     }
+//                 }
+//                 else {
+//                     return item;
+//                 }
+//             });
 
-
+//             setAnyQuery(() => checkIfFilterSelected(newFilters));
+//             return newFilters;
+//         }
+//         )
+//     }
     function handleSelectFilter(e) {
 
         let anyFilter = false;
@@ -139,9 +164,10 @@ const CardsFilter = (props) => {
                                             {filters.filter(item => item.field === category).map((item, index) => (
 
 
+                                                // <li className="cat__item filterModal" key={index * 1999} onClick={()=>handleSelectFilterNew(item.checked,category,item.data,item.filterId)}>
                                                 <li className="cat__item filterModal" key={index * 1999} >
                                                     <input className='filterModal' type="checkbox" id={item.filterId} value={item.data} name={category} onClick={handleSelectFilter} checked={item.checked} />
-                                                    <label className='filterModal' htmlFor={index1 % 2 === 0 ? 'sub__1' : 'sub__2'}>{item.data}({item.count})</label>
+                                                    <label className='filterModal' htmlFor={index1 % 2 === 0 ? 'sub__1' : 'sub__2'} >{item.data}({item.count})</label>
                                                 </li>
 
                                             ))}

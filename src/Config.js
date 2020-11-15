@@ -1,6 +1,6 @@
 
 export const pageimEndPoint = () => {
-    debugger
+    
     // if(window.origin==null)
     //     fetch(window.location.origin + '/serverurl.json')
     //     .then(res=>{

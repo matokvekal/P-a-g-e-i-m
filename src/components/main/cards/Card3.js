@@ -15,7 +15,7 @@ import ClickItem from '../../../helpers/clickItem';
 import card3 from './card3.css';
 import useLogIn from '../../../helpers/LogIn';
 import http from './http';
-
+import WelcomeModal from '../../../helpers/WelcomeModal';
 export const Card3 = (props) => {
 
   const [data, setData] = useState([]);
@@ -58,7 +58,15 @@ export const Card3 = (props) => {
     key: "_menuList",
     default: '',
   });
-
+  const welcomeModal = atom({
+    key: "_WelcomeModal",
+    default: {
+      formType: '',
+      active: true,
+      message: '<p></p>',
+    },
+  });
+  const [modalWelcome] = useRecoilState(welcomeModal);
   const [menuList, setMenuList] = useRecoilState(menuListAtom);
   const [login, setLogin] = useRecoilState(isLogIn);
 
@@ -233,6 +241,9 @@ export const Card3 = (props) => {
 
   return (
     <>
+    <div className='WelcomeModal'>
+    <WelcomeModal />
+    </div>
 
       {loader ? <CircularProgress /> : null}
       {!AppFields || AppFields.length === 0 || !data
@@ -278,7 +289,7 @@ export const Card3 = (props) => {
 
                     <div className="name__trophy">
                       <div className="name__place">
-                        <p>{AppFields.filter(x => x.cardHeaderPlace === 2)[0] &&el[AppFields.filter(x => x.cardHeaderPlace === 2)[0].name] &&`[${el[AppFields.filter(x => x.cardHeaderPlace === 2)[0].name]}]` }
+                        <p>{AppFields.filter(x => x.cardHeaderPlace === 2)[0] && el[AppFields.filter(x => x.cardHeaderPlace === 2)[0].name] && `[${el[AppFields.filter(x => x.cardHeaderPlace === 2)[0].name]}]`}
                         </p>
                         <p className="user__place" >{AppFields.filter(x => x.cardHeaderPlace === 3)[0] ? el[AppFields.filter(x => x.cardHeaderPlace === 3)[0].name] : null}</p>
                         <p className="user__name">{AppFields.filter(x => x.cardHeaderPlace === 1)[0] ? el[AppFields.filter(x => x.cardHeaderPlace === 1)[0].name] : null}</p>

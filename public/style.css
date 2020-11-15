@@ -9,7 +9,8 @@
 }
 html{
     scroll-behavior: smooth;
-    font-family: 'Poppins', sans-serif;
+    /* font-family: 'Poppins', sans-serif; */
+    font-family: 'Work Sans', sans-serif;
     font-size: 10px;
 }
 
@@ -101,9 +102,14 @@ ul{
     width: 100%;
     z-index: 1;
 }
-.fa.fa-recycle.red{
+.fa.fa-recycle.red {
     color:red;
 }
+.fa.fa-trash-alt.red {
+    color:red;
+}
+
+
 .subnav-content a {
     color: white;
     text-decoration: none;
@@ -196,7 +202,7 @@ display: none;
 .four__square{
     color: #dff9fb;
     font-size: var(--header-footer-font-size);
-    border: 1px solid rgb(250, 250, 252);
+    /* border: 1px solid rgb(250, 250, 252); */
     padding: 0 .5rem;
     border-radius: .5rem;
     cursor: pointer;
@@ -664,7 +670,7 @@ margin-left: 30px;
     top: 5rem;
     left: 57rem;
     height: 40rem;
-    width: 27rem;
+    width: 30rem;
     background-color: #ffffff;
     display: block;
     box-shadow: 0 1.5rem 5rem #757575;
@@ -1000,7 +1006,7 @@ tr:hover{
         margin: auto;
         max-height: 60rem;
         overflow-y: scroll;
-        left:7%;
+        left:4%;
     }
  .standing{
 display: block;
@@ -1167,6 +1173,10 @@ display: block;
     .fa.fa-recycle.red{
         color:red;
     }
+    .fa.fa-trash-alt.red {
+        color:red;
+    }
+    
 .chatIconHide{
     display: none;
 }

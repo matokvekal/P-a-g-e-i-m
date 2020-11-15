@@ -47,3 +47,8 @@ width:200rem;
 .fa.fa-circle_3 {
   animation: flicker 55s ease alternate infinite;
 }
+
+
+.modal-dialog {
+  top: 20%;
+}

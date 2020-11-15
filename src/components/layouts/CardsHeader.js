@@ -6,7 +6,7 @@ import CardsSideNav from './CardsSideNav';
 import { atom, useRecoilState } from 'recoil';
 import { FilterContext } from '../../context/FilterContext';
 import { SortContext } from '../../context/SortContext';
-
+import './cardsHeader.css';
 
 const CardsHeader = () => {
 
@@ -92,13 +92,19 @@ const CardsHeader = () => {
                     <i className="fas fa-arrow-alt-circle-left" onClick={prev}></i>
                     <i className="fas fa-arrow-alt-circle-right" onClick={next}></i>
                 </div>
+       
 
                 <div className="four__square" title='Reset all filter,sort' onClick={resetAllQuerys}>
-                    <i className={`fa fa-recycle  ${anyQuery === 'true' ? "red" : ""}`}></i>
+                    <i className={`fa fa-trash-alt  ${anyQuery === 'true' ? "red" : "hide"}`}></i>
+                    {/* <i className={`fa fa-recycle  ${anyQuery === 'true' ? "red" : ""}`}></i> */}
                 </div>
+              
                 <a href="#"><div className="filter__form active" onClick={handleFilter}>
-                    <input type="text" id="filter" placeholder='Filter' disabled value={`${filters.filter(x => x.checked === true).length} filters selected`} />
-                </div>   </a>
+               
+                    <input className='filterInput'type="text" id="filter" placeholder='Filter' disabled value={`Filters: ${filters.filter(x => x.checked === true).length}  selected`} />
+                    {/* <i className="fas fa-filter filterIcon"></i>  */}
+                    <svg className="filterIcon" width="26" height="26" viewBox="0 0 24 24" style={{fill: "white"}}><path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"/></svg>								
+               </div>   </a>
 
                 <div className="sort__box" >
                     <select className="selection__form" name="price" id="price" ref={selectRef} onChange={sortSelect}>
@@ -120,6 +126,7 @@ const CardsHeader = () => {
                 </div>
             </div>
             <CardsFilter />
+
         </>
     )
 

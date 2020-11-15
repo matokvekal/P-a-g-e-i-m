@@ -1,0 +1,17 @@
+
+.filterIcon{
+   display: none;
+}
+.filterInput{
+   display: block;
+}
+@media screen and (max-width:669px){
+.filterIcon{
+   display: block;
+   color:white !important;
+   font-size: 2rem;;
+}
+.filterInput{
+   display: none;
+}
+}

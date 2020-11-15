@@ -1,7 +1,8 @@
 body {
    font-size: 0.9em;
    color: #212121;
-   font-family: Arial;
+   /* font-family: Arial; */
+   font-family: 'Work Sans', sans-serif;
 }
 .container1{
   width: 300px;
