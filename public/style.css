@@ -1082,7 +1082,7 @@ display: block;
         white-space: normal  !important;
     }
 
-    .tdStanding.race_name{
+    .tdStanding.event_name{
         width:11%;
         min-width: 11%;
         text-overflow:ellipsis;

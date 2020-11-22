@@ -19,7 +19,7 @@ const SortContextProvider = (props) => {
 
     React.useEffect(() => {
         if(clearLocalStorage){
-            debugger
+            //debugger
             localStorage.removeItem('deviceIdentity');
             if (APP &&localStorage['fields_'+APP])
               localStorage.removeItem('fields_'+APP);

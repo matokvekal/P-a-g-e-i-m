@@ -25,7 +25,7 @@ const FilterContextProvider = (props) => {
                     return response.json()
                 })
                 .then(data => {
-                    // debugger
+                     debugger
                     if (data && data.filters && data.selectedfilters && data.filters[0].success !== 'false') {
                         setFilters((x) => {
                             const newFilters = data.filters.map((item, index) => {

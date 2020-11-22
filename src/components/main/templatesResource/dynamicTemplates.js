@@ -14,11 +14,11 @@ export const dynamicTemplates = () => {
             headers: { Authorization: "Bearer " + localStorage['deviceIdentity'] }
         })
             .then(response => {
-                debugger
+               // debugger
                 return response.json()
             })
             .then(res => {
-                debugger
+                //debugger
                 setSite(res &&res.appsresult[0] && res.appsresult[0][0].page_html? res.appsresult[0][0].page_html : null)
             })
             .catch((error) => {

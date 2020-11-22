@@ -66,6 +66,18 @@ export const Card3 = (props) => {
       message: '<p></p>',
     },
   });
+  const userSelectAll = atom({
+    key: "_userSelectAll",
+    default: "",
+  });
+  const userSelectcount = atom({
+    key: "_userSelect",
+    default: 0,
+});
+const [userSelect, setUserSelect] = useRecoilState(userSelectcount);
+  const [selectSelected, setSelectSelected] = useRecoilState(userSelectAll);
+  const [selectedItems, setSelectedItems] = useState('');//user_select
+  const [external, setExternal] = useState('');
   const [modalWelcome] = useRecoilState(welcomeModal);
   const [menuList, setMenuList] = useRecoilState(menuListAtom);
   const [login, setLogin] = useRecoilState(isLogIn);
@@ -79,6 +91,10 @@ export const Card3 = (props) => {
   let app = props.app ? props.app : '';
   let APP = app ? app.substr(1) : '';
   APP = APP.toLowerCase();
+
+  useEffect(() => {
+    setExternal(selectSelected ? 'get_All' : '');
+  }, [selectSelected])
 
 
   useEffect(() => {
@@ -96,7 +112,7 @@ export const Card3 = (props) => {
       setAppFields(tableFields.filter(x => x.application === APP));
 
     if (!tableFields || tableFields.length === 0) {
-      debugger
+      // debugger
       localStorage.removeItem("fields");
     }
   }, [tableFields])
@@ -104,13 +120,14 @@ export const Card3 = (props) => {
 
 
   useEffect(() => {
-    // debugger
+    
+    let temp=external;
     if (!app || app === '/' || app === '/Templates' || searchNew.length === 1)
       return
     if (!deviceIdentity())
       return
     setLoader(true);
-    const URL = `${API_ENDPOINT}/pageim/stateUpdate?appname=${APP}&search=${searchNew}&currentpage=${currentPage}&itemsperpage=${itemsPerPage}&order_by=${order_by}`;
+    const URL = `${API_ENDPOINT}/pageim/stateUpdate?appname=${APP}&search=${searchNew}&currentpage=${currentPage}&itemsperpage=${itemsPerPage}&order_by=${order_by}&external=${external}`;
     fetch(URL, {
       method: 'POST',
       headers: { Authorization: "Bearer " + localStorage['deviceIdentity'] },
@@ -118,21 +135,36 @@ export const Card3 = (props) => {
     )
       // http.Post(URL)
       .then(response => {
-        debugger
         return response.json()
       })
       .then(res => {
-        debugger
+        
         if (res && res.res && res.res[0] && res.res[0].success === 'false') {
           console.log('Err in stateUpdate sp');
           return;
         }
+        
+        setUserSelect(res.user_select.length)
+        // if (res.user_select.length > 0) {
+
+        // }
+
+        const newRes = res.res.map((item) => {
+          if (res.user_select.find(({ rowId }) => rowId === item.id)) {
+            item.selected = 'true';
+            return item;
+          }
+          else {
+            item.selected = false;
+            return item;
+          }
+        });
 
         mobilePage
           ?
-          setData(res.res ? [...data, ...res.res] : [...data])
+          setData(newRes ? [...data, ...newRes] : [...data])
           :
-          setData(res.res ? res.res : null);
+          setData(newRes ? newRes : null);
         setItems(res.total[0].totalRows);// react- in mobile page just add data insted of replace
         setLoader(false);
       })
@@ -141,7 +173,7 @@ export const Card3 = (props) => {
       });
 
 
-  }, [AppFields, searchNew, currentPage, itemsPerPage, mobilePage, order_by]);
+  }, [AppFields, searchNew, currentPage, itemsPerPage, mobilePage, order_by,external]);
 
 
   useEffect(() => {
@@ -152,7 +184,7 @@ export const Card3 = (props) => {
       return
     let data = filter;
     setLoader(true);
-    const URL = `${API_ENDPOINT}/pageim/filterUpdate?appname=${APP}&checked=${filter.checked}&name=${filter.name}&value=${filter.value}&itemsperpage=${itemsPerPage}`;
+    const URL = `${API_ENDPOINT}/pageim/filterUpdate?appname=${APP}&checked=${filter.checked}&name=${filter.name}&value=${filter.value}&itemsperpage=${itemsPerPage}&external=${external}`;
     //console.log(URL);
     fetch(URL, {
       method: 'POST',
@@ -183,10 +215,75 @@ export const Card3 = (props) => {
   }
 
 
+  const updateUserSelect = (res) => {///////////////////////
+
+
+  }
+  const manageUserSelect = (action, id) => {
+    if (!APP || !deviceIdentity())
+      return
+    const URL = `${API_ENDPOINT}/pageim/user_select?appname=${APP}&id=${id}&action=${action}`;
+    fetch(URL, {
+      method: 'POST',
+      headers: { Authorization: "Bearer " + localStorage['deviceIdentity'] },
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(res => {
+
+      
+        if (res && res.res[0])
+          setSelectedItems(res.res[0])
+        console.log('test')
+
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  }
+
+  const HandleSelect = el => event => {
+    
+    if (!login) {
+      closeModal();
+      setPopupCard('');
+      addLikeLogin(' Please login its simple, then select VS.');
+      return
+    }
+    else {
+      if (el['id'] && event.target) {
+        if (el.selected && el.selected === 'true') {
+          el.selected = 'false';
+          manageUserSelect('unChecked', el['id'])
+        }
+        else {
+          el.selected = 'true';
+          manageUserSelect('checked', el['id'])
+        }
+        setData((x) => {
+          const newData = data.map((item) => {
+            if (item.id === el['id']) {
+              return {
+
+                ...item,
+                selected: el.selected,
+              }
+            }
+            else {
+              return item;
+            }
+          });
+          return newData;
+        })
+        let test = data;
+      }
+    }
+  }
+
   function HandleLikes(el) {
     closeModal();
-    // setPopupCard('');
-    //debugger
+
     setPopupCard('');
     ClickItem('like', 'name', el['full_name'], el['id']);
     if (!login) {
@@ -241,9 +338,10 @@ export const Card3 = (props) => {
 
   return (
     <>
-    <div className='WelcomeModal'>
-    <WelcomeModal />
-    </div>
+      <div className='WelcomeModal'>
+        {menuList.filter(x => x.app === APP)[0].show_welcome === 'true' && <WelcomeModal />}
+
+      </div>
 
       {loader ? <CircularProgress /> : null}
       {!AppFields || AppFields.length === 0 || !data
@@ -380,8 +478,9 @@ export const Card3 = (props) => {
                   <div className="card__footer">
                     <div className="icons">
                       <a href={`https://wa.me/?text=${window.location.href}`} target="_blank"><i className="fas fa-share-alt-square share"></i></a>
-                      <input className="check" type="checkbox" name="completed" id="" />
 
+
+                      <input className='check' type="checkbox" value={el.id} name="user_select" onClick={e => HandleSelect(el)(e)} checked={el.selected === 'true' ? true : false} />
                     </div>
                     <div className="card__footer__main">
 

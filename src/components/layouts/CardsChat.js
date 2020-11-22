@@ -83,7 +83,7 @@ const CardsChat = () => {
             <input className='h_o_n_y' autoComplete="off" type="text" id="nemail_ho" value={formData.email_ho} onChange={handleInputChange} name="email_ho" placeholder="Your e_mail here"></input>
           </div>
           <div className="frm__btn">
-            <button className="close" type="submit" onClick={handleChat}><i className="fas fa-times"></i>Close</button>
+            <button className="submit _close" type="submit" onClick={handleChat}>Close<i className="fas fa-times"></i></button>
             <button className="submit" type="submit" onClick={submitRow}>Submit <i className="fas fa-paper-plane"></i></button>
           </div>
         </form>

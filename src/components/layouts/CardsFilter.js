@@ -88,33 +88,7 @@ const CardsFilter = (props) => {
         return newFilters.some(row => row.checked === true) ? 'true' : null;
     }
 
-    
-//     function handleSelectFilterNew(checked,name,value,id) {
-// debugger      
-//   let anyFilter = false;
-//         setFilter({
-//             checked: checked,
-//             name: name,
-//             value: value,
-//         })
-//         setFilters((x) => {
-//             const newFilters = filters.map((item) => {
-//                 if (item.filterId.toString() === id) {
-//                     return {
-//                         ...item,
-//                         checked: checked,
-//                     }
-//                 }
-//                 else {
-//                     return item;
-//                 }
-//             });
 
-//             setAnyQuery(() => checkIfFilterSelected(newFilters));
-//             return newFilters;
-//         }
-//         )
-//     }
     function handleSelectFilter(e) {
 
         let anyFilter = false;

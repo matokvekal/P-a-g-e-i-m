@@ -93,3 +93,6 @@ z-index: 10000;
    width: 35rem;
    padding: 2rem;
 } 
+.form-message{
+   font-size: 1.5rem;
+}

@@ -42,7 +42,7 @@ const LoginModal = () => {
                {modalLogin.formType === 'login' && (
                   <>
                      <div className="form-row">
-                        <label>{modalLogin.message}</label>
+                        <label className="form-message">{modalLogin.message}</label>
                      </div>
                      <div className="form-row">
                         <input type="text" id="personalName" className="form-input name" onChange={inputPersonalName}
