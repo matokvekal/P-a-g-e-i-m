@@ -336,15 +336,16 @@ export const Card3 = (props) => {
     }
 
   }
-  debugger
+  // debugger
 
   return (
     <>
+        <div style={{'z-index':'888'}}>{loader ? <CircularProgress /> : null}</div>
       <div className='WelcomeModal'>
         {menuList.filter(x => x.app === APP)[0].show_welcome === 'true' && <WelcomeModal />}
       </div>
 
-      {loader ? <CircularProgress /> : null}
+  
       {!AppFields || AppFields.length === 0 || !data
         ?
         <span className='error'>Error occured : {errorMsg} <CircularProgress /></span>
@@ -352,7 +353,7 @@ export const Card3 = (props) => {
         <div className="cards__area">
           <div className="cards">
             {/* <div className="main_head_mobile"> */}
-            <div class="Leaderboard__HeadRow-nnrug0-30 lgphL main_head_mobileNew">
+            <div class="Leaderboard__mobile lgphL main_head_mobileNew">
               <div class="Leaderboard__Rank-nnrug0-18 bdNual">
                 <div class="Leaderboard__HeadLabel-nnrug0-29 kEksxf">
                   {menuList.filter(x => x.app === APP)[0].standing_header}
@@ -396,7 +397,7 @@ export const Card3 = (props) => {
                         <div className="Leaderboard text">
                           <div className="Leaderboard name">{el['full_name'] ? el['full_name'] : null}</div>
                           <div className="Leaderboard lowerText">
-                            <span>{el['event_name'] ? <span>{el['event_name']}</span> : null}
+                            <span>{el['event_name'] ? <span>{el['event_name']}<span className="highlight">/</span></span> : null}
                               {el['branch'] ? <span>{el['branch']}<span className="highlight">/</span></span> : null}
                               {el['sub_branch'] ? <span>{el['sub_branch']}<span className="highlight">/</span></span> : null}
                               {el['category'] ? <span>{el['category']}</span> : null}</span>

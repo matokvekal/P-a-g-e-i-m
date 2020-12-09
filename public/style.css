@@ -522,14 +522,17 @@ margin-left: 30px;
     margin-right: .5rem;
 }
 .progress{
+    /* height: 10rem; */
     position: fixed;
     left: 50%;
      top: 50%;
-    box-shadow: 0 0 10rem rgb(211, 206, 206);
-    z-index: 10000;
+    /* box-shadow: 0 0 10rem rgb(211, 206, 206); */
+    z-index: 1000000;
         
 }
-
+.progress {
+    height: 4rem !important;
+}
 #popup {
     position: fixed;
     top: 45%;
@@ -822,7 +825,10 @@ tr:hover{
 
     }
 
-
+    .progress {
+        height: 4rem !important;
+        background-color: rgb(33, 44, 61) !important;
+    }
 
     .race__name__year{
 

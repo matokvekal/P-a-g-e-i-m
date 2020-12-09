@@ -156,7 +156,7 @@ width:200rem;
 }
 
 
-.Leaderboard__HeadRow-nnrug0-30.lgphL{
+.Leaderboard__mobile.lgphL{
 font-size: 20px;
 font-weight: 400;
 color: #92abcf;
@@ -170,6 +170,7 @@ padding: 10px;
 margin-bottom: 4px;
 margin-left: 4px;
 margin-right: 4px;
+margin-top: 1.2rem;
 /* -webkit-box-align: center; */
 align-items: center;
 background: rgb(29, 38, 54);
