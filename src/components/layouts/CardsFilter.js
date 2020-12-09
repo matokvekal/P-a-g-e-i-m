@@ -29,7 +29,6 @@ const CardsFilter = (props) => {
     const [filter, setFilter] = useRecoilState(newFilter);
     const [showFilter, setShowFilter] = useRecoilState(showHideFilter);//do not hide modal on click if contain className :filterModal
     const [filters, setFilters] = useContext(FilterContext);
-    // const [filterCheckbox, setFilterCheckbox] = useState(filters.filter(x => x.checked === true).length === 0 ? false : true)
     const [filterIndex, setFilterInex] = useState(0);
 
     function handleShowFilter(index1) {
@@ -67,6 +66,7 @@ const CardsFilter = (props) => {
             checked: e.target.checked,
             name: 'ALL',
             value: 'ALL',
+            sender:'',
         })
         setFilters((x) => {
             const newFilters = filters.map((item) => {
@@ -96,6 +96,7 @@ const CardsFilter = (props) => {
             checked: e.target.checked,
             name: e.target.name,
             value: e.target.value,
+            sender:'',
         })
         setFilters((x) => {
             const newFilters = filters.map((item) => {

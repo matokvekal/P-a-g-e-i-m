@@ -37,9 +37,8 @@ const SortContextProvider = (props) => {
                 headers: { Authorization: "Bearer " + localStorage['deviceIdentity'] }
             })
                 .then(response => {
-                    //debugger
                     if(response.status===401)
-                    {debugger
+                    {
                         setClearLocalStorage(true)
                     } 
                     
@@ -47,7 +46,6 @@ const SortContextProvider = (props) => {
                     return response.json()
                 })
                 .then(data => {
-                    //debugger
                     if (data && data.sortList) {
                         setSortList( [...data.sortList.map(x => ([x.name,x.label]))])
 

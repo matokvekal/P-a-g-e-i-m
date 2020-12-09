@@ -91,6 +91,7 @@ const CardsHeader = () => {
             checked: false,
             name: 'ALL',
             value: 'ALL',
+            sender:'',
         });
         setFilters((x) => {
             const newFilters = filters.map((item) => {

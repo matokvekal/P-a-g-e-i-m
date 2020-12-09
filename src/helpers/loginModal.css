@@ -96,3 +96,19 @@ z-index: 10000;
 .form-message{
    font-size: 1.5rem;
 }
+
+
+
+/* Media Queries ----------------------------------------------------------------------------------------------------------------------*/
+@media screen and (max-width:669px){
+body {
+   font-size: 0.9em;
+   color: #212121;
+   /* font-family: Arial; */
+   font-family: 'Work Sans', sans-serif;
+   background-color: rgb(29, 38, 54);
+    background-image: linear-gradient(to right, rgba(13, 230, 255, 0.15) 0%, rgba(201, 189, 174, 0) 25%);
+    box-shadow: rgba(0, 0, 0, 0.27) 0px 2px 3px 2px;
+
+}
+}

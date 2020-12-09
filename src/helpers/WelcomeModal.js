@@ -111,14 +111,35 @@ const WelcomeModal = () => {
 
    }, []);
    function selectEvent(name, value) {
+   //    setFilter({
+   //       checked: false,
+   //       name: 'ALL',
+   //       value: 'ALL',
+   //   });
+   //   setFilters((x) => {
+   //       const newFilters = filters.map((item) => {
+   //           return {
+   //               count: item.count,
+   //               data: item.data,
+   //               field: item.field,
+   //               filterId: item.filterId,
+   //               checked: false
+   //           }
+   //       });
+   //       return newFilters;
+   //   });
+   //   setAnyQuery(null);
+
       //debugger
-      setAnyQuery('true');
+   
       handleClose();
       setFilter({
          checked: true,
          name: name,
          value: value,
+         sender:'welcome'
       });
+      setAnyQuery('true');
    }
 
    return (

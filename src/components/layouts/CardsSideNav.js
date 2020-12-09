@@ -86,7 +86,9 @@ const CardsSideNav = () => {
               <a href="/" className="nav__link">Maim Page</a>
             </li>
           </ul>
+          Ver: <p className='version'>BETA </p>
         </nav>
+        
       </header>
 
 

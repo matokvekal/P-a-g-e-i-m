@@ -73,8 +73,9 @@ export const Card3 = (props) => {
   const userSelectcount = atom({
     key: "_userSelect",
     default: 0,
-});
-const [userSelect, setUserSelect] = useRecoilState(userSelectcount);
+  });
+  const standingVersion = 'new';
+  const [userSelect, setUserSelect] = useRecoilState(userSelectcount);
   const [selectSelected, setSelectSelected] = useRecoilState(userSelectAll);
   const [selectedItems, setSelectedItems] = useState('');//user_select
   const [external, setExternal] = useState('');
@@ -120,8 +121,8 @@ const [userSelect, setUserSelect] = useRecoilState(userSelectcount);
 
 
   useEffect(() => {
-    
-    let temp=external;
+
+    // let temp=external;
     if (!app || app === '/' || app === '/Templates' || searchNew.length === 1)
       return
     if (!deviceIdentity())
@@ -138,12 +139,12 @@ const [userSelect, setUserSelect] = useRecoilState(userSelectcount);
         return response.json()
       })
       .then(res => {
-        
+
         if (res && res.res && res.res[0] && res.res[0].success === 'false') {
           console.log('Err in stateUpdate sp');
           return;
         }
-        
+
         setUserSelect(res.user_select.length)
         // if (res.user_select.length > 0) {
 
@@ -173,18 +174,19 @@ const [userSelect, setUserSelect] = useRecoilState(userSelectcount);
       });
 
 
-  }, [AppFields, searchNew, currentPage, itemsPerPage, mobilePage, order_by,external]);
+  }, [AppFields, searchNew, currentPage, itemsPerPage, mobilePage, order_by, external]);
 
 
   useEffect(() => {
+    debugger
     const temp = likeChange.hasChange;
-    if (!app || app === '/' || app === '/Templates' || filter.value == 'undefined' || filter.name == 'undefined' || !filter.value || !filter.name)
+    if (!app || app === '/' || app === '/Templates' || filter.value === 'undefined' || filter.name === 'undefined' || !filter.value || !filter.name)
       return
     if (!deviceIdentity())
       return
     let data = filter;
     setLoader(true);
-    const URL = `${API_ENDPOINT}/pageim/filterUpdate?appname=${APP}&checked=${filter.checked}&name=${filter.name}&value=${filter.value}&itemsperpage=${itemsPerPage}&external=${external}`;
+    const URL = `${API_ENDPOINT}/pageim/filterUpdate?appname=${APP}&checked=${filter.checked}&name=${filter.name}&value=${filter.value}&itemsperpage=${itemsPerPage}&external=${external}&sender=${filter.sender}`;
     //console.log(URL);
     fetch(URL, {
       method: 'POST',
@@ -197,7 +199,7 @@ const [userSelect, setUserSelect] = useRecoilState(userSelectcount);
         return response.json()
       })
       .then(res => {
-        //debugger
+        debugger
         setCurrentPage(1);
         setMobilePage("");
         setData(res.res ? res.res : null); setItems(res.total[0].totalRows);
@@ -232,7 +234,7 @@ const [userSelect, setUserSelect] = useRecoilState(userSelectcount);
       })
       .then(res => {
 
-      
+
         if (res && res.res[0])
           setSelectedItems(res.res[0])
         console.log('test')
@@ -244,7 +246,7 @@ const [userSelect, setUserSelect] = useRecoilState(userSelectcount);
   }
 
   const HandleSelect = el => event => {
-    
+
     if (!login) {
       closeModal();
       setPopupCard('');
@@ -334,48 +336,78 @@ const [userSelect, setUserSelect] = useRecoilState(userSelectcount);
     }
 
   }
-
+  debugger
 
   return (
     <>
       <div className='WelcomeModal'>
         {menuList.filter(x => x.app === APP)[0].show_welcome === 'true' && <WelcomeModal />}
-
       </div>
 
       {loader ? <CircularProgress /> : null}
       {!AppFields || AppFields.length === 0 || !data
         ?
-        <span className='error'>Error occured : {errorMsg} <CircularProgress /></span> :
-
-
+        <span className='error'>Error occured : {errorMsg} <CircularProgress /></span>
+        :
         <div className="cards__area">
-
           <div className="cards">
-            <div className="main_head_mobile">
-              {/* <h1>ISRAEL CYCLING RACES RESULTS</h1> */}
-              <h1>{menuList.filter(x => x.app === APP)[0].standing_header}</h1>
+            {/* <div className="main_head_mobile"> */}
+            <div class="Leaderboard__HeadRow-nnrug0-30 lgphL main_head_mobileNew">
+              <div class="Leaderboard__Rank-nnrug0-18 bdNual">
+                <div class="Leaderboard__HeadLabel-nnrug0-29 kEksxf">
+                  {menuList.filter(x => x.app === APP)[0].standing_header}
+                </div>
+              </div>
+              <div class="Leaderboard__UserContainer-nnrug0-21 MnKPn">
+              </div>
             </div>
+            {/* <h1>{menuList.filter(x => x.app === APP)[0].standing_header}</h1> */}
+            {/* </div> */}
             {data.map((el, index) => (
               <>
                 {/*<!-- Mobile standing -->*/}
-                <tr className='standing' key={index * 331} onClick={() => { setPopupCard(index) }}>
-                  <td className='tdStanding pos' >
-                    {/* {el['pic']} */}
-                    {AppFields.filter(x => x.standing_show === 1)[0] && AppFields.filter(x => x.standing_order === 999)[0] ? el[AppFields.filter(x => x.standing_order === 999)[0].name] : null}
-                    {el['medal_image'] ? <img src={require(`./../../../assets/${el['medal_image']}.png`)} /> : null}
-                  </td>
-                  <td className='tdStanding branch hide'>
-                    {el['image'] ? <img src={require(`./../../../assets/${el['image']}.png`)} /> : null}
+                {standingVersion === 'old' ?
+                  <tr className='standing' key={index * 331} onClick={() => { setPopupCard(index) }}>
+                    <td className='tdStanding pos' >
+                      {AppFields.filter(x => x.standing_show === 1)[0] && AppFields.filter(x => x.standing_order === 999)[0] ? el[AppFields.filter(x => x.standing_order === 999)[0].name] : null}
+                      {el['medal_image'] ? <img src={require(`./../../../assets/${el['medal_image']}.png`)} /> : null}
+                    </td>
+                    <td className='tdStanding branch hide'>
+                      {el['image'] && <img src={require(`./../../../assets/${el['image']}.png`)} />}
+                    </td>
+                    {AppFields.filter(x => (x.standing_show === 1 && x.standing_order !== 999)).sort((a, b) => (a.standing_order > b.standing_order) ? 1 : -1).map((header, index1) => (
+                      <td className={`tdStanding ${header.name}`} style={index1 === 7 && el['event_id'] ? { 'width': header.style_standing, backgroundColor: `rgb(${colors[el['event_id']].rgb.r},${colors[el['event_id']].rgb.g},${colors[el['event_id']].rgb.b})` } : { 'width': header.style_standing }}>{el[header.name] ? el[header.name] : null}</td>
+                    ))}
+                  </tr>
+                  :
+                  <tr className='standing' key={index * 331} onClick={() => { setPopupCard(index) }}>
+                    <div className="Leaderboard allRow">
+                      <div className="Leaderboard first">
+                        <div className="Leaderboard side highlight">{el['pic'] ? el['pic'] : null}</div>
+                        <div className="Leaderboard cup cimg">
+                          {el['medal_image'] ? <img className="Leaderboard cimg" src={require(`./../../../assets/${el['medal_image']}.png`)} /> : null}
+                        </div>
+                      </div>
+                      <div className="Leaderboard UserAvatar " >
+                        <img width="20" height="20" src={require(`./../../../assets/bikesmall.png`)} />
+                      </div>
+                      <div className="Leaderboard data">
 
-                  </td>
-                  {AppFields.filter(x => (x.standing_show === 1 && x.standing_order !== 999)).sort((a, b) => (a.standing_order > b.standing_order) ? 1 : -1).map((header, index1) => (
-                    <td className={`tdStanding ${header.name}`} style={{ 'width': header.style_standing }}>{el[header.name] ? el[header.name] : null}</td>
+                        <div className="Leaderboard text">
+                          <div className="Leaderboard name">{el['full_name'] ? el['full_name'] : null}</div>
+                          <div className="Leaderboard lowerText">
+                            <span>{el['event_name'] ? <span>{el['event_name']}</span> : null}
+                              {el['branch'] ? <span>{el['branch']}<span className="highlight">/</span></span> : null}
+                              {el['sub_branch'] ? <span>{el['sub_branch']}<span className="highlight">/</span></span> : null}
+                              {el['category'] ? <span>{el['category']}</span> : null}</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="Leaderboard year highlight">{el['year'] ? el['year'] : null}</div>
+                    </div>
+                  </tr>
+                }
 
-                  ))}
-
-
-                </tr>
                 <div className={popupCard === index ? 'card__item active' : data.length < 5 ? 'card__item card_item_width' : 'card__item'} id={popupCard === index ? 'popup' : null} data={index}>
 
                   {/*<!-- Card Header-->*/}
@@ -408,6 +440,7 @@ const [userSelect, setUserSelect] = useRecoilState(userSelectcount);
                       <img className="flag__img" src={israelFlag} alt="" />
                     </div>
                   </div>
+
                   {/*<!-- Card Content -->*/}
                   <div className="card__content">
                     {popupCard !== index ?

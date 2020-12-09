@@ -2,29 +2,22 @@ import React, { useState, useEffect } from 'react';
 import ConfigContextProvider from './context/ConfigContext';
 import FilterontextProvider from './context/FilterContext';
 import SortContextProvider from './context/SortContext';
-//import MenuContextProvider from './context/MenuContext';
 import GlobalContextProvider from './context/GlobalContext';
-// import PrimarySearchAppBar from './components/layouts/PrimarySearchAppBar';
-// import './App.css';
-// import UploadFile from './components/UploadFile';
+
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Pageim from './components/Pageim';
 import Templates from './components/main/Templates';
 // import TodoWatsApp from './components/main/external/TodoWatsApp';
 import DynamicComponent from './components/main/DynamicComponent';
 import { pageimEndPoint } from './Config';
-// // import { url } from './helpers/Helpers';
-// import { RecoilRoot } from "recoil";
+
 import CardsHeader from './components/layouts/CardsHeader';
-// import CardsSideNav from './components/layouts/CardsSideNav';
-// import CardsFilter from './components/layouts/CardsFilter';
 
 import CardsChat from './components/layouts/CardsChat';
 import CardsFooter from './components/layouts/CardsFooter';
 import { atom, useRecoilState } from 'recoil';
 import deviceIdentity from './helpers/Helpers';
 import LoginModal from './helpers/LoginModal';
-// import SmsAuth from './components/main/smsVerification/SmsAuth';
 const colorPalet = [];
 colorPalet.basic = {
   '--color-primary': '#f89514',
@@ -66,28 +59,16 @@ colorPalet.tryit = {
 
 
 function App() {
-  // let set = 'tryit';
-  // function setColor(set) {
-  //   const color = colorPalet[set];
-
-  //   for (let key in color) {
-  //     document.documentElement.style.setProperty(key, color[key]);
-  //   }
-  // }
-
 
   const menuListAtom = atom({
     key: "_menuList",
     default: '',
   });
 
-  //debugger
 
-  // const [renderCounter, setRenderCounter] = useState([])
   const API_ENDPOINT = pageimEndPoint();
   const [menuList, setMenuList] = useRecoilState(menuListAtom);
-  // const location = window.location.pathname;
-  // const [freeUserToken] = useState(null)
+
   const [app, setApp] = useState('');
   let currentDir = window.localStorage.getItem('AppDirection');
   if (currentDir == null || (currentDir !== 'rtl' && currentDir !== 'ltr'))

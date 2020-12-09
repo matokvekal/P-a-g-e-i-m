@@ -62,7 +62,7 @@ const CardsFooter = () => {
                 <div className="page__box" className={hildeScroll}>
                     <div className='page__box'>
                         <Button className={itemsPerPage*currentPage>items?'footer__botton__hide':`footer__botton`}   type="primary" onClick={nextMobile} >
-                             {itemsPerPage*currentPage>items?'0':<>more   {itemsPerPage*currentPage>items?'':` ${items-itemsPerPage*currentPage}`}   </>}
+                             {itemsPerPage*currentPage>items?'':<>more   {itemsPerPage*currentPage>items?'':` ${items-itemsPerPage*currentPage}`}   </>}
                        </Button>
                     </div>
 

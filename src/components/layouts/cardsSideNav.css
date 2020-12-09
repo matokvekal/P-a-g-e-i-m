@@ -18,7 +18,10 @@
    padding: 1.5rem 0;
    text-transform: uppercase;
 }
-
+.version{
+   font-size: 3Rem;
+   
+}
 .navheader{
 display:flex;
 

@@ -70,6 +70,7 @@ ul{
     text-transform: uppercase;
     border-bottom: 1px solid #adaeaf;
 } */
+.main_head_mobileNew,
 .main_head_mobile{
     display: none;
 }
@@ -228,8 +229,9 @@ display: none;
     right: 0;
     bottom: 0;
     font-size: var(--header-footer-font-size);
-    color: var(--header-footer-text-color);
-    background-color: var(--header-footer-color);
+    color:rgb(146, 171, 207);
+    /* color: var(--header-footer-text-color); */
+    background-color: transparent;
     padding: .4rem .5rem;
     cursor: pointer;
 }
@@ -763,6 +765,8 @@ margin-left: 30px;
         display: flex;
         align-items: center;
         justify-content: space-between;
+        box-shadow: rgba(0, 0, 0, 0.27) 0px 2px 3px 2px;
+        background-color: rgb(33, 44, 61);
     }
     .header .pages,
     .header .price__box,
@@ -826,6 +830,8 @@ tr:hover{
     }
     Button.footer__botton{
         display: block;
+        color:rgb(17, 236, 61);
+        font-size: 2rem;
     
     }
        Button.footer__botton__hide{
@@ -890,14 +896,10 @@ tr:hover{
         align-items: center;
         padding: 0 2rem;
         color: var(--header-footer-text-color);
+        box-shadow: rgba(0, 0, 0, 0.27) 0px 2px 3px 2px;
+        background-color: rgb(33, 44, 61);
     }
-/* .page__box {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-left: 5rem;
 
-} */
 .total__mobile{
     font-size: var(--header-footer-font-size);
     display: flex;
@@ -925,6 +927,9 @@ tr:hover{
         display: flex;
         flex-direction: column;
         grid-gap: 0rem;
+        margin-top:3rem;
+        margin-left: 1rem;
+        margin-right: 1rem;
         /* margin-bottom: 1rem; */
     }
     
@@ -946,6 +951,9 @@ tr:hover{
     }
     #popup .card__footer__main .more__button{
         display: none;
+    }
+    .more__button{
+        color:rgb(17, 236, 61);
     }
     .card__item{
         width: 100%;
@@ -1167,6 +1175,10 @@ display: block;
         border-radius: 30px;
         margin-bottom: 1rem;
     }
+    .main_head_mobileNew{
+        display: block;
+    }
+    }
     .main_head_mobile h1{font-size: 20px;font-weight: bold;color :white;margin-bottom: 0px;}
     .main_head_mobile h3{font-size: 20px;color: goldenrod;font-size: 18px;}
     
@@ -1182,7 +1194,7 @@ display: block;
 }
 
 
-}
+
 /* For tablet devices -------------------------------------------------------------------------------------------------------------------------------*/
 @media screen and (min-width:810px) and (max-width:920px){
 .user__place{
@@ -1267,6 +1279,8 @@ display: block;
         align-items: center;
         padding: 0 2rem;
         color: var(--header-footer-text-color);
+        
+
     }
     .cards__area{
         margin: 0 1rem;
