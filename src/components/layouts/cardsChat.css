@@ -7,8 +7,10 @@
    border-radius: 4px;
    margin: 0;
    padding: .5rem;
-   background: var(--header-footer-text-color);
-   outline: none;
+
+   /* background: rgb(217, 226, 238); */
+   /* box-shadow: 0 0 10rem rgba(0, 0, 0, 1); */
+   color: rgb(17, 236, 229);
 
 }
 .h_o_n_y{
@@ -22,7 +24,20 @@
 }
 .row{
    margin-left: 0;
+   color: var(--color-new-gray);
 }
 .submit._close{
    background-color: tomato;
+}
+.form.active,.frm__btn{
+   background-color: rgb(61, 67, 77);
+}
+
+.textarea{
+   width: 100%;
+   background-color: rgb(29, 38, 54);
+   color: rgb(17, 236, 229);
+   font-size: 2rem;
+
+   ;
 }

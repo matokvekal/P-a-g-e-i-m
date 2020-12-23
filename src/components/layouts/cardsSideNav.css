@@ -1,6 +1,7 @@
 /* Sidebar */
 .sidebar{
-   background-color: #757575;
+   /* background-color: #757575; */
+   color: #92abcf;
    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
    position: fixed;
    top: 0;
@@ -8,13 +9,17 @@
    width: 29rem;
    height: 100vh;
    z-index: 1000;
+   background-color: rgb(29, 38, 54);
+   /* flex: 0 0 auto; */
+   font-size: 14px;
+   color: #92abcf;
 }
 .sidebar__text{
    text-align: center;
    font-size: 2.5rem;
    letter-spacing: 3px;
    font-weight: 600;
-   color: var(--bg-primary);
+   color: #92abcf;
    padding: 1.5rem 0;
    text-transform: uppercase;
 }

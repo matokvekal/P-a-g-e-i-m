@@ -114,7 +114,7 @@ const CardsHeader = () => {
     return (
         <>
             <CardsSideNav />
-            <div className="header">
+            <div className="header jZMqpm">
                 <div className="pages">
                     <p>{currentPage}  of {maxPage}</p>
                     <i className="fas fa-arrow-alt-circle-left" onClick={prev}></i>

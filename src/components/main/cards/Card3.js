@@ -74,6 +74,11 @@ export const Card3 = (props) => {
     key: "_userSelect",
     default: 0,
   });
+  const Query = atom({
+    key: "_critQuery",
+    default: "",
+});
+const [anyQuery, setAnyQuery] = useRecoilState(Query);
   const standingVersion = 'new';
   const [userSelect, setUserSelect] = useRecoilState(userSelectcount);
   const [selectSelected, setSelectSelected] = useRecoilState(userSelectAll);
@@ -93,6 +98,10 @@ export const Card3 = (props) => {
   let APP = app ? app.substr(1) : '';
   APP = APP.toLowerCase();
 
+  const handleClickFullName = name => {
+    setAnyQuery('true');
+    setSearchNew(name);
+  }
   useEffect(() => {
     setExternal(selectSelected ? 'get_All' : '');
   }, [selectSelected])
@@ -213,6 +222,7 @@ export const Card3 = (props) => {
   }, [filter, likeChange]);
 
   function handleClick(el) {
+    debugger
     ClickItem('like', 'name', el['full_name'], el['id']);
   }
 
@@ -246,14 +256,15 @@ export const Card3 = (props) => {
   }
 
   const HandleSelect = el => event => {
-
+debugger
     if (!login) {
       closeModal();
       setPopupCard('');
-      addLikeLogin(' Please login its simple, then select VS.');
+      addLikeLogin(' Please login its simple, then select cards');
       return
     }
     else {
+      debugger
       if (el['id'] && event.target) {
         if (el.selected && el.selected === 'true') {
           el.selected = 'false';
@@ -284,6 +295,7 @@ export const Card3 = (props) => {
   }
 
   function HandleLikes(el) {
+    debugger
     closeModal();
 
     setPopupCard('');
@@ -300,7 +312,7 @@ export const Card3 = (props) => {
       return;
     }
     else
-      if (el['likes'] && el['likes'] != '')
+      if (el['likes'] && el['likes'] !== '')
         el['likes'] = Number(el['likes']) + 1;
       else
         el['likes'] = 1;
@@ -340,12 +352,12 @@ export const Card3 = (props) => {
 
   return (
     <>
-        <div style={{'z-index':'888'}}>{loader ? <CircularProgress /> : null}</div>
+      <div style={{ 'z-index': '888' }}>{loader ? <CircularProgress /> : null}</div>
       <div className='WelcomeModal'>
         {menuList.filter(x => x.app === APP)[0].show_welcome === 'true' && <WelcomeModal />}
       </div>
 
-  
+
       {!AppFields || AppFields.length === 0 || !data
         ?
         <span className='error'>Error occured : {errorMsg} <CircularProgress /></span>
@@ -395,12 +407,15 @@ export const Card3 = (props) => {
                       <div className="Leaderboard data">
 
                         <div className="Leaderboard text">
-                          <div className="Leaderboard name">{el['full_name'] ? el['full_name'] : null}</div>
+                          <div className="Leaderboard name" >{el['full_name'] ? el['full_name'] : null}</div>
                           <div className="Leaderboard lowerText">
-                            <span>{el['event_name'] ? <span>{el['event_name']}<span className="highlight">/</span></span> : null}
+                            <span>
+                              {el['special'] ? <span>{el['special']}<span className="special">/</span></span> : null}
+                              {el['event_name'] ? <span>{el['event_name']}<span className="highlight">/</span></span> : null}
                               {el['branch'] ? <span>{el['branch']}<span className="highlight">/</span></span> : null}
                               {el['sub_branch'] ? <span>{el['sub_branch']}<span className="highlight">/</span></span> : null}
-                              {el['category'] ? <span>{el['category']}</span> : null}</span>
+                              {el['category'] ? <span>{el['category']}</span> : null}
+                            </span>
                           </div>
                         </div>
                       </div>
@@ -423,7 +438,7 @@ export const Card3 = (props) => {
                         <p>{AppFields.filter(x => x.cardHeaderPlace === 2)[0] && el[AppFields.filter(x => x.cardHeaderPlace === 2)[0].name] && `[${el[AppFields.filter(x => x.cardHeaderPlace === 2)[0].name]}]`}
                         </p>
                         <p className="user__place" >{AppFields.filter(x => x.cardHeaderPlace === 3)[0] ? el[AppFields.filter(x => x.cardHeaderPlace === 3)[0].name] : null}</p>
-                        <p className="user__name">{AppFields.filter(x => x.cardHeaderPlace === 1)[0] ? el[AppFields.filter(x => x.cardHeaderPlace === 1)[0].name] : null}</p>
+                        <p className="user__name" onDoubleClick={() => handleClickFullName(el['full_name'])}>{AppFields.filter(x => x.cardHeaderPlace === 1)[0] ? el[AppFields.filter(x => x.cardHeaderPlace === 1)[0].name] : null}</p>
                         <div className="trophy__quantity">
                           {el['medal_image'] ? <img src={require(`./../../../assets/${el['medal_image']}.png`)} /> : null}
                         </div>

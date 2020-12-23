@@ -6,6 +6,26 @@
    display: block;
 }
 
+.jZMqpm {
+font-size: 16px;
+font-weight: 400;
+color: #92abcf;
+font-family: Nunito,Arial,Helvetica,sans-serif;
+box-sizing: inherit;
+background-color: rgb(29, 38, 54);
+background-image: linear-gradient(to right, rgba(13, 230, 255, 0.15) 0%, rgba(201, 189, 174, 0) 25%);
+box-shadow: rgba(0, 0, 0, 0.27) 0px 2px 3px 2px;
+/* padding: 15px; */
+/* display: flex; */
+/* position: sticky; */
+/* top: 68px; */
+/* left: 0px; */
+/* width: 100%; */
+z-index: 99;
+/* overflow: hidden; */
+/* height: 111px; */
+}
+
 @media screen and (max-width:669px){
 .filterIcon{
    display: block;

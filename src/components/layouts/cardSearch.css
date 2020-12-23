@@ -1,5 +1,5 @@
 input.searchupper{
-   background: rgb(255, 255, 255);
+   /* background: rgb(255, 255, 255); */
    height: 2.5rem;
    margin: 0;
    padding: .5rem; 
@@ -8,6 +8,9 @@ input.searchupper{
     border: none; 
     outline: none;
    font-size: 2rem;
+   font-size: var(--header-footer-font-size);
+   background-color: var(--header-footer-text-color);
+   color: var(--color-new-gray);
 }
 
 
@@ -16,8 +19,8 @@ input.searchupper{
    input.searchupper{
       padding: 0 1rem;
       border-radius: 1rem;
-      background-color: rgba(255, 255, 255, 0.92);
-      color: rgb(24, 13, 54);
+      /* background-color: rgba(255, 255, 255, 0.92);
+      color: rgb(24, 13, 54); */
       font-weight: 500;
   }
 }
@@ -26,8 +29,8 @@ input.searchupper{
    input.searchupper{
       padding: 0 1rem;
       border-radius: 1rem;
-      background-color: rgba(255, 255, 255, 0.92);
-      color: rgb(24, 13, 54);
+      /* background-color: rgba(255, 255, 255, 0.92);
+      color: rgb(24, 13, 54); */
       font-weight: 500;
   }
 }

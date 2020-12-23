@@ -32,7 +32,8 @@ const CardsFilter = (props) => {
     const [filterIndex, setFilterInex] = useState(0);
 
     function handleShowFilter(index1) {
-        setFilterInex(index1);
+        filterIndex===index1?setFilterInex(''): setFilterInex(index1);
+       
     }
 
     useEffect(() => {
@@ -133,9 +134,9 @@ const CardsFilter = (props) => {
                                     <div className={index1 % 2 === 0 ? 'sub__catagory__1 filterModal' : 'sub__catagory__2 filterModal'} key={7623 * index1}>
                                         <div className='filterModal subFilter' onClick={() => handleShowFilter(index1)}>
                                             <label htmlFor={index1 % 2 === 0 ? 'A' : 'B'} className='filterModal subFilterHeader'>{category}</label>
-                                            <label className='toggleFilter  filterModal subFilterHeader' >{filterIndex === index1 ? '' : <i className="fas fa-plus filterModal"></i>}</label>
+                                            <label className='toggleFilter  filterModal subFilterHeader' >{filterIndex === index1 ? <i className="fas fa-minus filterModal"></i> : <i className="fas fa-plus filterModal"></i>}</label>
                                         </div>
-                                        <ul className={`sub__catagory filterModal displayNone ${filterIndex == index1 ? 'displayCategory' : null}`} >
+                                        <ul className={`sub__catagory filterModal displayNone ${filterIndex === index1 ? 'displayCategory' : null}`} >
                                             {filters.filter(item => item.field === category).map((item, index) => (
 
 

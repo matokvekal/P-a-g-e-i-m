@@ -87,6 +87,7 @@ const CardsSideNav = () => {
             </li>
           </ul>
           Ver: <p className='version'>BETA </p>
+          <a target="_blank"  href="http://page-im.com/info.html">LIST</a>
         </nav>
         
       </header>
@@ -96,4 +97,4 @@ const CardsSideNav = () => {
   )
 
 }
-export default CardsSideNav;
+export default CardsSideNav; 
