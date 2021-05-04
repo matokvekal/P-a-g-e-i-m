@@ -2,12 +2,12 @@ import React, { useContext, useEffect, useState } from 'react';
 import { FilterContext } from './../context/FilterContext';
 // import smsAuth from './smsAuth.css';
 import { atom, useRecoilState } from 'recoil';
-import welcomeModal from './welcomeModal.css';
+// import welcomeModal from './welcomeModal.css';
 // import useCustomefetch from './../../../hooks/useCustomFetch';
 // import { pageimEndPoint } from '../../../Config';
 // import deviceIdentity from '../../../helpers/Helpers';
-//import takanon from '../../../assets/documents/takanonnovember.pdf';
-import takanon from '../assets/documents/takanonnovember.pdf';
+//import takanon from '../../../assets/documents/takanon.pdf';
+import takanon from '../assets/documents/takanon.pdf';
 import Modal from 'react-bootstrap/Modal';
 import Alert from 'react-bootstrap/Alert';
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -19,7 +19,7 @@ import deviceIdentity from './/Helpers';
 
 import Button from 'react-bootstrap/Button';
 import Carousel from 'react-bootstrap/Carousel';
-import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 import Timer from './Timer';
 
 import { pageimEndPoint } from '../Config';

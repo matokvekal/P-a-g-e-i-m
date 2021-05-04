@@ -18,7 +18,7 @@ body{
 	margin-top: 80px;
 }
 	span{
-		font-family: monospace;
+		/* font-family: monospace; */
 		font-size: 72px;
 		position: absolute;
 		top: 50%;

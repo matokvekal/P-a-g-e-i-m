@@ -61,7 +61,7 @@ const CardsChat = () => {
       <div className="chat__btn" id="chat__btn" onClick={handleChat}>
         <a href="#"><i className="far fa-comment-alt"></i></a>
       </div>
-      <div className="chat__box">
+      <div className="chat__box" style={{"visibility": "hidden"}}>
         <form className={`form    ${openChat === 'true' ? "active" : ""}`}>
           <textarea className="textarea" value={formData.message} name='message' onChange={handleInputChange} placeholder="Please let us know what we can do for you in the future."></textarea>
           <div className='user_data_message'>

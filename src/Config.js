@@ -7,7 +7,8 @@ export const pageimEndPoint = () => {
     //         window.urlName = res.url;
     //     });
     // else
-      return 'http://'+window.location.hostname+':8080';
+       return 'http://'+window.location.hostname+':8080';//DEV
+     //  return 'https://'+window.location.hostname+':8080';//producton
 
 }
 export const configHeader = () => {
@@ -16,5 +17,6 @@ export const configHeader = () => {
             'Content-Type': 'application/json'
         }
     };
+ 
     return config;
 }

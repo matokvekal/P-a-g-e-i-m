@@ -1,0 +1,41 @@
+footer {
+	padding: 4rem 6rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	color: #fff;
+}
+
+.footer-text {
+	font-size: 1.6rem;
+	letter-spacing: 1px;
+}
+
+.footer-text span {
+	display: inline-block;
+	margin: 0 1rem;
+	font-size: 2rem;
+	transform: translateY(.2rem);
+}
+
+.footer-links a {
+	font-size: 1rem;
+}
+
+@media (max-width: 900px) {
+	footer {
+		flex-direction: column;
+		padding: 4rem 1rem;
+	}
+
+	.footer-text {
+		order: 2;
+		margin-top: 1rem;
+		text-align: center;
+	}
+
+	.footer-links a {
+		margin: 0 .25rem;
+		font-weight: normal;
+	}
+}

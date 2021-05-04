@@ -226,7 +226,7 @@
    },
    {
       "colorId": 15,
-      "hexString": "#ffffff",
+      "hexString": "--text-second",
       "rgb": {
          "r": 255,
          "g": 255,

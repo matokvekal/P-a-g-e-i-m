@@ -54,7 +54,7 @@ border-bottom: 1px solid #adaeaf;
 
 
 .fa-sign-in{
-   color:red;
+   color: --color-red
 }
 .fa-sign-out{
    color:greenyellow;
@@ -68,7 +68,7 @@ border-bottom: 1px solid #adaeaf;
   }
   .sidebar .sidebar__text{
       font-size: 1.4rem;
-      color: #ffffff;
+      color: --text-second;
   }
   .sidebar .nav__link{
       font-size: 1.3rem;
@@ -87,7 +87,7 @@ border-bottom: 1px solid #adaeaf;
   }
   .sidebar .sidebar__text{
       font-size: 1.8rem;
-      color: #ffffff;
+      color: --text-second;
   }
   .sidebar .nav__link{
       font-size: 1.6rem;

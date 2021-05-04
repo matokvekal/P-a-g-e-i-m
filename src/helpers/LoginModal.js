@@ -6,8 +6,8 @@ import useLogin from './LogIn';
 // import useCustomefetch from './../../../hooks/useCustomFetch';
 // import { pageimEndPoint } from '../../../Config';
 // import deviceIdentity from '../../../helpers/Helpers';
-//import takanon from '../../../assets/documents/takanonnovember.pdf';
-import takanon from '../assets/documents/takanonnovember.pdf';
+//import takanon from '../../../assets/documents/takanon.pdf';
+import takanon from '../assets/documents/takanon.pdf';
 
 
 import Timer from './Timer';
@@ -32,10 +32,10 @@ const LoginModal = () => {
    const [modalLogin] = useRecoilState(loginModal);
 
    return (
-      <div className={`login card__item ${modalLogin.active &&timerDown!=0? 'active' : null}`} id="popup">
+      <div className={`+ ${modalLogin.active &&timerDown!=0? 'active' : null}`} id="popup">
          <div className="container1">
             <div className="error"></div>
-            <form id="frm-mobile-verification">
+            <form id="frm-mobile-verification" style={{"visibility": "hidden"}}>
                <div className="form-row close" onClick={closeModal}><i className="fa fa-close"></i></div>
                <div className="form-heading">Mobile registration form</div>
 

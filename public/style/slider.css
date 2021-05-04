@@ -1,0 +1,64 @@
+/* slider */
+
+.slider,
+.slide {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+.slider .slide {
+  /*opacity: 0;*/
+  display: none;
+}
+
+.slider .slide.active {
+  display: block;
+  /*animation: slider 0.5s ease-in forwards;*/
+}
+
+.slider-button {
+	position: absolute;
+	left: 2rem;
+	bottom: 1rem;
+	display: flex;
+}
+
+.slider-button [id^="s-"] {
+	width: 10px;
+	height: 10px;
+	border: 2px solid #00A292;
+	cursor: pointer;
+	border-radius: 50%;
+	margin-right: .5rem;
+	z-index: 100;
+}
+
+.slider-button [id^="s-"].active {
+	background-color: #00A292;
+}
+
+/* slider ends */
+
+/* slider animation */
+@keyframes sliderNext {
+  from {
+  	transform: translateX(50%);
+    opacity: 0.25;
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes sliderPrev {
+  from {
+  	transform: translateX(-50%);
+    opacity: 0.25;
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}

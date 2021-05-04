@@ -87,7 +87,7 @@ const CardsSideNav = () => {
             </li>
           </ul>
           Ver: <p className='version'>BETA </p>
-          <a target="_blank"  href="http://page-im.com/info.html">LIST</a>
+          <a target="_blank"  href="https://www.israelrace.com/info.html">LIST</a>
         </nav>
         
       </header>

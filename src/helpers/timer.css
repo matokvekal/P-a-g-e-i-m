@@ -42,7 +42,7 @@
  }
  
  .timerCirsle.red {
-   color: red;
+   color:  --color-red
  }
  .base-timer {
    position: relative;

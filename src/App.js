@@ -23,7 +23,7 @@ colorPalet.basic = {
   '--color-primary': '#f89514',
   '--bg-primary': '#3ebedf',
   '--text': '#16191a',
-  '--text-second': '#ffffff',
+  '--text-second': '--text-second',
   '--hover': '#81ecec',
   '--hover-text-color': '#1c3183',
   '--share-icon': '#4cd137',
@@ -41,7 +41,25 @@ colorPalet.tryit = {
   '--color-primary': '#1a89f1',
   '--bg-primary': '#3ebedf',
   '--text': '#16191a',
-  '--text-second': '#ffffff',
+  '--text-second': '--text-second',
+  '--hover': '#81ecec',
+  '--hover-text-color': '#1c3183',
+  '--share-icon': '#4cd137',
+  '--rating': '##F4FF81',
+  '--active-off': '#d69c30',
+  '--active-on': '#4cd137',
+  '--trophy': '#60bdaa',
+  '--header-footer-color': '#4A148C',
+  '--underline': '#00B0FF',
+  '--header-footer-icon': '#1DE9B6',
+  '--header-footer-text-color': '#ecf0f1',
+  '--color-danger': '#aaca1b',
+}
+colorPalet.dark = {
+  '--color-primary': '#1a89f1',
+  '--bg-primary': '#3ebedf',
+  '--text': '#16191a',
+  '--text-second': '--text-second',
   '--hover': '#81ecec',
   '--hover-text-color': '#1c3183',
   '--share-icon': '#4cd137',
@@ -78,11 +96,11 @@ function App() {
 
 
   useEffect(() => {
-    //debugger
+    debugger
     let APP = window.location.pathname.toString();
     APP = APP ? APP.substr(1).toLowerCase() : '';
     setApp(APP);
-    if (!APP ||!deviceIdentity())  
+    if (!APP || !deviceIdentity())
       return
 
     const URL = `${API_ENDPOINT}/pageim/device_menu?appname=${APP}`;
@@ -95,7 +113,7 @@ function App() {
         return response.json()
       })
       .then(data => {
-       // debugger
+        // debugger
         return setMenuList(data.appsresult[1])
       })
       .catch((error) => {
@@ -140,7 +158,7 @@ function App() {
 
                                 <CardsHeader />
 
-                                  <Route path={'/' + app}><Pageim app={'/' + app} appPermission={item.permission} screenType={screenType} key={index} /> </Route>
+                                <Route path={'/' + app}><Pageim app={'/' + app} appPermission={item.permission} screenType={screenType} key={index} /> </Route>
 
                                 <CardsFooter />
                               </>

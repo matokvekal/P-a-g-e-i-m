@@ -1,0 +1,172 @@
+
+.nav-wrap {
+	position: relative;
+}
+
+.nav-wrap .logo {
+	transform: translate(2rem, -.1rem);
+}
+
+.nav-wrap .logo img {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 16rem;
+	height: 7rem;
+}
+
+.nav-wrap input {
+	display: none;
+}
+
+.nav-wrap .open {
+	display: none;
+	width: 3.5rem;
+	height: 2.5rem;
+	background-image: url('../icons/burger.svg');
+	background-size: cover;
+	cursor: pointer;
+}
+
+@media (max-width: 1042px) {
+
+	.nav-wrap {
+		padding: 1.5rem 3rem;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		background-image: linear-gradient(180deg, #233B3D 0%, #112327 100%);
+	}
+
+	.nav-wrap .open {
+		display: block;
+	}
+
+	.nav-wrap .logo {
+		transform: translate(-2rem, -1.25rem);
+		padding: 2.2rem 0;
+	}
+}
+
+nav ul {
+	list-style: none;
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	padding: 2rem;
+}
+
+nav a:link, nav a:visited {
+	color: white;
+	font-size: 2.3rem;
+}
+
+nav a:hover {
+	opacity: .85;
+}
+
+/* responsive nav */
+
+@media (max-width: 1042px) {
+	nav {
+		z-index: 150;
+		position: fixed;
+		top: 0;
+		left: 0;
+		display: none;
+		width: 100%;
+		height: 100vh;
+		min-height: 500px;
+		background-color: rgba(0, 0, 0, .65);
+		backdrop-filter: blur(5px);
+		flex-direction: column;
+	}
+
+	.nav-wrap input:checked + nav {
+		display: flex;
+		animation: visible .15s linear 1;
+		overflow-y: auto;
+	}
+
+	nav ul {
+		position: relative;
+		padding: 10rem 0 0 3rem;
+		width: 35rem;
+		background-color: #112327;
+		flex-direction: column;
+		justify-content: flex-start;
+		flex-wrap: nowrap;
+	}
+
+	@media (max-height: 500px) {
+		nav ul:last-child {
+			padding-bottom: 10rem;
+		}
+	}
+
+	@media (max-height: 400px) {
+		nav ul:last-child {
+			padding-bottom: 16rem;
+		}
+	}
+
+	@media (max-height: 340px) {
+		nav ul:last-child {
+			padding-bottom: 22rem;
+		}
+	}
+
+	@media (max-height: 280px) {
+		nav ul:last-child {
+			padding-bottom: 28rem;
+		}
+	}
+
+	nav ul:last-child {
+		flex: 1 0 auto;
+	}
+
+
+	nav ul li {
+		margin: 2rem 0 !important;
+	}
+
+	nav ul li a {
+		display: block;
+	}
+
+	nav ul li a:hover {
+		opacity: .75;
+	}
+
+	nav ul::before {
+		content: 'Menu';
+		color: #fff;
+		font-size: 3rem;
+		font-weight: 300;
+		padding-bottom: 1.75rem;
+		margin-bottom: 4rem;
+		border-bottom: 1px solid currentColor;
+	}
+
+	nav ul .close{
+		cursor: pointer;
+		position: absolute;
+		top: 2rem;
+		right: 2rem;
+		width: 3rem;
+		height: 3rem;
+		background-image: url('../icons/cross.png');
+		background-size: cover;
+	}
+}
+
+@media (max-width: 627px) {
+	nav a {
+		font-size: 2rem;
+	}
+}
+
+nav li:not(:last-child) {
+	margin-right: 6rem;
+}

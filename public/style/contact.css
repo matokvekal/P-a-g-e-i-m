@@ -1,0 +1,22 @@
+.contact {
+	background-image: linear-gradient(rgba(0, 0, 0, .2), rgba(0, 0, 0, .5)), url('../img/contact.png');
+	background-size: cover;
+	background-position: 65%;
+	padding: 6rem 0;
+	color: #fff;
+	display: flex;
+	justify-content: center;
+	text-align: center;
+}
+
+.contact .contact-heading {
+	font-weight: 500;
+	margin-bottom: 2rem;
+}
+
+.contact .contact-tagline {
+	font-size: 2rem;
+	font-weight: 400;
+	margin-bottom: 4rem;
+	letter-spacing: 1px;
+}

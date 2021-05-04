@@ -32,8 +32,8 @@ const CardsFilter = (props) => {
     const [filterIndex, setFilterInex] = useState(0);
 
     function handleShowFilter(index1) {
-        filterIndex===index1?setFilterInex(''): setFilterInex(index1);
-       
+        filterIndex === index1 ? setFilterInex('') : setFilterInex(index1);
+
     }
 
     useEffect(() => {
@@ -67,7 +67,7 @@ const CardsFilter = (props) => {
             checked: e.target.checked,
             name: 'ALL',
             value: 'ALL',
-            sender:'',
+            sender: '',
         })
         setFilters((x) => {
             const newFilters = filters.map((item) => {
@@ -97,7 +97,7 @@ const CardsFilter = (props) => {
             checked: e.target.checked,
             name: e.target.name,
             value: e.target.value,
-            sender:'',
+            sender: '',
         })
         setFilters((x) => {
             const newFilters = filters.map((item) => {

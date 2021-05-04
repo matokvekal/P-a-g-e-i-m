@@ -77,8 +77,8 @@ export const Card3 = (props) => {
   const Query = atom({
     key: "_critQuery",
     default: "",
-});
-const [anyQuery, setAnyQuery] = useRecoilState(Query);
+  });
+  const [anyQuery, setAnyQuery] = useRecoilState(Query);
   const standingVersion = 'new';
   const [userSelect, setUserSelect] = useRecoilState(userSelectcount);
   const [selectSelected, setSelectSelected] = useRecoilState(userSelectAll);
@@ -108,7 +108,7 @@ const [anyQuery, setAnyQuery] = useRecoilState(Query);
 
 
   useEffect(() => {
-    //debugger
+   debugger
     if (!tableFields || tableFields.length === 0) {
       if (APP && localStorage['fields_' + APP]) {
         let data = JSON.parse(localStorage['fields_' + APP]);
@@ -128,15 +128,16 @@ const [anyQuery, setAnyQuery] = useRecoilState(Query);
   }, [tableFields])
 
 
-
+  debugger
   useEffect(() => {
-
+    debugger
     // let temp=external;
     if (!app || app === '/' || app === '/Templates' || searchNew.length === 1)
       return
     if (!deviceIdentity())
       return
     setLoader(true);
+    debugger
     const URL = `${API_ENDPOINT}/pageim/stateUpdate?appname=${APP}&search=${searchNew}&currentpage=${currentPage}&itemsperpage=${itemsPerPage}&order_by=${order_by}&external=${external}`;
     fetch(URL, {
       method: 'POST',
@@ -256,7 +257,7 @@ const [anyQuery, setAnyQuery] = useRecoilState(Query);
   }
 
   const HandleSelect = el => event => {
-debugger
+    debugger
     if (!login) {
       closeModal();
       setPopupCard('');

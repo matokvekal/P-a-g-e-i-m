@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap'); */
 /* Global Style settings */
 *,
 *::before,
@@ -8,26 +8,12 @@
     box-sizing: border-box;
 }
 html{
-    scroll-behavior: smooth;
+    /* scroll-behavior: smooth; */
     /* font-family: 'Poppins', sans-serif; */
-    font-family: 'Work Sans', sans-serif;
-    font-size: 10px;
+    /* font-family: 'Work Sans', sans-serif; */
+    /* font-size: 10px; */
 }
-.root{
-    background-color: rgb(15, 23, 36);
-}
-a{
-    text-decoration: none;
-}
-ul{
-    list-style: none;
-}
-::placeholder{
-    margin-left: 2rem;
-}
-#root{
-    background-color: rgb(15, 23, 36);
-}
+
 
 /* Colors */
 :root{
@@ -46,16 +32,32 @@ ul{
     --underline: #576574;
     --header-footer-icon: #8395a7;
     --header-footer-text-color: #16191a;
-
+    --white:white;
     --color-danger: #aaca1b;
     --color-new-gray: rgb(146, 171, 207);
+    --background-color:rgb(15, 23, 36);
+    --color-red:red;
 }
 
 /* Header footer font size */
 :root{
     --header-footer-font-size: 1.8rem;
 }
-
+.root{
+    background-color: --background-color;
+}
+a{
+    text-decoration: none;
+}
+ul{
+    list-style: none;
+}
+::placeholder{
+    margin-left: 2rem;
+}
+#root{
+    background-color: --background-color;
+}
 
 .main_head_mobileNew,
 .main_head_mobile{
@@ -75,9 +77,9 @@ ul{
 .subnav .nav__item {
     border: none;
     outline: none;
-    color: white;
+    color: --white;
     background-color: inherit;
-    font-family: inherit;
+    /* font-family: inherit; */
     margin: 0;
 }
 .nav__item:nth-child(12){
@@ -91,15 +93,15 @@ ul{
     z-index: 1;
 }
 .fa.fa-recycle.red {
-    color:red;
+    color: --color-red
 }
 .fa.fa-trash-alt.red {
-    color:red;
+    color: --color-red
 }
 
 
 .subnav-content a {
-    color: white;
+    color: --white;
     text-decoration: none;
 }
 .subnav .subnav-content.active {
@@ -623,7 +625,7 @@ margin-left: 30px;
     font-size: 2rem;
     background: var(--share-icon);
     padding: 1.5rem;
-    color: #ffffff;
+    color: --text-second;
     box-shadow: 0 0 30px rgba(174, 240, 240, 0.281);
 }
 
@@ -650,14 +652,14 @@ margin-left: 30px;
     height: 30rem;
     /* width: 30rem; */
     font-size: 1.5rem;
-    font-family: 'Poppins', sans-serif;
+    /* font-family: 'Poppins', sans-serif; */
 }
 .form.active{
     visibility: visible;
     opacity: 1;
     transition: 0.6s;
     z-index: 2000;
-    /* background-color: #ffffff; */
+    /* background-color: --text-second; */
     border:1px solid rgb(17, 236, 229);
     padding: 0.2rem;;
 }
@@ -665,20 +667,20 @@ margin-left: 30px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #ffffff;
+    background-color: --text-second;
 }
 .frm__btn button{
     border: none;
     outline: none;
-    background-color: #ffffff;
+    background-color: --text-second;
     padding: 1rem 3rem;
     cursor: pointer;
     margin: 1rem;
     letter-spacing: 2px;
 }
 .frm__btn .close{
-    background-color: red;
-    color: white;
+    background-color:  --color-red;
+    color: --white;
     font-size: 1.4rem;
 }
 .close i{
@@ -686,7 +688,7 @@ margin-left: 30px;
 }
 .frm__btn .submit{
     background-color: var(--share-icon);
-    color: white;
+    color: --white;
     font-size: 1.4rem;
 }
 .filterheader{
@@ -702,7 +704,7 @@ margin-left: 30px;
 }
 ::placeholder{
     font-size: 1.5rem;
-    font-family: 'Poppins', sans-serif;
+    /* font-family: 'Poppins', sans-serif; */
 }
 .sub__menu{
     position: absolute;
@@ -713,7 +715,7 @@ margin-left: 30px;
     left: 57rem;
     height: 40rem;
     width: 30rem;
-    /* background-color: #ffffff; */
+    /* background-color: --text-second; */
     display: block;
     box-shadow: 0 1.5rem 5rem #757575;
     z-index: 200000;
@@ -732,7 +734,7 @@ color: rgb(17, 236, 229);
     padding-right: 2rem;
 }
 .sub__catagory__1 label{
-    /* color: #ffffff;; */
+    /* color: --text-second;; */
     color: var(--color-new-gray);
 }
 
@@ -757,7 +759,7 @@ color: rgb(17, 236, 229);
     padding-right: 2rem;
 }
 .sub__catagory__3 label{
-    color: #ffffff;
+    color: --text-second;
 }
 .catagory label{
     font-size: 1.6rem;
@@ -771,7 +773,7 @@ color: rgb(17, 236, 229);
     left: 57rem;
     height: 30rem;
     width: 23rem;
-    background-color: #ffffff;
+    background-color: --text-second;
     display: block;
     box-shadow: 0 1.5rem 5rem #757575;
     z-index: 200000;
@@ -1081,7 +1083,7 @@ display: block;
      tr{
         text-align: center;
        
-        /* color: white; */
+        /* color: --white; */
         border-radius: 3px 0 0 3px;
         border: none;
         margin: 0.3rem 0 !important;
@@ -1181,7 +1183,7 @@ display: block;
         /* width: 15%; */
         border-left: 1px solid rgb(214, 207, 207);
         vertical-align: middle !important; 
-        background: white;color: black;
+        background: --white;color: black;
         border-bottom: 2px solid black;
         border-top: none !important;
         vertical-align: middle !important;
@@ -1191,17 +1193,17 @@ display: block;
     tr td:nth-child(1){
         border-radius: 30px  0 0 30px ;
         background: #ffffff4d;
-        color: white;   
+        color: --white;   
     }
     tr td:nth-child(2){
-        background: white;
+        background: --white;
         color: black;
     
     }
     tr td:nth-last-child(1){
         background: #F00044;
         border-radius: 0 30px 30px 0;
-        color: white;
+        color: --white;
        
     }
     tr td:nth-last-child(2){
@@ -1228,7 +1230,7 @@ display: block;
         display: block;
         width: 100%;
         background: #F00044;
-        color: white;
+        color: --white;
         padding: 2px;
         text-align: center;
         border-radius: 30px;
@@ -1238,14 +1240,14 @@ display: block;
         display: block;
     }
     }
-    .main_head_mobile h1{font-size: 20px;font-weight: bold;color :white;margin-bottom: 0px;}
+    .main_head_mobile h1{font-size: 20px;font-weight: bold;color :--white;margin-bottom: 0px;}
     .main_head_mobile h3{font-size: 20px;color: goldenrod;font-size: 18px;}
     
     .fa.fa-recycle.red{
-        color:red;
+        color: --color-red
     }
     .fa.fa-trash-alt.red {
-        color:red;
+        color: --color-red
     }
     
 .chatIconHide{
